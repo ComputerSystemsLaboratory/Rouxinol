@@ -1,0 +1,32 @@
+#include "iostream"
+
+using namespace std;
+
+int main() {
+
+	int num;
+	int min;
+	int sa = -1000000000;
+
+	cin >> num;
+
+	//????????????????´?
+	cin >> min;
+	//2????????\??????????´?
+	for (int i = 1; i < num; i++) {
+		int a;
+		cin >> a;
+
+		if (a - min > sa) {
+			sa = a - min;
+		}
+		if (a < min) {
+			min = a;
+		}
+
+	}
+
+	cout << sa << endl;
+
+	return 0;
+}

@@ -1,0 +1,68 @@
+# Dataset Directory
+#
+dataset:
+  benchmarks: /home/anderson/Rouxinol/datasets/CodeNet.ollvm.44c.350s.5/benchmarks
+  input_output: /home/anderson/Rouxinol/datasets/CodeNet.ollvm.44c.350s.5/input_output
+  input_data: input.txt
+  input_type: stdin
+  classes: 32
+  test_size: 0.2
+  validation_size: 0.0
+
+# Environment
+#
+environment:
+  type: llvm
+  tools:
+    absolute_path: /opt/ollvm/bin
+    compiler:
+      c: clang
+      cxx: clang++
+    optimizer: opt
+
+# Compiler flags
+#
+# --std=c++11 --std=c++14 (CodeNet + clang-10)
+#
+compiler_flags:
+  train:
+    level: -O0
+    c_flags: -w
+    cxx_flags: -w
+    obfuscation: ""
+    sequence: ""
+  test:
+    level: -O0
+    c_flags: -w
+    cxx_flags: -w
+    obfuscation: ""     
+    sequence: ""
+
+# Representation
+#
+# llvm_histogram | cfggrind_histogram | ...
+#
+representation:
+  type: llvm_histogram
+  cfggrind: dynamic
+
+# Results Directory
+#
+output_absolute_path: /home/anderson/Rouxinol/results/game0_llvm
+
+# Model
+#
+# rf | svm | lr | mlp | knn | lstm
+#
+model:
+  type:  rf
+  config:
+    learning_rate: 0.001
+    batch_size: 64
+    num_epochs: 1000
+    early_stopping: 0
+    restore_best_weights: 0
+    patience: 100
+    maxlen: 64
+    num_classes: 32
+

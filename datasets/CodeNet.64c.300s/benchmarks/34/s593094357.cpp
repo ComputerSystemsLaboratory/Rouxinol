@@ -1,0 +1,37 @@
+#include <iostream>
+using namespace std;
+
+void insertionSort(int *A, int N){ // N??????????´??????????0-?????????????????????A
+	for (int i = 0; i<N; i++){
+		int v = A[i];
+		int j = i - 1;
+		
+		while (j >= 0 && A[j] > v){
+			A[j + 1] = A[j];
+			j--;
+			A[j + 1] = v;
+		}
+
+		for (int i = 0; i < N; i++){
+			cout << A[i];
+			if (i == N - 1) cout << "\n";
+			else cout << " ";
+		}
+	}
+}
+
+int main(void){
+	int N, *A;
+	
+	cin >> N;
+
+	A = new int[N];
+
+	for (int i = 0; i < N; i++){
+		cin >> A[i];
+	}
+
+	insertionSort(A, N);
+
+	return 0;
+}

@@ -1,0 +1,2 @@
+#include <iostream>
+using namespace std;int n,a[5000];int main(){int i,j,t,s;while(cin>>n,n){s=0;t=-100001;for(i=0;i<n;i++){cin>>a[i];}for(i=0;i<n;i++){s+=a[i];if(t<s)t=s;for(j=i+1;j<n;j++){s+=a[j];if(t<s)t=s;}s=0;}cout<<t<<endl;}return 0;}

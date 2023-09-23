@@ -1,0 +1,33 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+const int MAX = 1000100;
+bool prime[MAX];
+
+void sieve(){
+    fill(prime, prime+MAX, true);
+    prime[0] = prime[1] = false;
+
+    for(int i=0; i < MAX; i++){
+	        if(!prime[i]) continue;
+	        for(int j=i+i; j < MAX; j += i){
+			            prime[j] = false;
+			        }
+	    }
+}
+
+
+int main(){
+	int a, d, n;
+	sieve();
+	while(cin >> a >> d >> n, a+d+n){
+		int count = 0;
+		while(true){
+			if(prime[a]) n--;
+			if(n == 0) break;
+			a+=d;
+		}
+		cout << a << endl;
+	}
+}
