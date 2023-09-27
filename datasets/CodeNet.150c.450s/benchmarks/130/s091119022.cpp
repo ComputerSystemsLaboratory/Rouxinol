@@ -1,0 +1,43 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{
+	//?????°??????
+	int Array[100][100] = {};//[???][?¨?]
+	int Vector[100] = {};
+	int n = 0;
+	int m = 0;
+	//??\?????????
+	cin >> m >> n;
+	for (int i = 0; i<m; i++)
+	{
+		for (int j = 0; j<n; j++)
+		{
+			cin >> Array[i][j];
+		}
+	}
+
+	for (int i = 0; i<n; i++)
+	{
+		cin >> Vector[i];
+	}
+	//?¨??????????
+	int TemporarySum = 0;//
+	int ReturnVector[100] = {};//??????????????£??\??????
+	for (int i = 0; i<m; i++)
+	{
+		for (int j = 0; j<n; j++)
+		{
+			TemporarySum += Array[i][j] * Vector[j];
+		}
+		ReturnVector[i] = TemporarySum;
+		TemporarySum = 0;
+	}
+	//????????????
+	for (int i = 0; i<m; i++)
+	{
+		cout << ReturnVector[i] << endl;
+	}
+	return 0;
+}

@@ -1,0 +1,22 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{
+	int n, debt = 100000;
+	double risi = 1.05;
+
+	cin >> n;
+	for(int i = 0; i < n; i++){
+		// ???????????????
+		debt *= risi;
+		//cout << debt << endl;
+
+		// 1000?????????????????????
+		if(debt % 1000 > 0)
+			debt += 1000 - (debt % 1000);
+	}
+	cout << debt << endl;
+
+	return 0;
+}

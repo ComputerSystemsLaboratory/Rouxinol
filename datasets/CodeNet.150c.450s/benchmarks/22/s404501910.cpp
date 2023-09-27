@@ -1,0 +1,51 @@
+#include <bits/stdc++.h>
+using namespace std; // ???????????¨???
+#define rep(i,n) repi(i,0,n)
+#define repi(i,a,b) for(int i=(int)(a);i<(int)(b);i++)
+#define pb push_back 
+#define MAX_E 2017
+#define MAX_V 1145
+#define INF INT_MAX / 3
+
+// make_pair ??????????????§
+struct edge{int from, to, cost; };
+edge es[MAX_E]; // ???
+int d[MAX_V]; // ???????????¢
+int V, E; // V???????????°???E????????°
+//?§????s????????????????????????????????¢????±???????
+bool find_negative_loop(int s){ 
+    rep(i, V) d[i] = INF;
+    d[s] = 0;
+    rep(i, V){
+        rep(j, E){
+            edge e = es[j];
+            if(d[e.from] != INF && d[e.to] > d[e.from] + e.cost){
+                d[e.to] = d[e.from] + e.cost;
+                if(i == V - 1) return true;
+            }
+        }
+    }
+    return false;
+}
+int main(){
+	int r;
+	cin >> V >> E >> r;
+	int s, t, w;
+	rep(i, E)
+	{
+		cin >> s >> t >> w;
+		es[i] = {s, t, w};
+	}
+	if(!find_negative_loop(r))
+	{
+		rep(i, V)
+		{
+			if(d[i] == INF) cout << "INF" << endl;
+			else cout << d[i] << endl;
+		}
+	}
+	else
+	{
+		cout << "NEGATIVE CYCLE" << endl;
+	}
+}

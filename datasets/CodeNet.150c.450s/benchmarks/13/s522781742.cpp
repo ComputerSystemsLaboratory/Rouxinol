@@ -1,0 +1,35 @@
+#include <iostream>
+#include <cstdio>
+#include <string>
+using namespace std;
+
+int main(){
+	//??????????¢??????¨?????°
+	string s, p;
+
+	//??\???
+	cin >> s;
+	cin >> p;
+
+	//??????????????¨????????°
+	int flag = 0;
+
+	s += s;
+	int s_length = s.length();
+	int p_length = p.length();
+	for (int i = 0; i < s_length - p_length; i++)
+	{
+		if (s.substr(i, p_length) == p){
+			flag = 1;
+			break;
+		}
+	}
+	if (flag){
+		cout << "Yes" << endl;
+	}else
+	{
+		cout << "No" << endl;
+	
+	}
+	return 0;
+}

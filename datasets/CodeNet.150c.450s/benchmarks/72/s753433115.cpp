@@ -1,0 +1,30 @@
+#include <iostream>
+using namespace std;
+
+#include <stdio.h>
+#include <cctype>
+
+int main(void)
+{
+	std::string st;
+	getline(cin, st);
+	
+	
+	
+	for(int i = 0 ; i < st.size();i++ ){
+
+		char ch = st[i];
+		if (islower(ch)){	//?°?????????????
+			ch = toupper(ch);		//??§????????§??????
+		}
+		else if (isupper(ch)){
+			ch = tolower(ch);
+		}
+		else {
+			//????????????
+		}
+		printf("%c", ch);
+	}
+	printf("\n");
+	return 0;
+}

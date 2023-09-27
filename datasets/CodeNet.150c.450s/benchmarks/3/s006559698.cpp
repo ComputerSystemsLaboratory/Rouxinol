@@ -1,0 +1,51 @@
+#include<iostream>
+#include<string>
+#include<vector>
+using namespace std;
+
+string REVERSE(string s, int a, int b){
+	string S = s;
+	for(int i = a; i <= b; i++) s[i] = S[a+b-i];
+	return s;
+}
+
+string REPLACE(string s, int a, int b, string r){
+	for(int i = a; i <= b; i++) s[i] = r[i-a];
+	return s;
+}
+
+int main(){
+	//?????????????????????
+	string str;
+	cin >> str;
+	//???????????°????????????
+	int q;
+	cin >> q;
+	//??????????????????????????????
+	vector<string> Order, Replace;
+	vector<int> Start, End;
+	for(int i = 0; i < q; i++){
+		string order, replace;
+		int start, end;
+		cin >> order;
+		Order.push_back(order);
+		cin >> start;
+		Start.push_back(start);
+		cin >> end;
+		End.push_back(end);
+		if(order == "replace"){
+			cin >> replace;
+			Replace.push_back(replace);
+		}else{
+			Replace.push_back("EMPTY");
+		}
+	}
+	//??????????????????????????????????????????
+	for(int i = 0; i < q; i++){
+		if(Order[i] == "print") cout << str.substr(Start[i], End[i] - Start[i] + 1) << endl;
+		if(Order[i] == "reverse") str = REVERSE(str, Start[i], End[i]);
+		if(Order[i] == "replace") str = REPLACE(str, Start[i], End[i], Replace[i]);
+	}
+//	system("pause");
+	return 0;
+}

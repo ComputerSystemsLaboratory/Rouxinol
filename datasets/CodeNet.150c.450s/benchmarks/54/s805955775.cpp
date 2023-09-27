@@ -1,0 +1,62 @@
+#include<ctype.h>
+#include<stdio.h>
+
+int main()
+{
+	char a[11]={'\0'},T[1002]={'\n'},P[1002]="END_OF_TEXT";
+	int i,t,n,s=0,y=1;
+	
+	scanf("%s",a);
+	for(i=0;a[i]!='\0';i++);
+	
+	
+	for(t=0;a[t]!='\0';t++){//????????§??§??????????°????????????????
+		
+		a[t]=tolower(a[t]);
+	}
+	//printf("%s\n",a);
+	
+	for(;y!=0;){
+		y=0;
+		for(int m=0;m<1001;m++){
+			T[m]='\0';
+		}
+		
+		scanf("%s",T);
+		
+		for(int x=0;T[x]!='\0';x++){//END_OF_TEXT?????????????????????
+			if(T[x]!=P[x]){
+			y++;
+			}
+		}
+		
+		for(t=0;T[t]!='\0';t++){//????????§??§??????????°????????????????
+			
+			T[t]=tolower(T[t]);
+		}
+		
+		
+		if(y!=0){
+			//printf("%s\n",a);
+			n=0;
+			if(a[0]==T[0]&&i==t){
+				
+				for(n=1;n<i;n++){
+					
+					if(a[n]!=T[n]){
+						break;
+					}
+				}
+			}
+			if(n==i){
+				s=s+1;
+				//printf("%s %d %d\n\n",T,i,n);
+				
+			}
+		}
+		//printf("%s %d\n\n",T,s);
+	}
+	printf("%d\n",s);
+	
+	return 0;
+}

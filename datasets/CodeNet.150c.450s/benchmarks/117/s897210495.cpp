@@ -1,0 +1,121 @@
+#include <cstdio>
+#include <iostream>
+#include <vector>
+using namespace std;
+
+static const int MAX_ELEM = 500000;
+
+int MergeElem(int elem[], int start, int mid, int end)
+{
+#if 1
+    int i, j, k, l;
+    int num = 0;
+    vector<int> left, right;
+
+    i = mid - start;
+    j = end - mid;
+    l = (i > j) ? i : j;
+
+    /* ???????????¢??????????????? */
+    for (k = 0; k < l; k++) {
+        left.push_back(elem[start + k]);
+        right.push_back(elem[mid + k]);
+    }
+    /* ??????????????§????????\?????? */
+    left[i]  = 0x7FFFFFFF;
+    right[j] = 0x7FFFFFFF;
+
+    i = 0;
+    j = 0;
+    for (k = start; k < end; k++) {
+        ++num; /* ?????? */
+
+        if (left[i] <= right[j]) {
+            elem[k] = left[i];
+            ++i;
+        }
+        else {
+            elem[k] = right[j];
+            ++j;
+        }
+    }
+
+    return num;
+#else
+    int i, j, k, l;
+    int num = 0;
+    int left[MAX_ELEM/2 + 1], right[MAX_ELEM/2 + 1];
+
+    i = mid - start;
+    j = end - mid;
+    l = (i > j) ? i : j;
+
+    /* ???????????¢??????????????? */
+    for (k = 0; k < l; k++) {
+        left[k]  = elem[start + k];
+        right[k] = elem[mid + k];
+    }
+    /* ??????????????§????????\?????? */
+    left[i]  = 0x7FFFFFFF;
+    right[j] = 0x7FFFFFFF;
+
+    i = 0;
+    j = 0;
+    for (k = start; k < end; k++) {
+        ++num; /* ?????? */
+
+        if (left[i] <= right[j]) {
+            elem[k] = left[i];
+            ++i;
+        }
+        else {
+            elem[k] = right[j];
+            ++j;
+        }
+    }
+
+    return num;
+#endif
+}
+
+/* end ???????±??????????????????????????????§???????´???°???????????? */
+int MergeSort(int elem[], int start, int end)
+{
+    int mid;
+    int cnt = 0;
+
+    /* end ???????±????????????????????±????1????????´????????????????????? */
+    if ((start + 1) >= end) {
+        return 0;
+    }
+
+    mid = (start + end) / 2;
+    cnt += MergeSort(elem, start, mid);
+    cnt += MergeSort(elem, mid,   end);
+    cnt += MergeElem(elem, start, mid, end);
+
+    return cnt;
+}
+
+int main(void)
+{
+    int i;
+    int num;
+    int cnt;
+    int elem[500002];
+
+    scanf("%d", &num);
+    for (i = 0; i < num; i++) {
+        scanf("%d", &elem[i]);
+    }
+
+    cnt = MergeSort(elem, 0, num);
+
+    printf("%d", elem[0]);
+    for (i = 1; i < num; i++) {
+        printf(" %d", elem[i]);
+    }
+    printf("\n%d\n", cnt);
+
+    return 0;
+}

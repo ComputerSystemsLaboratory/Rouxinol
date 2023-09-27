@@ -1,0 +1,30 @@
+#include<iostream>
+using namespace std;
+
+int Zellers_congruence(int y, int m, int d) {
+	int num;
+	if (m < 3)num= (y - 1) + (y - 1) / 4 - (y - 1) / 100 + (y - 1) / 400 + (13 * (m + 12) + 8) / 5 + d;
+	else num= y + y / 4 + -y / 100 + y / 400 + (13 * m + 8) / 5 + d;
+	return num % 7;
+}
+//?????§???????????¬??????year+year/4-year/100+year/400+(13*month+8)/5+day
+//1??? or 2 ??????????????????????????´???????????????????????¨??????????¨?????????????
+
+int main() {
+	int  m, d;
+	while (true) {
+		cin >> m >> d;
+		if (m == 0 && d == 0)break;
+		switch (Zellers_congruence(2004, m, d)) {
+		case 0:cout << "Sunday" << endl; break;
+		case 1:cout << "Monday" << endl; break;
+		case 2:cout << "Tuesday" << endl; break;
+		case 3:cout << "Wednesday" << endl; break;
+		case 4:cout << "Thursday" << endl; break;
+		case 5:cout << "Friday" << endl; break;
+		case 6:cout << "Saturday" << endl; break;
+		default:cout << "error" << endl; break;
+		}
+	}
+	return 0;
+}

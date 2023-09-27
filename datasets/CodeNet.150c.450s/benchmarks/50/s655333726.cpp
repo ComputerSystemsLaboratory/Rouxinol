@@ -1,0 +1,53 @@
+// quest1.cpp : ??????????????? ??¢????????±????????§????????¨????????? ?????????????????????????????????
+//
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+
+
+int main()
+{
+	int result[1000], suffix = 0;
+
+	while (1) {
+		int money, reverse, count = 0;
+
+		scanf("%d", &money);
+		if (money == 0) {
+			break;
+		}
+		reverse = 1000 - money;
+
+		while (reverse >= 500) {
+			reverse -= 500;
+			count++;
+		}
+		while (reverse >= 100) {
+			reverse -= 100;
+			count++;
+		}
+		while (reverse >= 50) {
+			reverse -= 50;
+			count++;
+		}
+		while (reverse >= 10) {
+			reverse -= 10;
+			count++;
+		}
+		while (reverse >= 5) {
+			reverse -= 5;
+			count++;
+		}
+		while (reverse >= 1) {
+			reverse -= 1;
+			count++;
+		}
+
+		result[suffix++] = count;
+	}
+
+	for (int i = 0; i < suffix; i++) {
+		printf("%d\n", result[i]);
+	}
+
+    return 0;
+}

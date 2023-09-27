@@ -1,0 +1,102 @@
+#include<iostream>
+#include<cstdio>
+#include<string>
+#include<algorithm>
+
+//????????¢?´¢??¨?????§????????????????????????????????§??????????????????????????????????°??????????
+
+using namespace std;
+
+typedef struct s {
+    int Key;
+    s *Parent;
+    s *Left;
+    s *Right;
+} Node;
+
+Node *root,*NIL;
+
+void insert(int Key){
+    Node *x = root;//?§????????????¢?????¬???
+    Node *y = NIL;//??¢?????¬???????????????????????¨????????????NIL??§?????????
+    Node *z;//??¬???
+    
+    z = (Node *)malloc(sizeof(Node));
+    z -> Key = Key;
+    z -> Left = NIL;
+    z -> Right = NIL;
+    
+    //x???NIL????????????
+    while (x != NIL) {
+        y = x;
+        if (z -> Key < x -> Key) {
+            x = x -> Left;
+        }else{
+            x = x -> Right;
+        }
+    }
+    
+    z -> Parent = y;
+    //root??????NIL??????????????£?????´???
+    //
+    if (y == NIL) {
+        root = z;
+    }else{
+        if (z -> Key < y -> Key) {
+            y -> Left = z;
+        }else{
+            y -> Right = z;
+        }
+    }
+}
+
+bool find(int Key){
+    Node *f = root;
+    
+    while (f != NIL) {
+        if(f -> Key > Key) f = f -> Left;
+        else if (f -> Key < Key) f = f -> Right;
+        else return true;
+    }
+    return false;
+}
+
+void inoder(Node *n){
+    if (n == NIL) return;
+    inoder(n -> Left);
+    cout << " " << n -> Key;
+    inoder(n -> Right);
+}
+
+void preoder(Node *n){
+    if (n == NIL) return;
+    cout << " " << n -> Key;
+    preoder(n -> Left);
+    preoder(n -> Right);
+}
+
+int main(){
+    root = NIL;
+    int N;
+    cin >> N;
+    for (int i = 0; i < N; i++) {
+        string com;
+        cin >> com;
+        if (com == "insert") {
+            int num;
+            scanf("%d",&num);
+            insert(num);
+        }else if (com == "find"){
+            int num;
+            scanf("%d",&num);
+            if(find(num)) cout << "yes" << endl;
+            else cout << "no" << endl;
+        }else{
+            inoder(root);
+            cout << endl;
+            preoder(root);
+            cout << endl;
+        }
+    }
+    return 0;
+}

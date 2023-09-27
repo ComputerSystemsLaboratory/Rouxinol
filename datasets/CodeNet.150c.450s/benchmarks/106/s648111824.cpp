@@ -1,0 +1,31 @@
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+int a,b,c,d;
+	cin>>a;
+	cin>>b;
+	cin>>c;
+	d=0;
+		if(a==b)
+		{
+			if(c%a==0)//?´???°?????£?????????(?´???°?????°)??????1
+			{
+				d++;}
+	}
+		else
+		{
+			while(a<=b){
+				if(c%a==0){
+					a++;
+					d++;}
+			else if(c%a>0){
+				a++;}
+			}
+		}
+	cout<<d<<endl;
+			
+	return 0;
+}

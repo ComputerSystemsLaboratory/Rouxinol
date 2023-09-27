@@ -1,0 +1,49 @@
+#include<iostream>
+#include<iomanip>
+#include<math.h>
+#include<algorithm>
+#include<string>
+#include<vector>
+#include<queue>
+#include<set>
+#include<map>
+#include<tuple>
+#include<complex>
+#define REP(i, N) for(ll i = 0; i < N; ++i)
+#define FOR(i, a, b) for(ll i = a; i < b; ++i)
+#define ALL(a) (a).begin(),(a).end()
+#define pb push_back
+#define INF (long long)1000000000
+#define MOD 1000000007
+#define EPS (long double) 1e-8
+using namespace std;
+typedef long long ll;
+typedef long double ld;
+typedef pair<ll, ll> P;
+int dh[4] = {1, 0, -1, 0};
+int dw[4] = {0, 1, 0, -1};
+
+using namespace std;
+
+int main() {
+	while(1) {
+		int n, m;
+		cin>>n>>m;
+		if(n == 0 && m == 0) break;
+		vector<int> d(n);
+		vector<P> p(n);
+		REP(i, n) cin>>d[i]>>p[i].first;
+		REP(i, n) p[i].second = i;
+		sort(ALL(p), greater<P>());
+		int res = 0;
+		REP(i, n) {
+			if(d[p[i].second] <= m) {
+				m -= d[p[i].second];
+			} else {
+				res += (d[p[i].second] - m) * p[i].first;
+				m = 0;
+			}
+		}
+		cout<<res<<endl;
+	}
+}

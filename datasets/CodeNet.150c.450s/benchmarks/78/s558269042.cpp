@@ -1,0 +1,55 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define INF_LL (int64)1e18
+#define INF (int32)1e9
+#define REP(i, n) for(int i = 0;i < (n);i++)
+#define FOR(i, a, b) for(int i = (a);i < (b);i++)
+#define all(x) x.begin(),x.end()
+#define fs first
+#define sc second
+
+using int32 = int_fast32_t;
+using uint32 = uint_fast32_t;
+using int64 = int_fast64_t;
+using uint64 = uint_fast64_t;
+using PII = pair<int32, int32>;
+using PLL = pair<int64, int64>;
+
+const double eps = 1e-6;
+
+template<typename A, typename B>inline void chmin(A &a, B b){if(a > b) a = b;}
+template<typename A, typename B>inline void chmax(A &a, B b){if(a < b) a = b;}
+
+const int64 mod = 1e9+7;
+
+vector<int64> po, podd;
+vector<int64> dp(1e6+1, INF), dpdd(1e6+1, INF);
+
+void init(){
+	for(int64 i = 1;i*(i+1)*(i+2)/6 <= 1000000;i++){
+		int64 x = i*(i+1)*(i+2)/6;
+		po.push_back(x);
+		if(x%2) podd.push_back(x);
+	}
+
+	dp[0] = 0; dpdd[0] = 0;
+	REP(i, po.size()){
+		for(int32 j = 0;j+po[i] < dp.size();j++){
+			dp[j+po[i]] = min(dp[j+po[i]], dp[j]+1);
+		}
+	}
+	REP(i, podd.size()){
+		for(int32 j = 0;j+podd[i] < dpdd.size();j++){
+			dpdd[j+podd[i]] = min(dpdd[j+podd[i]], dpdd[j]+1);
+		}
+	}
+}
+
+int main(void){
+	init();
+	int32 N;
+	while(cin >> N && N){
+		cout << dp[N] << " " << dpdd[N] << endl;
+	}
+}

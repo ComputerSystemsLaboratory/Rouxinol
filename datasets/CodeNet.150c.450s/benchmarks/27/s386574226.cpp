@@ -1,0 +1,98 @@
+/*Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2DDiv2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2iv2Div2Div2Div2
+Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2DDiv2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2iv2Div2Div2Div2
+Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2DDiv2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2iv2Div2Div2Div2
+Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2DDiv2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2iv2Div2Div2Div2
+Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2DDiv2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2iv2Div2Div2Div2
+Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2DDiv2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2iv2Div2Div2Div2
+Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2DDiv2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2iv2Div2Div2Div2
+Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2DDiv2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2iv2Div2Div2Div2
+Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2DDiv2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2iv2Div2Div2Div2
+Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2DDiv2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2iv2Div2Div2Div2
+Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2DDiv2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2iv2Div2Div2Div2
+Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2DDiv2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2iv2Div2Div2Div2
+Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2DDiv2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2iv2Div2Div2Div2
+Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2DDiv2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2iv2Div2Div2Div2
+Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2DDiv2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2iv2Div2Div2Div2
+Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2DDiv2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2iv2Div2Div2Div2
+Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2DDiv2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2iv2Div2Div2Div2
+Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2DDiv2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2iv2Div2Div2Div2
+Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2DDiv2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2iv2Div2Div2Div2
+Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2DDiv2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2iv2Div2Div2Div2
+Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2DDiv2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2iv2Div2Div2Div2
+Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2DDiv2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2iv2Div2Div2Div2
+Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2DDiv2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2iv2Div2Div2Div2
+Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2DDiv2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2iv2Div2Div2Div2
+Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2DDiv2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2iv2Div2Div2Div2
+Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2DDiv2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2iv2Div2Div2Div2
+Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2DDiv2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2iv2Div2Div2Div2
+Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2DDiv2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2iv2Div2Div2Div2
+Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2DDiv2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2iv2Div2Div2Div2
+Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2DDiv2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2iv2Div2Div2Div2
+Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2DDiv2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2iv2Div2Div2Div2
+Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2DDiv2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2Div2iv2Div2Div2Div2
+*/
+
+#include<iostream>
+#include<string>
+using namespace std;
+
+int a;
+
+struct NodeDiv2 {
+	int key;
+	NodeDiv2 *parent, *left, *right;
+};
+
+NodeDiv2 *root, *NIL;
+
+void preTreeWalkDiv2(NodeDiv2 *u){
+	if (u == NIL) { return; }
+	cout << ' ' << u->key;
+	preTreeWalkDiv2(u->left);
+	preTreeWalkDiv2(u->right);
+}
+
+void inTreeWalkDiv2(NodeDiv2 *u) {
+	if (u == NIL) { return; }
+	inTreeWalkDiv2(u->left);
+	cout << ' ' << u->key;
+	inTreeWalkDiv2(u->right);
+}
+
+void insertDiv2(int k) {
+	NodeDiv2 *y = NIL;
+	NodeDiv2 *x = root;
+	NodeDiv2 *z;
+	z = (NodeDiv2*)malloc(sizeof(NodeDiv2));
+	z->key = k;
+	z->right = NIL;
+	z->left = NIL;
+	while (x != NIL) {
+		y = x;
+		if (z->key < x->key) { x = x->left; }
+		else { x = x->right; }
+	}
+	z->parent = y;
+	if (y == NIL) { root = z; }
+	else if (z->key < y->key) { y->left = z; }
+	else { y->right = z; }
+}
+
+int q;
+string S;
+
+int main() {
+	cin >> q;
+	for (int i = 0; i < q; i++) {
+		cin >> S;
+		if (S == "print") {
+			inTreeWalkDiv2(root); cout << endl;
+			preTreeWalkDiv2(root); cout << endl;
+		}
+		else {
+			cin >> a;
+			insertDiv2(a);
+		}
+	}
+	return 0;
+}

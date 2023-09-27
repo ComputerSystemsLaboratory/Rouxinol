@@ -1,0 +1,72 @@
+#include "bits/stdc++.h"
+using namespace std;
+
+//?????????
+#pragma region MACRO 
+#define putans(x)  std::cerr << "[ answer ]: " ; cout << (x) << endl
+#define dputans(x) std::cerr << "[ answer ]: "; cout << setprecision(27) << (double)(x) << endl
+#define REP(i,a,n) for(int i=(a); i<(int)(n); i++)
+#define RREP(i,a,n) for(int i=(int)(n-1); i>= a; i--)
+#define rep(i,n) REP(i,0,n)
+#define rrep(i,n) RREP(i,0,n)
+#define all(a) begin((a)),end((a))
+#define mp make_pair
+#define exist(container, n) ((container).find((n)) != (container).end())
+#define equals(a,b) (fabs((a)-(b)) < EPS)
+#ifdef _DEBUG //???????????????????????????????????????????????????
+std::ifstream ifs("data.txt");
+#define put ifs >>
+#else //?????£????????????????????§?????????????????????
+#define put cin >>
+#endif
+#pragma endregion
+//???????????°??????????????´
+#pragma region CODING_SUPPORT
+#ifdef _DEBUG
+#define dbg(var0) { std::cerr << ( #var0 ) << "=" << ( var0 ) << endl; }
+#define dbg2(var0, var1) { std::cerr << ( #var0 ) << "=" << ( var0 ) << ", "; dbg(var1); }
+#define dbg3(var0, var1, var2) { std::cerr << ( #var0 ) << "=" << ( var0 ) << ", "; dbg2(var1, var2); }
+#define dbgArray(a,n) {std::cerr << (#a) << "=";  rep(i,n){std::cerr <<(a[i])<<",";} cerr<<endl;} 
+#else
+#define dbg(var0) {}
+#define dbg2(var0, var1) {}
+#define dbg3(var0, var1, var2) {}
+#define dbgArray(a,n) {}
+#endif 
+#pragma endregion 
+//typedef????????????????????????????¶????????????§?????????
+#pragma region TYPE_DEF
+typedef long long ll;
+typedef pair<int, int> pii; typedef pair<string, string> pss; typedef pair<int, string>pis;
+typedef vector<string> vs; typedef vector<int> vi;
+#pragma endregion
+//??????????????°(???????????????????????§??????)
+#pragma region CONST_VAL
+#define PI (2*acos(0.0))
+#define EPS (1e-10)
+#define MOD (ll)(1e9 + 7)
+#define INF (ll)(2*1e9)
+#pragma endregion
+
+int main() {
+	string s1; put s1;
+	string s2; put s2;
+	int l1 = s1.size();
+	int l2 = s2.size();
+	int dp[1001][1001];
+	rep(i, l1+1) {
+		dp[i][0] = i;
+	}
+	rep(i, l2+1) {
+		dp[0][i] = i;
+	}
+	rep(i, l1) {
+		rep(j, l2) {
+			int cost = (s1[i] == s2[j]) ? 0 : 1;
+			dp[i + 1][j + 1] = min(dp[i][j+1]+1,min(dp[i+1][j]+1,dp[i][j]+cost));
+		}
+	}
+	cout << dp[l1][l2] << endl;
+END:
+	return 0;
+}

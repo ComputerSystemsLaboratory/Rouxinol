@@ -1,0 +1,164 @@
+//#define MYDEBUG
+#include <bits/stdc++.h>
+using namespace std;
+
+#ifdef MYDEBUG
+#define dbp(x) cout<<#x<<": "<<x<<endl
+#define dbp2(x,y) cout<<#x<<","<<#y<<": "<<x<<","<<y<<endl
+#define dbp3(x,y,z) cout<<#x<<","<<#y<<","<<#z<<": "<<x<<","<<y<<","<<z<<endl
+#define dbp4(w,x,y,z) cout<<#w<<","<<#x<<","<<#y<<","<<#z<<": "<<w<<","<<x<<","<<y<<","<<z<<endl
+#else
+#define dbp(x)
+#define dbp2(x,y)
+#define dbp3(x,y,z)
+#define dbp4(w,x,y,z)
+#endif
+#define ll long long
+#define ull unsigned long long
+#define eps 1e-14
+#define all(x) x.begin(), x.end()
+#define rep(i, from, to) for(int i=from; i<to; ++i)
+
+template<typename T>
+ostream& operator<<(ostream& out, const vector<T>& v) {
+	out << "[";
+	size_t last = v.size() - 1;
+	for (size_t i = 0; i < v.size(); ++i) {
+		out << v[i];
+		if (i != last)
+			out << ",";
+	}
+	out << "]";
+	return out;
+}
+
+struct edge {
+	int from, to, cost;
+	edge(int from, int to, int cost) {
+		this->from = from;
+		this->to = to;
+		this->cost = cost;
+	}
+	edge() {
+		from = -1;
+		to = -1;
+		cost = -1;
+	}
+	bool operator<(const edge& e) const {
+		return this->cost < e.cost;
+	}
+	bool operator>(const edge& e) const {
+		return e < *this;
+	}
+	bool operator>=(const edge& e) const {
+		return !(*this < e);
+	}
+	bool operator<=(const edge& e) const {
+		return !(*this > e);
+	}
+};
+
+typedef struct edge edge;
+typedef pair<int, int> P;
+const int MAXV = 1100;
+const int MAXE = 2100;
+const int INF = 1e9 + 10000;
+vector<edge> graph[MAXV];
+edge edges[MAXE];
+int V, E, r;
+int d[MAXV];
+const string NEGATIVE = "NEGATIVE CYCLE";
+
+void bellmanford() {
+	fill(d, d + MAXV, INF);
+	d[r] = 0;
+	rep(i,0,V)
+	{
+		bool update = false;
+		rep(k,0,E)
+		{
+			edge e = edges[k];
+			if (d[e.from] != INF && d[e.to] > d[e.from] + e.cost) {
+				d[e.to] = d[e.from] + e.cost;
+				update = true;
+				if (i == V - 1) {
+					cout << NEGATIVE << endl;
+					return;
+				}
+			}
+		}
+		if (!update) {
+			break;
+		}
+	}
+	rep(i,0,V)
+	{
+		if (d[i] == INF) {
+			cout << "INF" << endl;
+		} else {
+			cout << d[i] << endl;
+		}
+	}
+}
+
+int dijkstra() {
+	//edge???from, to, cost?????????(??????????????????)
+	//g?????£??\?????????vector<edge> g[MAXV]
+	//d[MAXV]?????????????????§??????????????¢
+	//pair<Distance, Vertex> P???<?§????????????????????????¢,????????????>
+	//typedef??????P(0,start)??¨??????????????????????????????
+
+	//??¢?????´?????????
+	//d????????????INF??§fill
+	//d[start]=0 ?§????????????¢???0???
+	//while(!que.empty())??§?????\???????????????????????§?????????
+	//que.top()??§??????????????????v???????????????, pop()???????????????
+	//v?????????????????????e???????????????????????´??°
+	//if(d[e.to] > d[e.from] + e.cost) ????????´??°
+	//	d[e.to] = d[e.from] + e.cost
+	//	que.push(P(d[e.to], e.to);
+
+	fill(d, d + MAXV, INF);
+	priority_queue<P, vector<P>, greater<P> > que;
+	d[r] = 0;
+	que.push(P(0, r));
+	while (!que.empty()) {
+		P p = que.top();
+		que.pop();
+		int v = p.second;
+		for (size_t i = 0; i < graph[v].size(); ++i) {
+			edge e = graph[v][i];
+			if (d[e.to] > d[e.from] + e.cost) {
+				d[e.to] = d[e.from] + e.cost;
+				que.push(P(d[e.to], e.to));
+			}
+		}
+	}
+	for (int i = 0; i < V; ++i) {
+		if (d[i] == INF) {
+			cout << "INF" << endl;
+		} else {
+			cout << d[i] << endl;
+		}
+	}
+	return 0;
+}
+
+void solve() {
+	cin >> V >> E >> r;
+	rep(i,0,E)
+	{
+		int s, t, d;
+		cin >> s >> t >> d;
+		edge e = edge(s, t, d);
+		graph[s].push_back(e);
+		edges[i] = e;
+	}
+//	dijkstra();
+	bellmanford();
+}
+
+int main() {
+	solve();
+	return 0;
+}

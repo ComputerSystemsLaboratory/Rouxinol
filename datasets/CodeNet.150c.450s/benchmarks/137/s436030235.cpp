@@ -1,0 +1,30 @@
+#include <iostream>
+#include <unordered_set>
+#include <string>
+
+using namespace std;
+
+int main() {
+	string cmd; // while ????????´??§??????????????????????????°???????????¨??????
+	int order;
+	string str;
+	unordered_set<string> dict;
+
+	cin >> order;
+
+	for (int i=0;i<order;i++) {
+		cin >> cmd;
+		if (cmd == "insert") {
+			cin >> str;
+			dict.insert(str);
+		
+		} else if (cmd == "find") {
+			cin >> str;
+			if(dict.count(str) > 0) {
+				cout << "yes" << endl;
+			} else {
+				cout << "no" << endl;
+			}
+		}
+	}
+}

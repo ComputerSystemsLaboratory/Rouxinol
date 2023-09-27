@@ -1,0 +1,2 @@
+#include<iostream>
+typedef float f;f a,b,c,d,h,i,e,g;f r(f k,f l,f m,f n){m-=k;n-=l;k=e-k;l=g-l;return m*l-n*k?m*l-n*k>0?1:-1:0;}int main(){for(;!(std::cin>>a>>b>>c>>d>>h>>i>>e>>g).eof();)puts(r(a,b,c,d)==r(c,d,h,i)&&r(a,b,c,d)==r(h,i,a,b)?"YES":"NO");}

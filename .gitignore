@@ -162,6 +162,6 @@ cython_debug/
 # Rouxinol
 results/
 datasets/*
-!datasets/CodeNet.64c.300s
+!datasets/CodeNet.150c.450s
 !datasets/Sample
 

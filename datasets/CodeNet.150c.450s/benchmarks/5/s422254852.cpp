@@ -1,0 +1,14 @@
+#include <bits/stdc++.h>
+#define rep(i,a,b) for (int i = (a); i < (b); i++)
+#define REP(i,n) rep(i,0,n)
+using namespace std;
+
+int main()
+{
+    int n;
+    cin>>n;
+    int a[n];
+    REP(i,n)cin>>a[i];
+    for(int i=n-1;i>0;i--)cout<<a[i]<<" ";
+    cout<<a[0]<<endl;
+}

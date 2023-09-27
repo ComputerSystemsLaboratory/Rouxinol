@@ -1,0 +1,2 @@
+#include <stdio.h>
+int main() {int N;double x1,x2,x3,x4,y1,y2,y3,y4;scanf("%d",&N);while (N--) {scanf("%lf %lf %lf %lf %lf %lf %lf %lf",&x1,&y1,&x2,&y2,&x3,&y3,&x4,&y4);double A1=y2-y1,A2=y4-y3,B1=x1-x2,B2=x3-x4;if (A1*B2==A2*B1) puts("YES"); else puts("NO");}return 0;}

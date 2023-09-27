@@ -1,0 +1,42 @@
+#include <stdio.h>
+
+
+// ?????\???????§???????
+typedef struct {
+    char name[11];
+    int time;
+} Queue;
+
+
+int main()
+{
+    //??\???
+    int n, q;
+    scanf("%d%d", &n, &q);
+
+    int size = 2 * n; //?????\???????????????
+    Queue Queue[size];
+    int pre = 0, rear = 0, cnt = 0; //pre:enqueue, rear:inqueue, cnt:????????????
+    for( rear = 0; rear < n; ++rear )
+        scanf("%s %d", Queue[rear].name, &Queue[rear].time);
+
+
+    //????????¨??????
+    while( pre != rear ){
+        if( Queue[pre].time <= q ){ // if( Queue[pre].time == q ){ inqueue????????? }
+            cnt += Queue[pre].time;
+            printf("%s %d\n", Queue[pre].name, cnt);
+        } else {
+            cnt += q;
+            Queue[pre].time -= q;
+            Queue[rear] = Queue[pre]; //inqueue
+            rear = (rear + 1) % size; //?¬????inqueue???
+        }
+
+        //?¬????dequeue???
+        pre = (pre + 1) % size;
+    }
+
+
+    return 0;
+}

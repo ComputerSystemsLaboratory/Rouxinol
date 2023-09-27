@@ -1,0 +1,30 @@
+#include<iostream>
+#include<cmath>
+#include<string>
+#include<cstdlib>
+#include<stdio.h>
+#include<cctype>
+#include<algorithm>
+#include<string.h>
+#include<iomanip>
+using namespace std;
+int main()
+{
+	string a,b;
+	int c=0,d=0,n;//c??????a???d??????b
+	cin>>n;
+	for(int i=0;i<n;i++)
+	{
+		cin>>a>>b;
+		if(a>b)//????????¬????°±??????????????????
+			c=c+3;
+		if(a==b)
+			{
+				c++;
+				d++;}
+		if(a<b)
+			d=d+3;
+	}
+	cout<<c<<" "<<d<<endl;
+}
+	

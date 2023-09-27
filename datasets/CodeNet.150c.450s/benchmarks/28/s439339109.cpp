@@ -1,0 +1,57 @@
+#include<iostream>
+#include<cstdio>
+using namespace std;
+
+void show( long long arr[], long long size )
+{
+	cout<<arr[0]<<flush;
+	for( int i=1; i<size; i++ ){
+		cout<<' '<<arr[i]<<endl;
+	}
+	cout<<endl;
+}
+/////////////////////////////////////////////////////////////////
+
+int check( long long maxcarry, int w[],int w_size, int t ){
+	int w_i=0;
+	for( int t_j=0; t_j<t; t_j++ ){
+		long long sum=0;
+		for( ; sum + w[w_i] <=maxcarry ; w_i++ ){
+			sum +=w[w_i];
+			if( w_i == w_size ) {
+				return w_size;
+			}
+		}
+	}
+	return w_i;
+}
+
+long long solve( int w[], int w_size, int t ){
+
+	long long maxcarry_front =0, maxcarry_back =100000*10000, maxcarry_center;
+	while( maxcarry_back - maxcarry_front > 1 ){
+		maxcarry_center= (maxcarry_front+maxcarry_back) /2;
+		int canCarry= check(maxcarry_center, w, w_size, t);
+		if( canCarry >= w_size ) {
+//			printf("?????§?????????(%d )???????????????????????????????????°( %d ) >= ???????????°( %d )\n", maxcarry_center, canCarry, w_size);
+
+			maxcarry_back= maxcarry_center;
+		}else{
+//			printf("?????§?????????(%d )???????????????????????????????????°( %d )??? ???????????°( %d )??????????°???????!\n", maxcarry_center, canCarry, w_size);
+
+			maxcarry_front=maxcarry_center;
+		}
+	}
+	return maxcarry_back;
+}
+
+
+int main()
+{
+	int w_size, t;
+	cin>>w_size>>t;
+	int *w=new int[w_size];
+	for( int i=0; i<w_size; i++ ) cin>>w[i];
+
+	cout<<solve(w, w_size, t)<<endl;
+}

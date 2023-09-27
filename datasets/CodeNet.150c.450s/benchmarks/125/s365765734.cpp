@@ -1,0 +1,55 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<cstdio>
+
+bool table[102][102] = {};
+int color[102] = {}; //0:?????¢?´¢???1:?¨??????????, 2:??¢?´¢??????
+int n, counter = 0;
+int t_visit[102] = {};
+int t_finish[102] = {};
+
+void DFS(int y) {
+	
+	for (int j = 0; j <= n - 1;j++) {
+
+		//?¨????or??¢?´¢???????????£???????????????
+		if ((table[y][j] == 1)&&(color[j] == 0)) {
+			color[y] = 1; //?¨???????????????????
+			if (t_visit[y] == 0) t_visit[y] = ++counter;
+			DFS(j);
+		}
+
+	}
+
+	color[y] = 2; //??¢?´¢???????????????
+	if (t_visit[y] == 0) t_visit[y] = ++counter;
+	if (t_finish[y] == 0) t_finish[y] = ++counter;
+	
+}
+
+int main(void) {
+	int u, k, s;
+
+	scanf("%d", &n);
+
+	for (int i = 0;i <= n - 1;i++) {
+		scanf("%d %d", &u, &k);
+		for (int j = 0;j <= k - 1;j++) {
+			scanf("%d", &s);
+			table[u - 1][s - 1] = 1;
+		}
+	}
+
+
+	for (int i = 0;i <= n - 1;i++) {
+		if (color[i] == 0) {
+			DFS(i);
+		}
+	}
+
+
+	for (int i = 0; i <= n - 1;i++) {
+		printf("%d %d %d\n", i + 1, t_visit[i], t_finish[i]);
+	}
+
+	return 0;
+}

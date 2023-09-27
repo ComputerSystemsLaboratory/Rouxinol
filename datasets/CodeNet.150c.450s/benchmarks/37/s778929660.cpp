@@ -1,0 +1,2 @@
+#include<iostream>
+int main(){for(float a,b,c,d,e,f,x,y;;){std::cin>>a>>b>>c>>d>>e>>f;if(std::cin.eof())break;d&&b*d-a*e?(x=f/d-e*(c*d-a*f)/(b*d-a*e)/d,y=b?c/b-a*x/b:f/e-d*x/e):(y=(c*d-a*f)/(b*d-a*e),x=a?c/a-b*y/a:f/d-e*y/d);printf("%.3f %.3f\n",x,y);}}

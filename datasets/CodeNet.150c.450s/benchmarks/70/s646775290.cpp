@@ -1,0 +1,2 @@
+#include <stdio.h>
+int main() {char *ans[7]={"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"};int i,j,today[12]={4,0,1,4,6,2,4,0,3,5,1,3};while (1) {scanf("%d %d",&i,&j);if (!i && !j) return 0;puts(ans[(today[i-1]+j-1)%7]);}return 0;}

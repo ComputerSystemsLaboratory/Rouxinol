@@ -1,0 +1,49 @@
+#include<iostream>
+
+using namespace std;
+
+int main(void){
+
+    int n, i, j, k, l;
+
+    cin >> n;
+
+    int b[n], f[n], r[n], v[n]; 
+
+    for(i = 0;i < n;i++){
+
+        cin >> b[i] >> f[i] >> r[i] >> v[i];
+
+    }//??\?±??????±?????\?????????
+
+    int N[4][3][10] = {0};
+
+    for(i = 0;i < n;i++){
+
+        N[b[i] - 1][f[i] - 1][r[i] - 1] =  N[b[i] - 1][f[i] - 1][r[i] - 1] + v[i];
+
+    }//??¨??\?±??????±????????£?????????????????¨?±?????????°????????????
+
+    for(k = 0;k < 4;k++){
+
+        for(j = 0;j < 3;j++){
+
+            for(i = 0;i < 10;i++){
+
+                cout << ' ' << N[k][j][i];
+
+            }
+
+            cout << endl;
+
+        }
+
+        if(k != 3)for(l = 0;l < 20;l++){cout << '#';};
+
+        if(k != 3) cout << endl;
+
+    }
+
+return 0;
+
+}

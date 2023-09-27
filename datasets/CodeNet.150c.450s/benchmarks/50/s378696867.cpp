@@ -1,0 +1,39 @@
+#include<stdio.h>
+int main()
+{
+  int y,ama,cou=0;
+  while(1){
+    cou=0;
+    scanf("%d",&y);
+    if(y==0){
+      break;
+    }
+    ama=1000-y;
+    if(ama>=500){
+      cou+=ama/500;
+      ama=ama%500;
+    }
+    if(ama>=100){
+      cou+=ama/100;
+      ama=ama%100;
+    }
+    if(ama>=50){
+      cou+=ama/50;
+      ama=ama%50;
+    }
+    if(ama>=10){
+      cou+=ama/10;
+      ama=ama%10;
+    }
+    if(ama>=5){
+      cou+=ama/5;
+      ama=ama%5;
+    }
+    if(ama>=1){
+      cou+=ama/1;
+      ama=ama%1;
+    }
+    printf("%d\n",cou);
+  }
+  return 0;
+}

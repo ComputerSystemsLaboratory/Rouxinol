@@ -1,0 +1,68 @@
+#include <iostream>
+#include <vector>
+
+const int Max_N = 101; // 3 <= N <= 100
+const int Max_ans = 21; // 0 <= answer <= 20
+bool memo[Max_N][Max_ans]; // memo for dp
+long long int dp[Max_N][Max_ans] = {0};
+std::vector<int> seq;
+
+// memo[0][seq[0]] = true;
+// memo[i][j] : caliculated up to i+1 and the num of result is j
+void format(){
+	for(u_int i = 0; i < Max_N; ++i){
+		for(u_int j = 0; j < Max_ans; ++j){
+			memo[i][j] = false;
+			dp[i][j] = 0;
+		}
+	}
+	memo[0][seq[0]] = true;
+	dp[0][seq[0]] = 1;
+}
+/*
+term - 1 ?????§????????????num??§???????????°???= term - 2?????§????????????num - seq[num - 1]??§???????????°???+???term - 2?????§????????????num + seq[num - 1]??§???????????°
+*/
+long long int calcEq(int term, int num){ // term-1?????§????????????number(term)??§???????????°?????????
+	if(num < 0 || num > 20){
+		return 0;
+	}
+	else if(term == 3){
+		int count = 0;
+		if(seq[0] + seq[1] == num){
+			count += 1;
+		}
+		if(seq[0] - seq[1] == num){
+			count += 1;
+		}
+		memo[1][num] = true;
+		dp[1][num] = count;
+		return dp[1][num];
+	}
+	else{ //?¨???????????????????????????????????????´???
+		if(!memo[term - 2][num]){
+			//dp[term - 2][num] = dp[term - 3][num - seq[num - 1]] + dp[term - 3][num + seq[num - 1]];
+			dp[term - 2][num] = calcEq(term - 1, num - seq[term - 2]) + calcEq(term - 1, num + seq[term - 2]);
+			memo[term - 2][num] = true;
+		}
+		return dp[term - 2][num];
+	}
+}
+   
+int main(void) {
+    u_int N;    // the number of integer
+    
+	// input
+    std::cin >> N;
+    seq.reserve(N);
+    for (u_int i = 0; i < N; ++i) {
+        u_int tmp;
+        std::cin >> tmp;
+        seq.push_back(tmp);
+    }
+    
+	// bounding condition
+	format();
+    // solve by dp
+    std::cout << calcEq(N, seq[N - 1]) << std::endl;
+    return 0;
+}

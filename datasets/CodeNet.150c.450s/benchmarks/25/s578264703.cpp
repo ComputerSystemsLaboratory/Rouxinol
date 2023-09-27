@@ -1,0 +1,26 @@
+#include <iostream>
+using namespace std;
+ 
+int main(){
+ 
+    int a[26]={0},i=0;
+    char s;
+ 
+    while(i<1200&& cin >> s)
+    {
+               if('a'<=s && s<='z'){
+            a[s-'a']++;
+        }
+        else if('A'<=s && s<='Z'){
+            a[s-'A']++;
+        }
+ i++;
+    }
+ 
+    for(int i=0; i<26; i++){
+        cout << (char)(i+'a') << " : " << a[i] << endl; 
+  
+       	 
+   }
+   return 0;
+}

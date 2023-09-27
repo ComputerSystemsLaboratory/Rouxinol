@@ -1,0 +1,22 @@
+#include<bits/stdc++.h>
+#include<vector>
+#include<list>
+#include<stack>
+#include<queue>
+#include<algorithm>
+using namespace std;
+
+//????°?????????\???????????§back?????????????????????
+int main() {
+    int n;
+    list<int> l={0};
+    while (scanf("%d",&n)!=EOF) {
+        if (n==0) {
+            printf("%d\n",l.front());
+            l.pop_front();
+        } else {
+            l.push_front(n);
+        }
+    }
+    return 0;
+}

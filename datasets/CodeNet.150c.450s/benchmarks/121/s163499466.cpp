@@ -1,0 +1,73 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#include<queue>
+#include<stack>
+using namespace std;
+
+const int MAX_H = 100, MAX_W = 100;
+const int INF = 10000;
+int H, W;
+char a[MAX_H][MAX_W + 1];//????????¨???
+int memo[MAX_H][MAX_W];
+int dx[4] = { 1,0,-1,0 };
+int dy[4] = { 0,1,0,-1 };
+
+//solve()
+//????????¢???????¶?????????????????????¢??°
+void dfs(int y, int x) {
+	memo[y][x] = INF;
+	char c = a[y][x];
+	a[y][x] = 'a';
+	for (int i = 0; i < 4; i++) {
+		int nx = x + dx[i];
+		int ny = y + dy[i];
+		if (memo[ny][nx] == 0 && 0 <= nx && nx < W && 0 <= ny && ny < H && a[ny][nx] == c)dfs(ny, nx);
+	}
+}
+
+
+
+
+void solve() {
+	//??????????????¢????????£?¶??????????????????????????????¨????¨?????????°????????????	
+	//memset(memo, 0, sizeof(memo));
+	for (int y = 0; y < H; y++) {
+		for (int x = 0; x < W; x++) {
+			memo[y][x] = 0;
+		}
+	}
+
+	int counter = 0;
+	for (int y = 0; y < H; y++) {
+		for (int x = 0; x < W; x++) {
+			if (a[y][x] == '#' || a[y][x] == '*' || a[y][x] == '@') {
+				counter++;
+				dfs(y, x);
+			}
+		}
+	}
+
+	cout << counter << endl;
+}
+
+
+
+
+
+
+
+int main()
+{
+	while(true) {
+		cin >> H >> W;
+		if (H == 0 && W == 0)break;
+		for (int y = 0; y < H; y++) {
+			for (int x = 0; x < W; x++) {
+				cin >> a[y][x];
+			}
+		}
+		solve();
+	}
+	return 0;
+}

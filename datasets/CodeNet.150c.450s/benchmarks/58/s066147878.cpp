@@ -1,0 +1,33 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+	vector<int> sta;	// stack<int> sta; ??§??????	????????????push_back()???????????????push()??? pop_back()???????????????pop()?????????
+	char c;
+	while (cin >> c) {
+		if (isdigit(c)) {
+			int a;
+			cin.putback(c);
+			cin >> a;
+			sta.push_back(a);
+		}
+		else {
+			int a = sta.back(); sta.pop_back();
+			int b = sta.back(); sta.pop_back();
+			switch (c) {
+			case '+':
+				sta.push_back(b + a);
+				break;
+			case '-':
+				sta.push_back(b - a);
+				break;
+			case '*':
+				sta.push_back(b * a);
+				break;
+			}
+		}
+	}
+	cout << sta[0] << endl;
+	return 0;
+}
