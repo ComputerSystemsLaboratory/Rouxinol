@@ -1,2 +1,0 @@
-#include <stdio.h>
-int main() {int A[4],B[4],C[10],i,j;while (scanf("%d %d %d %d %d %d %d %d",&A[0],&A[1],&A[2],&A[3],&B[0],&B[1],&B[2],&B[3])!=EOF) {for (i=0,j=0;i<4;i++) if (A[i]==B[i]) j++;for (i=0;i<10;C[i++]=0);for (i=0;i<4;i++) C[A[i]]++;int k=-j;for (i=0;i<4;i++) if (C[B[i]]>0) k++,C[B[i]]--;printf("%d %d\n",j,k);} return 0;}

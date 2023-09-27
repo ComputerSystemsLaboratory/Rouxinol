@@ -1,2 +1,0 @@
-#include <stdio.h>
-int main() {int RideBack[605];int i,j;for (i=0;i<600;RideBack[i]=i*i,i++);while (scanf("%d",&i)!=EOF) {int ans=0;for (j=0;j<600;j+=i) ans+=RideBack[j]*i;printf("%d\n",ans);}return 0;}
