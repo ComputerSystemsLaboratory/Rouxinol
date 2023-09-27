@@ -49,7 +49,7 @@ You need the following packages.
 The repository has the following organization.
 ```bash
 |-- datasets "The datasets"
-    |-- CodeNet.64c.300s*. "A small parte of the CodeNet Project."
+    |-- CodeNet.150c.450s. "A small parte of the CodeNet Project."
     |-- Sample "A dataset for testing"
 |-- docs "Rouxinol documentation"
 |-- examples "How to use Rouxinol"
