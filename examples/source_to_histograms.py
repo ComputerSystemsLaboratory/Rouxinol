@@ -15,13 +15,7 @@ limitations under the License.
 """
 
 """
-Thaís Damásio, Michael Canesche, Vinícius Pacheco, Marcus
-Botacin, Anderson Faustino da Silva, and Fernando M. Quintão
-Pereira. 2023. A Game-Based Framework to Compare Program
-Classifiers and Evaders. In Proceedings of the 21st ACM/IEEE
-International Symposium on Code Generation and Optimization
-(CGO 2023). Association for Computing Machinery, New York, NY,
-USA, 108–121. https://doi.org/10.1145/3579990.3580012
+Generate histograms
 """
 
 #
@@ -52,7 +46,6 @@ def filename_type(filename: str) -> Tuple:
 
 def samples_to_rep(args: Tuple) -> List:
     (
-        label,
         X_samples,
         y_samples,
         transformer,
@@ -68,8 +61,6 @@ def samples_to_rep(args: Tuple) -> List:
     compiler_level = flags["level"]
     obfuscation_flags = flags["obfuscation"]
  
-    representation_list = []
-
     for idx, X_sample in enumerate(X_samples):
         filename, ftype = filename_type(X_sample)
         y_sample = y_samples[idx]
@@ -77,9 +68,9 @@ def samples_to_rep(args: Tuple) -> List:
         comp_flags = flags["c_flags"] if ftype == "c" else flags["cxx_flags"]
         compiler_flags = f"{compiler_level} {comp_flags} {obfuscation_flags}"
         
-        ir_dir = os.path.join(output_directory, label, "ir", str(y_sample))
-        exec_dir = os.path.join(output_directory, label, "exec", str(y_sample))
-        rep_dir = os.path.join(output_directory, label, "rep", str(y_sample))
+        ir_dir = os.path.join(output_directory, "ir", str(y_sample))
+        exec_dir = os.path.join(output_directory, "exec", str(y_sample))
+        rep_dir = os.path.join(output_directory, "rep", str(y_sample))
 
         os.makedirs(ir_dir, exist_ok=True)
         os.makedirs(exec_dir, exist_ok=True)
@@ -111,10 +102,6 @@ def samples_to_rep(args: Tuple) -> List:
             with open(os.path.join(rep_dir, f"{filename}.yl"), "w") as fout:
                 yl.dump(representation, fout, default_flow_style=False)
 
-        representation_list.append(representation)
-
-    return representation_list
-
 
 def play_game(config: dataclass) -> None:
     """Play a game."""
@@ -130,6 +117,12 @@ def play_game(config: dataclass) -> None:
                                                         config.dataset["validation_size"]
                                                     )
 
+    X_train.extend(X_test)
+    y_train.extend(y_test)
+    if X_val:
+        X_train.extend(X_val)
+        y_train.extend(y_val)
+
     ### The transformer
     transformer = {
         "llvm_histogram": T.LLVMHistogram,
@@ -144,7 +137,6 @@ def play_game(config: dataclass) -> None:
     ### Extract the representation
     # Train data
     args = (
-        "train",
         X_train,
         y_train,
         transformer,
@@ -156,50 +148,7 @@ def play_game(config: dataclass) -> None:
         config.dataset["input_output"],
         config.dataset["input_data"]
     )
-    X_train = samples_to_rep(args)
-
-    # Test data
-    args = (
-        "test",
-        X_test,
-        y_test,
-        transformer,
-        env,
-        config.compiler_flags["test"],
-        config.output_absolute_path,
-        is_cfggrind_histogram,
-        config.representation["cfggrind"],
-        config.dataset["input_output"],
-        config.dataset["input_data"]
-    )
-    X_test = samples_to_rep(args)
-
-    ### Run the model
-    # Prepare the data
-    data_train, data_test, _, num_types, max_val_type = dataset.preprocess_histograms(
-                                                            X_train,
-                                                            y_train,
-                                                            X_test,
-                                                            y_test,
-                                                            min_max_scaler=config.dataset["min_max_scaler"]
-                                                        )
-
-    # The model
-    models = {
-        "rf": S.RandomForestModel,
-        "lr": S.LogisticRegressionModel,
-        "mlp": S.MultiLayerPerceptronModel,
-        "knn": S.KNeighborsModel,
-        "svm": S.SupportVectorMachineModel,
-        "lstm": S.TfLSTMModel
-    }
-    model = models[config.model["type"]]
-    model_ = model(num_types=max_val_type)
-
-    # Run
-    train_summary = model_.train(data_train, data_test)
-    acc, _ = model_.predict(data_test)
-    print("\n\nAccuracy:", acc, "\n\n")
+    samples_to_rep(args)
 
 
 def main(argv):

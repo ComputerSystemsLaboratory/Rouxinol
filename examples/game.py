@@ -62,12 +62,9 @@ def samples_to_rep(args: Tuple) -> List:
         is_cfggrind_histogram,
         cfggrind_representation,
         dataset_input_output,
-        dataset_input_data,
-        dataset_input_type
+        dataset_input_data
     ) = args
 
-
-    print(output_directory)
     compiler_level = flags["level"]
     obfuscation_flags = flags["obfuscation"]
  
@@ -79,47 +76,39 @@ def samples_to_rep(args: Tuple) -> List:
 
         comp_flags = flags["c_flags"] if ftype == "c" else flags["cxx_flags"]
         compiler_flags = f"{compiler_level} {comp_flags} {obfuscation_flags}"
+        
+        ir_dir = os.path.join(output_directory, label, "ir", str(y_sample))
+        exec_dir = os.path.join(output_directory, label, "exec", str(y_sample))
+        rep_dir = os.path.join(output_directory, label, "rep", str(y_sample))
+
+        os.makedirs(ir_dir, exist_ok=True)
+        os.makedirs(exec_dir, exist_ok=True)
+        os.makedirs(rep_dir, exist_ok=True)
 
         ir_filename = environment.src_to_ir(
                         X_sample,
                         compiler_flags,
-                        output_directory=os.path.join(output_directory, label, "ir", str(y_sample))
+                        ir_directory=ir_dir
                         )
-
-        out_dir = os.path.join(output_directory, label, "rep", str(y_sample))
-        os.makedirs(out_dir, exist_ok=True)
-
         if is_cfggrind_histogram:
-            exec_filename = environment.ir_to_exec(
+            input_data = f"< {dataset_input_output}/{y_sample}/{dataset_input_data}"
+            static, dynamic = transformer.from_ir(
                                 ir_filename,
-                                "",
-                                output_directory=os.path.join(output_directory, label, "exec", str(y_sample))
+                                flags=compiler_flags,
+                                input_data=input_data,
+                                exec_directory=exec_dir,
+                                env=environment
                             )
-
-            if dataset_input_type == "stdin":
-                input_ = f"< {dataset_input_output}/{y_sample}/{dataset_input_data}"
-            else:
-                input_ = dataset_input_data
-
-            static, dynamic = transformer.from_exec(
-                                exec_filename,
-                                input_data=input_
-                            )
-
-            with open(os.path.join(out_dir, f"{filename}_static.yl"), "w") as fout:
+            with open(os.path.join(rep_dir, f"{filename}_static.yl"), "w") as fout:
                 yl.dump(static, fout, default_flow_style=False)
-
-            with open(os.path.join(out_dir, f"{filename}_dynamic.yl"), "w") as fout:
+            with open(os.path.join(rep_dir, f"{filename}_dynamic.yl"), "w") as fout:
                 yl.dump(dynamic, fout, default_flow_style=False)
-
             representation = static if cfggrind_representation == "static" else dynamic
-
         else:
             representation = transformer.from_ir(
                                 ir_filename
                             )
-
-            with open(os.path.join(out_dir, f"{filename}.yl"), "w") as fout:
+            with open(os.path.join(rep_dir, f"{filename}.yl"), "w") as fout:
                 yl.dump(representation, fout, default_flow_style=False)
 
         representation_list.append(representation)
@@ -165,8 +154,7 @@ def play_game(config: dataclass) -> None:
         is_cfggrind_histogram,
         config.representation["cfggrind"],
         config.dataset["input_output"],
-        config.dataset["input_data"],
-        config.dataset["input_type"]
+        config.dataset["input_data"]
     )
     X_train = samples_to_rep(args)
 
@@ -182,32 +170,19 @@ def play_game(config: dataclass) -> None:
         is_cfggrind_histogram,
         config.representation["cfggrind"],
         config.dataset["input_output"],
-        config.dataset["input_data"],
-        config.dataset["input_type"]
+        config.dataset["input_data"]
     )
     X_test = samples_to_rep(args)
 
-    # Validattion data
-    if X_val:
-        args = (
-            "val",
-            X_val,
-            y_val,
-            transformer,
-            env,
-            config.compiler_flags["test"],
-            config.output_absolute_path,
-            is_cfggrind_histogram,
-            config.representation["cfggrind"],
-            config.dataset["input_output"],
-            config.dataset["input_data"],
-            config.dataset["input_type"]
-        )
-        X_val = samples_ro_rep(args)
-
     ### Run the model
     # Prepare the data
-    data_train, data_test, data_val, num_types, max_val_type = dataset.preprocess_histograms(X_train, y_train, X_test, y_test, X_val, y_val)
+    data_train, data_test, _, num_types, max_val_type = dataset.preprocess_histograms(
+                                                            X_train,
+                                                            y_train,
+                                                            X_test,
+                                                            y_test,
+                                                            min_max_scaler=config.dataset["min_max_scaler"]
+                                                        )
 
     # The model
     models = {

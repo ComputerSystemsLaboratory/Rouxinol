@@ -1,13 +1,13 @@
 # Dataset Directory
 #
 dataset:
-  benchmarks: /home/anderson/Rouxinol/datasets/CodeNet.ollvm.44c.350s.2/benchmarks
-  input_output: /home/anderson/Rouxinol/datasets/CodeNet.ollvm.44c.350s.2/input_output
+  benchmarks: /home/anderson/Rouxinol/datasets/Sample/benchmarks
+  input_output: /home/anderson/Rouxinol/datasets/Sample/input_output
   input_data: input.txt
   input_type: stdin
-  classes: 32
   test_size: 0.2
   validation_size: 0.0
+  min_max_scaler: True
 
 # Environment
 #
@@ -22,20 +22,18 @@ environment:
 
 # Compiler flags
 #
-# --std=c++11 --std=c++14 (CodeNet + clang-10)
-#
 compiler_flags:
   train:
     level: -O0
     c_flags: -w
-    cxx_flags: -w
+    cxx_flags: -w --std=c++11 --std=c++14
     obfuscation: ""
     sequence: ""
   test:
     level: -O0
     c_flags: -w
-    cxx_flags: -w
-    obfuscation: ""     
+    cxx_flags: -w --std=c++11 --std=c++14
+    obfuscation: -mllvm -fla     
     sequence: ""
 
 # Representation
@@ -44,11 +42,11 @@ compiler_flags:
 #
 representation:
   type: cfggrind_histogram
-  cfggrind: static
+  cfggrind: dynamic
 
 # Results Directory
 #
-output_absolute_path: /home/anderson/Rouxinol/results/game0_cfggrind_static
+output_absolute_path: /home/anderson/Rouxinol/results/test
 
 # Model
 #
