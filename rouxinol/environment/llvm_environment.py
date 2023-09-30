@@ -57,8 +57,7 @@ class LLVMEnvironment(Environment):
 
         """The compiler."""
         compiler = os.path.join(self.config["absolute_path"], self.config["compiler"][file_type])
-        # -Xclang -disable-O0-optnone 
-        cmdline = f"{compiler} -S -c {flags} -emit-llvm {src_filename} -o {out_filename}"
+        cmdline = f"{compiler} -S -c -Xclang -disable-O0-optnone {flags} -emit-llvm {src_filename} -o {out_filename}"
 
         """Compile to IR."""
         try:
@@ -73,7 +72,7 @@ class LLVMEnvironment(Environment):
             logging.error(f"Source -> IR ({src_filename}).")
             return ""
 
-    def src_to_exec(self, src_filename: str, flags: str, *args, **kargs) -> str:
+    def src_to_exec(self, src_filename: str, flags: str, *args, **kwargs) -> str:
         """Generate an executable file.
 
         :param src_filename: The source code filename.
