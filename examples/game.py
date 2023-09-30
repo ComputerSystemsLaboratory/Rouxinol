@@ -94,7 +94,6 @@ def samples_to_rep(args: Tuple) -> List:
             input_data = f"< {dataset_input_output}/{y_sample}/{dataset_input_data}"
             static, dynamic = transformer.from_ir(
                                 ir_filename,
-                                flags=compiler_flags,
                                 input_data=input_data,
                                 exec_directory=exec_dir,
                                 env=environment
