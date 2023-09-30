@@ -105,7 +105,7 @@ class Dataset():
         nof_labels = len(labels)
         return (nof_labels*(nof_labels+1))/2 == sum(labels)
 
-    def split_dataset(self, num_classes: int, test_size: Optional[float]=0.2, validation_size: Optional[float]=0.0) -> Tuple[List, List, List, List, List, List]:
+    def _split_dataset(self, num_classes: int, test_size: float, validation_size: float, *args) -> Tuple[List, List, List, List, List, List]:
         """Split the dataset into train, test and validation subsets.
 
         :param num_classes: The number of classes.
@@ -132,7 +132,7 @@ class Dataset():
         labels = labels[:num_classes]
         for label in labels:
             label_path = os.path.join(self.dataset_path, str(label))
-            sources = self._multiple_file_types(label_path, "*.c", "*.cpp")
+            sources = self._multiple_file_types(label_path, *args)
             X.extend(sources)
             y.extend([label] * len(sources))
 
@@ -153,6 +153,12 @@ class Dataset():
             return (X_train, X_test, X_val, y_train, y_test, y_val)
         else:
             return (X_train, X_test, [], y_train, y_test, [])
+
+    def split_dataset(self, num_classes: int, test_size: Optional[float]=0.2, validation_size: Optional[float]=0.0) -> Tuple[List, List, List, List, List, List]:
+        return self._split_dataset(num_classes, test_size, validation_size, "*.c", "*.cpp")
+
+    def split_ir_dataset(self, num_classes: int, test_size: Optional[float]=0.2, validation_size: Optional[float]=0.0) -> Tuple[List, List, List, List, List, List]:
+        return self._split_dataset(num_classes, test_size, validation_size, "*.ll")
 
     def _histogram_to_list(self, samples: Dict, keys: List) -> List:
         """Transform a dict into a list.
