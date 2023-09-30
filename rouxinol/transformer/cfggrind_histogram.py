@@ -40,7 +40,7 @@ class CFGgrindHistogram(Transformer):
 
         :param flags: The compiler flags.
 
-        :output_directory: The out directory.
+        :exec_directory: The exec (output) directory.
 
         :env: The environment.
 
@@ -78,7 +78,7 @@ class CFGgrindHistogram(Transformer):
 
         :param flags: The compiler flags.
 
-        :output_directory: The out directory.
+        :exec_directory: The exzec (output) directory.
 
         :env: The environment.
 
