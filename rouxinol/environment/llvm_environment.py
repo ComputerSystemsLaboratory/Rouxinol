@@ -80,16 +80,16 @@ class LLVMEnvironment(Environment):
 
         :param flags: The compiler flags.
 
-        :output_directory: The out directory.
+        :exec_directory: The exec (output) directory.
 
         :return: The exec filename.
         """
 
         """Parameters"""
-        output_directory = kwargs["output_directory"] if "output_directory" in kwargs else ""
+        exec_directory = kwargs["exec_directory"] if "output_directory" in kwargs else ""
 
         """The out filename."""
-        _, file_type, out_filename = self._out_filename(src_filename, output_directory, "")
+        _, file_type, out_filename = self._out_filename(src_filename, exec_directory, "")
 
         """The compiler."""
         compiler = os.path.join(self.config["absolute_path"], self.config["compiler"][file_type])
@@ -115,16 +115,16 @@ class LLVMEnvironment(Environment):
 
         :param flags: The compiler flags.
 
-        :output_directory: The out directory.
+        :exec_directory: The exec (output) directory.
 
         :return: The ir filename.
         """
 
         """Parameters"""
-        ir_directory = kwargs["ir_directory"] if "ir_directory" in kwargs else ""
+        exec_directory = kwargs["exec_directory"] if "exec_directory" in kwargs else ""
 
         """The out filename."""
-        _, file_type, out_filename = self._out_filename(ir_filename, ir_directory, "")
+        _, file_type, out_filename = self._out_filename(ir_filename, exec_directory, "")
 
         """The compiler."""
         src_filename = linecache.getline(ir_filename, 2).replace("\n", "").replace('"', '')
@@ -154,7 +154,7 @@ class LLVMEnvironment(Environment):
 
         :param flags: The compiler flags.
 
-        :output_directory: The out directory.
+        :ir_directory: The ir (output) directory.
 
         :return: The ir filename.
         """

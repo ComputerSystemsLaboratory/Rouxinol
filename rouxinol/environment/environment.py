@@ -53,7 +53,7 @@ class Environment():
 
         :param flags: The compiler flags.
 
-        :output_directory: The out directory.
+        :ir_directory: The ir (output) directory.
 
         :return: The ir filename.
         """
@@ -66,7 +66,7 @@ class Environment():
 
         :param flags: The compiler flags.
 
-        :output_directory: The out directory.
+        :exec_directory: The exec (output) directory.
 
         :return: The exec filename.
         """
@@ -79,7 +79,7 @@ class Environment():
 
         :param flags: The compiler flags.
 
-        :output_directory: The out directory.
+        :exec_directory: The exec (output) directory.
 
         :return: The ir filename.
         """
@@ -92,7 +92,7 @@ class Environment():
 
         :param flags: The compiler flags.
 
-        :output_directory: The out directory.
+        :ir_directory: The ir (output) directory.
 
         :return: The ir filename.
         """
