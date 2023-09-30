@@ -85,7 +85,7 @@ class LLVMEnvironment(Environment):
         """
 
         """Parameters"""
-        exec_directory = kwargs["exec_directory"] if "output_directory" in kwargs else ""
+        exec_directory = kwargs["exec_directory"] if "exec_directory" in kwargs else ""
 
         """The out filename."""
         _, file_type, out_filename = self._out_filename(src_filename, exec_directory, "")
