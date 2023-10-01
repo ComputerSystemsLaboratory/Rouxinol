@@ -160,6 +160,9 @@ class Dataset():
     def split_ir_dataset(self, num_classes: int, test_size: Optional[float]=0.2, validation_size: Optional[float]=0.0) -> Tuple[List, List, List, List, List, List]:
         return self._split_dataset(num_classes, test_size, validation_size, "*.ll")
 
+    def split_rep_dataset(self, num_classes: int, test_size: Optional[float]=0.2, validation_size: Optional[float]=0.0) -> Tuple[List, List, List, List, List, List]:
+        return self._split_dataset(num_classes, test_size, validation_size, "*.yl")
+
     def _histogram_to_list(self, samples: Dict, keys: List) -> List:
         """Transform a dict into a list.
         
