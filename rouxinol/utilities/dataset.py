@@ -90,7 +90,7 @@ class Dataset():
         :return: True if the dataset is valid.
         """
         if not os.path.isabs(self.dataset_path):
-            logging.error(f"Not a absolute path. ({daaset_path})")
+            logging.error(f"Not a absolute path. ({self.dataset_path})")
             sys.exit(1)
 
         try:
