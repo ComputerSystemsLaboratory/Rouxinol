@@ -8,6 +8,7 @@ function install_system_packages {
   sudo apt update
   sudo apt install -y graphviz libgraphviz-dev
   sudo apt install -y gcc-7 g++-7
+  sudo apt install -y python3-pip
 }
 
 function install_cfggrind {
