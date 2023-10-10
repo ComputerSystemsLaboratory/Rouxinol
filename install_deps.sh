@@ -5,6 +5,7 @@ function install_system_packages {
   chmod +x llvm.sh
   sudo ./llvm.sh 12
   rm llvm.sh
+  sudo apt update
   sudo apt install -y graphviz libgraphviz-dev
   sudo apt install -y gcc-7 g++-7
 }
