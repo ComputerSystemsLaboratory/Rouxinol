@@ -17,10 +17,12 @@ install_requires = [
     "gitpython",
     "wget",
     "pygraphviz",
-    "ir2vec==2.1.1",
+    "ir2vec==2.1.0",
     "wget",
     "xgboost",
-    "pandas"
+    "pandas",
+    "absl-py",
+    "scikit-learn"
 ]
 tests_require = ["pytest", "pytest-cov"]
 
