@@ -5,7 +5,9 @@ set(compile_options_common
         # LLVM warnings
         -Wno-unused-parameter -Wno-tautological-overlap-compare -Wno-deprecated-copy -Wno-class-memaccess -Wno-maybe-uninitialized
         # Clang warnings
-        -Wno-comment -Wno-strict-aliasing)
+        -Wno-comment -Wno-strict-aliasing
+        # LLVM version
+        -DLLVM10=1)
 
 # Common library
 add_library(extractors_common

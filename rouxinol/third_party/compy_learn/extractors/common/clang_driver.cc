@@ -33,8 +33,13 @@ using namespace ::llvm;
 
 namespace compy {
 
-static void LLVMErrorHandler(void *UserData, /*const char* Message*/const std::string &Message,
+#ifdef LLVM10
+static void LLVMErrorHandler(void *UserData, const std::string &Message,
                              bool GenCrashDiag) {
+#else
+static void LLVMErrorHandler(void *UserData, const char* Message,
+                             bool GenCrashDiag) {
+#endif
   DiagnosticsEngine &Diags = *static_cast<DiagnosticsEngine *>(UserData);
 
   Diags.Report(diag::err_fe_error_backend) << Message;
