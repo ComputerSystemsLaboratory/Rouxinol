@@ -30,9 +30,7 @@ if (${SUPPORTS_FVISIBILITY_INLINES_HIDDEN_FLAG} EQUAL "1")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility-inlines-hidden")
 endif()
 
-#set(PROJECT_LIBRARY_DIR "/usr/local")
-set(PROJECT_LIBRARY_DIR ".")
-
+set(PROJECT_LIBRARY_DIR "/usr/local")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_LIBRARY_DIR}/lib")
 
 
