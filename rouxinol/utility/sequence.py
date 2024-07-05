@@ -539,10 +539,10 @@ def create_random_sequences(nof_sequences,
 
     while True:
         # generate a sequence
-        seq = create_random_sequence(passes,
-                                     minimum,
+        seq = create_random_sequence(minimum,
                                      maximum,
-                                     repetition)
+                                     repetition,
+                                     passes)
         seq = sanitize(seq)
 
         if ssa:
