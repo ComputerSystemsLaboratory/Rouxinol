@@ -24,7 +24,7 @@ import subprocess
 from absl import logging
 
 from rouxinol.utility import output_filename, execute_command_line
-from rouxinol.environment.environment import Environment
+from rouxinol.environment import Environment
 
 
 class LLVMEnvironment(Environment):

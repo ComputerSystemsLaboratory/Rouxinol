@@ -21,3 +21,24 @@ from .utils import (
     execute_command_line,
     multiple_file_types
 )
+
+from .sequence import (
+    update,
+    sanitize,
+    mem2reg_first,
+    index_pass_to_list,
+    index_pass_to_string,
+    remove_passes,
+    name_pass_to_string,
+    string_to_name_pass,
+    fix_index,
+    get_the_best,
+    get_all_best,
+    filter_sequences,
+    get_the_smallest,
+    exist,
+    create_random_sequence,
+    create_random_sequences,
+    split
+)
+
