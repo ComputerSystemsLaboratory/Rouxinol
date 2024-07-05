@@ -452,8 +452,8 @@ def create_random_sequence(minimum,
         A list of optimization (a sequence).
     """
     sequence = []
-    first_key = 1
-    last_key = len(passes)
+    first_key = 0
+    last_key = len(passes) - 1
     if minimum != maximum:
         real_length = rn.randint(minimum, maximum)
     else:
