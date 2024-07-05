@@ -75,3 +75,5 @@ from .inst2vec import Inst2Vec
 from .ir2vec import IR2Vec
 
 from .llvm_inst_count import LLVMInstCount
+
+from .milespost import Milepost
