@@ -23,7 +23,7 @@ from absl import logging
 
 from rouxinol.environment import Environment
 from rouxinol.transformer import Transformer
-
+from rouxinol.utility import execute_command_line
 
 class Milepost(Transformer):
     """Extract code representations.
