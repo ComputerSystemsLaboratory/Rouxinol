@@ -51,7 +51,9 @@ class Dataset(object):
             with tarfile.open(archive_file, "r:xz") as f:
                 f.extractall(self.dataset_dir)
 
-        os.remove(archive_file)
+        if os.path.exists(archive_file):
+            os.remove(archive_file)
+
         return self.content_dir
 
     def clone_git(

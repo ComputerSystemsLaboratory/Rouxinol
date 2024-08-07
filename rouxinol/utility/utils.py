@@ -19,6 +19,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 import os
 import sys
 import glob
+import time
 import subprocess
 import itertools as it
 
@@ -61,6 +62,7 @@ def execute_command_line(
 
     """Execute the command."""
     cmdline = cmdline if enable_stdin else f"{cmdline} {input_data}"
+    start = time.time()
     proc = subprocess.Popen(
                         cmdline,
                         stdin=subprocess.PIPE,
@@ -78,12 +80,13 @@ def execute_command_line(
             outs, errs = proc.communicate(
                                 timeout=timeout
                             )
-        return outs, errs
+        elapsed = time.time() - start
+        return outs, errs, elapsed
     except subprocess.TimeoutExpired:
         proc.kill()
-        return "error", "error"
+        return None, None, None
     except Exception:
-        return "error", "error"
+        return None, None, None
 
 def multiple_file_types(
     dir_path,

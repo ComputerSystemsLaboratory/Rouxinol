@@ -1,0 +1,36 @@
+name: rouxinol
+channels:
+  - pytorch
+  - defaults
+  - anaconda
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - python=3.10
+  - clang=10.0.0
+  - clangdev=10.0.0
+  - llvm=10.0.0
+  - llvm-tools=10.0.0
+  - llvmdev=10.0.0
+  - libclang=10.0.0
+  - libllvm10=10.0.0
+  - pip
+  - pip:
+    - absl-py
+    - appdirs
+    - dgl
+    - gitpython
+    - ir2vec==2.1.0
+    - networkx
+    - numpy
+    - pandas
+    - pytest
+    - pygraphviz
+    - pyaml
+    - torch
+    - typing-extensions
+    - scikit-learn
+    - sympy
+    - xgboost
+    - wget

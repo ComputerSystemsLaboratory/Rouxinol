@@ -91,21 +91,21 @@ class LLVMEnvironment(Environment):
         cmdline = f"{compiler} -S -c -Xclang -disable-O0-optnone {flags} -emit-llvm {src_filename} -o {out_filename}"
 
         """Compile to IR."""
-        _, errs = execute_command_line(
-                    cmdline,
-                    "",
-                    False,
-                    True,
-                    timeout
-                ) 
+        _, errs, elapsed = execute_command_line(
+                                cmdline,
+                                "",
+                                False,
+                                True,
+                                timeout
+        )
 
         if not errs:
-            return out_filename
+            return out_filename, elapsed
         else:
             logging.error(
                 f"Source -> IR ({src_filename})."
             )
-            return False
+            return None, None
 
     def src_to_exec(
         self,
@@ -159,21 +159,21 @@ class LLVMEnvironment(Environment):
         cmdline = f"{compiler} {flags} {src_filename} -o {out_filename} {libs} -lm"
 
         """Compile to exe."""
-        _, errs = execute_command_line(
-                    cmdline,
-                    "",
-                    False,
-                    True,
-                    timeout
-                ) 
+        _, errs, elapsed = execute_command_line(
+                                cmdline,
+                                "",
+                                False,
+                                True,
+                                timeout
+        ) 
 
         if not errs:
-            return out_filename
+            return out_filename, elapsed
         else:
             logging.error(
                 f"Source -> Exec ({src_filename})."
             )
-            return False
+            return None, None
 
     def ir_to_exec(
             self,
@@ -224,21 +224,21 @@ class LLVMEnvironment(Environment):
         if exec_directory:
             os.makedirs(exec_directory, exist_ok=True)
 
-        _, errs = execute_command_line(
-                        cmdline,
-                        "",
-                        False,
-                        True,
-                        timeout
-                    ) 
+        _, errs, elapsed = execute_command_line(
+                            cmdline,
+                            "",
+                            False,
+                            True,
+                            timeout
+        ) 
 
         if not errs:
-            return out_filename
+            return out_filename, elapsed
         else:
             logging.error(
                 f"IR -> Exec ({ir_filename})."
             )
-            return False
+            return None, None
 
     def optimize_ir(
             self,
@@ -288,21 +288,21 @@ class LLVMEnvironment(Environment):
         if ir_directory:
             os.makedirs(ir_directory, exist_ok=True)
 
-        _, errs = execute_command_line(
-                    cmdline,
-                    "",
-                    False,
-                    True,
-                    timeout
-                ) 
+        _, errs, elapsed = execute_command_line(
+                                cmdline,
+                                "",
+                                False,
+                                True,
+                                timeout
+        ) 
 
         if not errs:
-            return out_filename
+            return out_filename, elapsed
         else:
             logging.error(
                 f"IR -> IR ({ir_filename})."
             )
-            return False
+            return None, None
 
     def validate_output(
             self,
@@ -355,13 +355,14 @@ class LLVMEnvironment(Environment):
             return False
 
         """Execute the program."""
-        outs, _ = execute_command_line(
+        outs, _, _ = execute_command_line(
                         exec_filename,
                         input_data,
                         use_stdin,
                         False,
                         timeout
-                    ) 
+        )
+
         try:
             outs = outs.decode() if type(outs) == bytes else outs
             output_data = output_data.decode() if type(output_data) == bytes else output_data

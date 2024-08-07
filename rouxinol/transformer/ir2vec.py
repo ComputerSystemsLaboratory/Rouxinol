@@ -21,11 +21,8 @@ import ir2vec as i2v
 
 from absl import logging
 
-from rouxinol.environment import Environment
-from rouxinol.transformer import Transformer
 
-
-class IR2Vec(Transformer):
+class IR2Vec():
     """Extract code representations.
 
     Rouxinol invokes IR2Vec to extract the representation.
@@ -34,9 +31,13 @@ class IR2Vec(Transformer):
     """
 
     def __init__(
-        self
+        self,
+        builder=None
     ):
-        super().__init__()
+        super().__init__(
+                    builder,
+                    None
+                )
 
     def from_src(
         self,

@@ -23,5 +23,3 @@ from .support_vector_machine_model import SupportVectorMachineModel
 from .multi_layer_perceptron_model import MultiLayerPerceptronModel
 from .xgboost_model import XGBoostModel
 
-from .tf_lstm_model import TfLSTMModel
-from .tf_lstm_e_model import TfLSTMEModel

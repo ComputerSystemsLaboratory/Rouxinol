@@ -38,7 +38,6 @@ function install_python_packages {
   python3 -m pip install torch-spline-conv -f https://pytorch-geometric.com/whl/torch-${TORCH}+${CUDA}.html
   if [[ "$CUDA" != "cpu" ]]; then
     python3 -m pip install dgl -f https://data.dgl.ai/wheels/$CUDA/repo.html
-#    python3 -m pip install dglgo -f https://data.dgl.ai/wheels-test/repo.htm
     python3 -m pip install tensorflow
   else
     python3 -m pip install dgl

@@ -590,15 +590,16 @@ def create_random_sequences(nof_sequences,
 
 def expand(passes):
     """Expand the sequence.
-       LLVM adds several passes in the sequence.
+    
+    LLVM adds several passes in the sequence.
 
-       Example:
-       passes: -constprop
+    Example:
+    passes: -constprop
 
-       LLVM invokes: -targetlibinfo -tti -constprop -verify
+    LLVM invokes: -targetlibinfo -tti -constprop -verify
 
-       See:
-       opt --disable-output <sequence> --debug-pass=Arguments < /dev/null
+    See:
+    opt --disable-output <sequence> --debug-pass=Arguments < /dev/null
 
     Argument
     --------
@@ -612,22 +613,14 @@ def expand(passes):
     cmdline = 'opt --disable-output {}'.format(str_passes) \
               + ' --debug-pass=Arguments < /dev/null'
 
-    # Invoke the compiler
-    #try:
-    #    ret = subprocess.run(cmdline,
-    #                         shell=True,
-    #                         check=True,
-    #                         capture_output=True)
-    #except subprocess.CalledProcessError:
-    #    lg.warning('Expand: {}'.format(passes))
-    #    return ''
-
-    _, err = execute_command_line(cmdline,
-                                  '',
-                                  False,
-                                  True,
-                                  True,
-                                  20)
+    _, err, _ = execute_command_line(
+                    cmdline,
+                    '',
+                    False,
+                    True,
+                    True,
+                    20
+    )
 
     if err == "error":
         return ''

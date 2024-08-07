@@ -27,21 +27,23 @@ from absl import logging
 
 from appdirs import user_data_dir
 
-from rouxinol.environment import Environment
-from rouxinol.transformer import Transformer
-from rouxinol.third_party.inst2vec import llvm_ir_to_trainable
+from rouxinol.third_party.ncc import llvm_ir_to_trainable
 
 
-class Inst2Vec(Transformer):
+class Inst2Vec():
     """Extract code representations.
 
     - Inst2Vec
     """
 
     def __init__(
-        self
+        self,
+        builder
     ):
-        super().__init__()
+        super().__init__(
+                    builder,
+                    None
+                )
 
         app_dir = user_data_dir(appname="Rouxinol")
         self.vocabulary_dir = os.path.join(app_dir, "vocabulary")
