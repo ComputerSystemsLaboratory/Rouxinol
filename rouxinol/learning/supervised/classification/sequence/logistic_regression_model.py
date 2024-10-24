@@ -74,7 +74,7 @@ class LogisticRegressionModel(Model):
             l1_ratio=config["l1_ratio"]
         )
 
-    def _predict_with_data(
+    def predict_with_data(
         self,
         data
     ):

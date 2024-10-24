@@ -23,7 +23,7 @@ import subprocess
 
 from absl import logging
 
-from rouxinol.utility import output_filename, execute_command_line
+from rouxinol.utility import output_filename, run_command_unix
 from rouxinol.environment import Environment
 
 
@@ -88,24 +88,10 @@ class LLVMEnvironment(Environment):
 
         """The compiler."""
         compiler = os.path.join(self.config["absolute_path"], self.config["compiler"][file_type])
-        cmdline = f"{compiler} -S -c -Xclang -disable-O0-optnone {flags} -emit-llvm {src_filename} -o {out_filename}"
+        command = f"{compiler} -S -c -Xclang -disable-O0-optnone {flags} -emit-llvm {src_filename} -o {out_filename}"
 
         """Compile to IR."""
-        _, errs, elapsed = execute_command_line(
-                                cmdline,
-                                "",
-                                False,
-                                True,
-                                timeout
-        )
-
-        if not errs:
-            return out_filename, elapsed
-        else:
-            logging.error(
-                f"Source -> IR ({src_filename})."
-            )
-            return None, None
+        return out_filename, run_command_unix(command, timeout=timeout)
 
     def src_to_exec(
         self,
@@ -156,29 +142,15 @@ class LLVMEnvironment(Environment):
                         self.config["absolute_path"],
                         self.config["compiler"][file_type]
                     )
-        cmdline = f"{compiler} {flags} {src_filename} -o {out_filename} {libs} -lm"
+        command = f"{compiler} {flags} {src_filename} -o {out_filename} {libs} -lm"
 
         """Compile to exe."""
-        _, errs, elapsed = execute_command_line(
-                                cmdline,
-                                "",
-                                False,
-                                True,
-                                timeout
-        ) 
-
-        if not errs:
-            return out_filename, elapsed
-        else:
-            logging.error(
-                f"Source -> Exec ({src_filename})."
-            )
-            return None, None
+        return out_filename, run_command_unix(command, timeout=timeout)
 
     def ir_to_exec(
             self,
             ir_filename,
-            flags,
+            flags="",
             *args,
             **kwargs
     ):
@@ -218,27 +190,13 @@ class LLVMEnvironment(Environment):
         src_type = src_filename[idx+1:] if src_filename[idx+1:] == "c" else "cxx"
 
         compiler = os.path.join(self.config["absolute_path"], self.config["compiler"][src_type])
-        cmdline = f"{compiler} {flags} {ir_filename} -o {out_filename} {libs} -lm"
+        command = f"{compiler} {flags} {ir_filename} -o {out_filename} {libs} -lm"
 
         """Compile to exe."""
         if exec_directory:
             os.makedirs(exec_directory, exist_ok=True)
 
-        _, errs, elapsed = execute_command_line(
-                            cmdline,
-                            "",
-                            False,
-                            True,
-                            timeout
-        ) 
-
-        if not errs:
-            return out_filename, elapsed
-        else:
-            logging.error(
-                f"IR -> Exec ({ir_filename})."
-            )
-            return None, None
+        return out_filename, run_command_unix(command, timeout=timeout)
 
     def optimize_ir(
             self,
@@ -282,27 +240,13 @@ class LLVMEnvironment(Environment):
 
         """The optimizer."""
         optimizer = os.path.join(self.config["absolute_path"], self.config["optimizer"])
-        cmdline = f"{optimizer} {flags} {ir_filename} -o {out_filename}"
+        command = f"{optimizer} {flags} {ir_filename} -o {out_filename}"
 
         """Optimize."""
         if ir_directory:
             os.makedirs(ir_directory, exist_ok=True)
 
-        _, errs, elapsed = execute_command_line(
-                                cmdline,
-                                "",
-                                False,
-                                True,
-                                timeout
-        ) 
-
-        if not errs:
-            return out_filename, elapsed
-        else:
-            logging.error(
-                f"IR -> IR ({ir_filename})."
-            )
-            return None, None
+        return out_filename, run_command_unix(command, timeout=timeout)
 
     def validate_output(
             self,
@@ -330,7 +274,7 @@ class LLVMEnvironment(Environment):
         """Parameters"""
         input_data = kwargs["input_data"] if "input_data" in kwargs else ""
         output_data = kwargs["output_data"] if "output_data" in kwargs else ""
-        use_stdin = kwargs["use_stdin"] if "use_stdin" in kwargs else False
+        use_stdin = kwargs["use_stdin"] if "use_stdin" in kwargs else None
         timeout = kwargs["timeout"] if "timeout" in kwargs else None
         exec_directory = kwargs["exec_directory"] if "exec_directory" in kwargs else "/tmp"
 
@@ -354,23 +298,10 @@ class LLVMEnvironment(Environment):
         if not exec_filename:
             return False
 
-        """Execute the program."""
-        outs, _, _ = execute_command_line(
-                        exec_filename,
-                        input_data,
-                        use_stdin,
-                        False,
-                        timeout
-        )
+        output = run_command_unix(command, input=input_data, timeout=timeout)
 
-        try:
-            outs = outs.decode() if type(outs) == bytes else outs
-            output_data = output_data.decode() if type(output_data) == bytes else output_data
-        except Exception:
-            return False
+        if output['returncode'] == 0:
+            return cleanup(output['stdout']) == cleanup(output_data)
 
-        outs = cleanup(outs)
-        output_data = cleanup(output_data)
-
-        return outs == output_data
+        return False
 

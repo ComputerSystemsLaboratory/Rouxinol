@@ -56,7 +56,7 @@ class Model(object):
         #data_train_x = pd.DataFrame.from_records(data_train_x).fillna(0).to_numpy()
         return np.array(data_train_x), np.array(data_train_y)
 
-    def _predict_with_data(
+    def predict_with_data(
         self,
         data
     ):

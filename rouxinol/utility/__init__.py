@@ -18,7 +18,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 from .utils import (
     output_filename,
-    execute_command_line,
+    run_command_unix,
     multiple_file_types
 )
 

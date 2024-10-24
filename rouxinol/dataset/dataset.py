@@ -17,8 +17,10 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 """
 
 import os
-import tarfile
+
 import urllib.request
+import tarfile
+import zipfile
 
 from git import Repo
 
@@ -27,42 +29,60 @@ from appdirs import user_data_dir
 
 class Dataset(object):
     def __init__(
-        self,
-        url
+        self
     ):
         self.name = self.__class__.__name__
-        self.url = url
 
-        app_dir = user_data_dir(appname="Rouxinol")
-        self.dataset_dir = os.path.join(app_dir, "dataset")
+        if 'ROUXINOL_APP_DIR' in os.environ:
+            app_dir = os.environ['ROUXINOL_APP_DIR']
+        else:
+            app_dir = user_data_dir(appname="Rouxinol")
 
+        self.dataset_dir = os.path.join(app_dir, self.name)
         os.makedirs(self.dataset_dir, exist_ok=True)
-        self.content_dir = os.path.join(self.dataset_dir, self.name)
+
+        self.content_dir = os.path.join(self.dataset_dir, "content")
+
+    def get_content_dir(
+        self
+    ):
+        return self.content_dir
 
     def download_http_and_extract(
-        self
+            self,
+            url,
+            archive_type="zip"
     ):
-        archive_file = os.path.join(self.dataset_dir, "dataset.xz")
+        archive_file = os.path.join(self.dataset_dir, "content." + archive_type)
+
+        if not os.path.isfile(archive_file):
+            urllib.request.urlretrieve(url, archive_file)
 
         if not os.path.isdir(self.content_dir):
-            urllib.request.urlretrieve(self.url, archive_file)
-
             os.makedirs(self.content_dir, exist_ok=True)
-            with tarfile.open(archive_file, "r:xz") as f:
-                f.extractall(self.dataset_dir)
+            if archive_type == "zip":
+                with zipfile.ZipFile(archive_file, "r") as f:
+                    f.extractall(self.content_dir)
+            elif archive_type == "tar.bz2":
+                with tarfile.open(archive_file, "r:bz2") as f:
+                    f.extractall(self.content_dir)
+            elif archive_type == "tar.xz":
+                with tarfile.open(archive_file, "r:xz") as f:
+                    f.extractall(self.content_dir)                    
+            else:
+                raise Exception
 
-        if os.path.exists(archive_file):
-            os.remove(archive_file)
-
-        return self.content_dir
+        return archive_file, self.content_dir
 
     def clone_git(
-        self
+        self,
+        uri
     ):
-        if not os.path.isdir(self.dataset_dir):
-            Repo.clone_from(self.url, self.content_dir)
+        if not os.path.isdir(self.content_dir):
+            Repo.clone_from(uri, self.content_dir)
 
         return self.content_dir
+
 
     def preprocess(
         self,
@@ -70,5 +90,4 @@ class Dataset(object):
         **kwargs
     ):
         raise NotImplementedError
-
 

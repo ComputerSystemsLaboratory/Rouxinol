@@ -44,11 +44,31 @@ from rouxinol.third_party.compy.llvm_seq import (
 )
 
 from .cfggrind import (
-    CFGgrindStaticHistogramVisitor,
-    CFGgrindDynamicHistogramVisitor,
+    CFGgrindStaticVisitor,
+    CFGgrindDynamicVisitor,
+    CFGgrindStaticDynamicVisitor,
     CFGgrindHistogramBuilder,
 )
 
-from .inst2vec import Inst2Vec
-from .ir2vec import IR2Vec
+from .inst2vec import (
+    Inst2VecPreprocessedVisitor,
+    Inst2VecEmbeddingsVisitor,
+    Inst2VecBuilder,
+)
 
+from .ir2vec import (
+    IR2VecSymbolicRepresentationVisitor,
+    IR2VecFlowAwareRepresentationVisitor,
+    IR2VecBuilder,
+)
+
+from .llvm_histogram import (
+    LLVMVisitor,
+    LLVMHistogramBuilder,
+)
+
+from .x86_histogram import (
+    X86AllSectionsVisitor,
+    X86ExecutableSectionsVisitor,
+    X86HistogramBuilder,
+)

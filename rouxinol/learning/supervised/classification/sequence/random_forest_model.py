@@ -80,7 +80,7 @@ class RandomForestModel(Model):
             max_samples=config["max_samples"]
         )
 
-    def _predict_with_data(
+    def predict_with_data(
         self,
         data
     ):

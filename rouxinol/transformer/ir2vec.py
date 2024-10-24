@@ -1,112 +1,88 @@
 """
-Rouxinol an infrastructure to explore code generation and machine learning models.
-Copyright (C) 2023 Anderson Faustino da Silva
+Copyright 2023 Anderson Faustino da Silva.
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+http://www.apache.org/licenses/LICENSE-2.0
 
-You should have received a copy of the GNU General Public License
-along with this program. If not, see <https://www.gnu.org/licenses/>.
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 """
 
-import sys
+import os
+import time
+import resource
 import ir2vec as i2v
 
-from absl import logging
+from rouxinol.third_party.compy import common
 
 
-class IR2Vec():
-    """Extract code representations.
+class IR2VecSymbolicRepresentationVisitor():
+    def __init__(
+        self
+    ):
+        self.mode = "sym"
 
-    Rouxinol invokes IR2Vec to extract the representation.
 
-    - IR2Vec
+class IR2VecFlowAwareRepresentationVisitor():
+    def __init__(
+        self
+    ):
+        self.mode = "fa"
+
+class IR2VecBuilder(common.RepresentationBuilder):
+    """Extract IR2Vec.
     """
 
     def __init__(
-        self,
-        builder=None
+        self
     ):
-        super().__init__(
-                    builder,
-                    None
-                )
-
-    def from_src(
-        self,
-        src_filename,
-        *args,
-        **kwargs
-    ):
-        """Extact the IR2Vec representation.
-
-        :param src_filename: The source file.
-
-        :param flags: The compiler flags.
-
-        :ir_directory: The out directory.
-
-        :env: The environment.
-
-        :mode: The representation type.
-
-        :return: [2.34, ...].
-        """
-
-        """Parameters"""
-        flags = kwargs["flags"] if "flags" in kwargs else ""
-        ir_directory = kwargs["ir_directory"] if "ir_directory" in kwargs else ""
-        mode = kwargs["mode"] if "mode" in kwargs else "fa"
-
-        """Compile the program."""
-        if not "env" in kwargs:
-            logging.error(
-                        "Uninstantiated environment."
-                    )
-            sys.exit(1)
-
-        ir_filename = kwargs["env"].src_to_ir(
-                                        src_filename,
-                                        flags,
-                                        ir_directory=ir_directory
-                                    )
-
-        return self.from_ir(
-                        ir_filename,
-                        mode=mode
-                    )
-
-    def from_ir(
+        common.RepresentationBuilder.__init__(self)
+        self.ir_filename = None
+       
+    def string_to_info(
         self,
         ir_filename,
         *args,
         **kwargs
     ):
-        """Extact the IR2Vec representation.
+        self.ir_filename = ir_filename
 
-        :param ir_filename: The LLVM IR file.
-
-        :mode: The representation type.
-
-        :return: [2.34, ...]
-        """
-        mode = kwargs["mode"] if "mode" in kwargs else "fa"
-
+    def info_to_representation(
+        self,
+        visitor=IR2VecFlowAwareRepresentationVisitor
+    ):
         try:
+            # Start timing
+            start_time = time.perf_counter()
+            start_usage = resource.getrusage(resource.RUSAGE_CHILDREN)
+            start = time.time()
+            
+            # Collect IR2Vec
             obj = i2v.initEmbedding(
-                    ir_filename,
-                    mode,
+                    self.ir_filename,
+                    visitor.mode,
                     "p"
                 )
-        
-            return i2v.getProgramVector(obj)
+            ir2vec = i2v.getProgramVector(obj)
+
+            # End timing
+            end_time = time.perf_counter()
+            end_usage = resource.getrusage(resource.RUSAGE_CHILDREN)
+
+            # Calculate the time differences
+            user_time = end_usage.ru_utime - start_usage.ru_utime
+            system_time = end_usage.ru_stime - start_usage.ru_stime
+            cpu_time = user_time + system_time            
+            elapsed = end_time - start_time
+    
+            self.update_elapsed(elapsed)
+
+            return ir2vec
         except:
             return None
-

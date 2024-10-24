@@ -17,31 +17,31 @@ limitations under the License.
 import os
 import sys
 import json
+import time
 import shutil
 import subprocess
 import networkx as nx
 
 from absl import logging
 
-from rouxinol.utility import execute_command_line
+from rouxinol.utility import run_command_unix
 from rouxinol.transformer import RepresentationBuilder
 
 class CFGgrind():
     """Invoke CFGgrind to extract exectution histograms.
 
     """
-
     def __init__(
         self,
         exec_filename,
-        input_data,
-        stdin,
-        function_only,
-        timeout
+        input_data="",
+        stdin_filename=None,
+        function_only=False,
+        timeout=None
     ):
         self.exec_filename = exec_filename
         self.input_data = input_data
-        self.stdin = stdin
+        self.stdin_filename = stdin_filename
         self.function_only = function_only
         self.timeout = timeout
         self.elapsed = 0.0
@@ -57,14 +57,8 @@ class CFGgrind():
     def __del__(
         self
     ):
-        cmdline = f"rm -f {self.cfg_filename} {self.map_filename}"
-        _, _, _ = execute_command_line(
-                    cmdline,
-                    "",
-                    False,
-                    True,
-                    self.timeout
-                )
+        command = f"rm -f {self.cfg_filename} {self.map_filename}"
+        _ = run_command_unix(command, timeout=self.timeout)
 
     def asmmap(
         self
@@ -73,15 +67,16 @@ class CFGgrind():
 
         :param exec_filename: The executable filename
 	    """
-        cmdline = f"cfggrind_asmmap {self.exec_filename} > {self.map_filename}"
-        _, _, elapsed = execute_command_line(
-                            cmdline,
-                            "",
-                            False,
-                            True,
-                            self.timeout
-        )
+        command = f"cfggrind_asmmap {self.exec_filename}"
+        teste = f"cfggrind_asmmap {self.exec_filename} > {self.map_filename}"
+        start = time.time()
+        os.system(teste)
+        elapsed=time.time()-start
         self.elapsed += elapsed
+        #with open(self.map_filename, 'w') as map_filename:
+        #    output = run_command_unix(command, stdout=map_filename, timeout=self.timeout)
+        #if output['returncode'] == 0:
+        #    self.elapsed += output['runtime']['elapsed_time']
 
     def cfg(
         self
@@ -92,19 +87,17 @@ class CFGgrind():
 
         :param input_data: The dataset to run the program
         """
-        if not self.stdin:
-            cmdline = f"valgrind --tool=cfggrind --cfg-outfile={self.cfg_filename} --instrs-map={self.map_filename} {self.exec_filename} {self.input_data}"
+        command = f"valgrind --tool=cfggrind --cfg-outfile={self.cfg_filename} --instrs-map={self.map_filename} {self.exec_filename} {self.input_data}"
+     
+        if self.stdin_filename:
+            with open(self.stdin_filename, 'r') as fin:
+                output = run_command_unix(command, stdin=fin, timeout=self.timeout)
+                if output['returncode'] == 0:
+                    self.elapsed += output['runtime']['elapsed_time']
         else:
-            cmdline = f"valgrind --tool=cfggrind --cfg-outfile={self.cfg_filename} --instrs-map={self.map_filename} {self.exec_filename} < {self.input_data}"
-
-        _, _, elapsed = execute_command_line(
-                            cmdline,
-                            "",
-                            False,
-                            True,
-                            self.timeout
-        )
-        self.elapsed += elapsed
+            output = run_command_unix(command, timeout=self.timeout)
+            if output['returncode'] == 0:
+                self.elapsed += output['runtime']['elapsed_time']
 
     def histogram(
         self
@@ -120,27 +113,24 @@ class CFGgrind():
             {sub: 2, mov: 3, test 1, xor: 2, pop: 6, call: 10, ..., jne: 2}
         """
         if self.function_only:
-            cmdline = f"cfggrind_info -s functions -f \"{self.exec_filename}::{self.function_only}\" -i {self.map_filename} -m json {self.cfg_filename}"
+            command = f"cfggrind_info -s functions -f \"{self.exec_filename}::{self.function_only}\" -i {self.map_filename} -m json {self.cfg_filename}"
         else:
-            cmdline = f"cfggrind_info -s program -i {self.map_filename} -m json {self.cfg_filename}"
+            command = f"cfggrind_info -s program -i {self.map_filename} -m json {self.cfg_filename}"
 
-        outs, _, elapsed = execute_command_line(
-                                cmdline,
-                                "",
-                                False,
-                                True,
-                                self.timeout
-        )
-        self.elapsed += elapsed
+        output = run_command_unix(command, timeout=self.timeout)
+        if output['returncode'] == 0:
+            self.elapsed += output['runtime']['elapsed_time']
 
         try:
-            out_json = json.loads(outs)
+            out_json = json.loads(output['stdout'])
         except:
             return None, None
+
         static = out_json["static"]["instructions"]["opcodes"]
         dynamic = out_json["dynamic"]["instructions"]["opcodes"]
         del static["unknown"]
         del dynamic["unknown"]
+
         return static, dynamic
 
     def get_elapsed(
@@ -149,19 +139,24 @@ class CFGgrind():
         return self.elapsed
 
 
-class CFGgrindStaticHistogramVisitor():
+class CFGgrindStaticVisitor():
     def __init__(
         self
     ):
         pass
 
 
-class CFGgrindDynamicHistogramVisitor():
+class CFGgrindDynamicVisitor():
     def __init__(
         self
     ):
         pass
 
+class CFGgrindStaticDynamicVisitor():
+    def __init__(
+        self
+    ):
+        pass
 
 class CFGgrindHistogramBuilder(RepresentationBuilder):
     """Invoke CFGgrind to extract histograms.
@@ -175,17 +170,20 @@ class CFGgrindHistogramBuilder(RepresentationBuilder):
     def string_to_info(
         self,
         exec_filename,
-        input_data,
-        stdin=False,
-        function_only=False,
-        timeout=60
+        *args,
+        **kwargs
     ):
+        input_data =  kwargs["input_data"] if "input_data" in kwargs else ""
+        stdin_filename = kwargs["stdin_filename"] if "stdin_filename" in kwargs else ""
+        function_only = kwargs["function_only"] if "function_only" in kwargs else False
+        timeout = kwargs["timeout"] if "timeout" in kwargs else None
+
         cfggrind = CFGgrind(
-                        exec_filename,
-                        input_data,
-                        stdin,
-                        function_only,
-                        timeout
+                        exec_filename=exec_filename,
+                        input_data=input_data,
+                        stdin_filename=stdin_filename,
+                        function_only=function_only,
+                        timeout=timeout
                     )
         cfggrind.asmmap()
         cfggrind.cfg()
@@ -194,21 +192,29 @@ class CFGgrindHistogramBuilder(RepresentationBuilder):
 
     def info_to_representation(
         self,
-        visitor=CFGgrindStaticHistogramVisitor
+        visitor=CFGgrindStaticDynamicVisitor
     ):
-        vis = visitor()
-
         if not (self.static and self.dynamic):
             return None
 
-        if isinstance(vis, CFGgrindStaticHistogramVisitor):
+        if visitor.__name__ == CFGgrindStaticVisitor.__name__:
             data = self.static
-        elif isinstance(vis, CFGgrindDynamicHistogramVisitor):
+            for op, val in data.items():
+                if op not in self._tokens:
+                    self._tokens[op] = 0
+                self._tokens[op] = val
+            return data
+        elif visitor.__name__ == CFGgrindDynamicVisitor.__name__:
             data = self.dynamic
-
-        for op, val in data.items():
-            if op not in self._tokens:
-                self._tokens[op] = 0
-            self._tokens[op] = val
-
-        return data
+            for op, val in data.items():
+                if op not in self._tokens:
+                    self._tokens[op] = 0
+                self._tokens[op] = val
+            return data
+        elif visitor.__name__ == CFGgrindStaticDynamicVisitor.__name__:
+            data = self.static.copy()
+            for op, val in self.dynamic.items():
+                if op not in self._tokens:
+                    self._tokens[op] = 0
+                self._tokens[op] += val
+            return (self.static, self.dynamic)

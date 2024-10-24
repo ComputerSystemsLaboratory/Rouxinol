@@ -31,6 +31,10 @@ class RepresentationBuilder(object):
     def update_elapsed(self, elapsed):
         self.elapsed += elapsed
 
+    def reset_elapsed(self):
+        self.elapsed = 0.0
+
+
 class Sequence(object):
     def __init__(self, S, token_types):
         self.S = S

@@ -29,9 +29,12 @@ class OpenJudge(Dataset):
     def __init__(
         self,
     ):
-        super().__init__("http://www.csl.uem.br/repository/code4ml/OpenJudge.xz")
+        super().__init__()
 
-        self.download_http_and_extract()
+        self.download_http_and_extract(
+            "http://www.csl.uem.br/repository/code4ml/OpenJudge.xz",
+            archive_type="tar.xz"
+        )
 
     def _verify_problem(
         self,
@@ -66,22 +69,27 @@ class OpenJudge(Dataset):
     def select_problems_and_samples(
         self,
         num_problems,
-        languages
+        languages,
+        shuffle=False,
     ):
         """Select the problems and their samples.
 
         :param num_problems: The number of problems.
 
-        :param languages: The languages and their number of samples. A list of tuples [("C", 500), ...].
+        :param languages: The languages and their number of samples. A dictionary {"C": 500, ...}.
 
         :return: The problems and the samples.
         """
         data = {}
 
         problems = gl.glob(f"{self.content_dir}/p*")
-        shuffle(problems)
+        problems.sort()
 
-        for problem in problems:
+        if shuffle:
+            shuffle(problems)
+
+        problem_names = [os.path.basename(problem) for problem in problems]
+        for problem in problem_names:
             samples = self._verify_problem(
                                 problem,
                                 languages
@@ -91,9 +99,6 @@ class OpenJudge(Dataset):
 
             if len(data) == num_problems:
                 break
-
-        if len(data) < num_problems:
-            return None
 
         return data
 

@@ -68,7 +68,7 @@ class SupportVectorMachineModel(Model):
             max_iter=config["max_iter"]
         )
 
-    def _predict_with_data(
+    def predict_with_data(
         self,
         data
     ):

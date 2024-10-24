@@ -15,6 +15,13 @@ dependencies:
   - llvmdev=10.0.0
   - libclang=10.0.0
   - libllvm10=10.0.0
+  - gcc=8.5.0
+  - gxx=8.5.0
+  - gawk
+  - libstdcxx-ng
+  - graphviz
+  - py-lief
+  - capstone
   - pip
   - pip:
     - absl-py

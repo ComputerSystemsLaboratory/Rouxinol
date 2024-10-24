@@ -20,7 +20,7 @@ import sys
 import random as rn
 import subprocess
 
-from rouxinol.utility import execute_command_line
+from rouxinol.utility import run_command_unix
 
 from absl import logging as lg
 
@@ -621,11 +621,11 @@ def expand(passes):
                     True,
                     20
     )
-
-    if err == "error":
+    output = run_command_unix(command)
+    if output['returncode'] != 0:
         return ''
 
-    expand_passes = ret.stderr.decode()
+    expand_passes = output['stderr']
     expand_passes = expand_passes.replace('\n', '')
     expand_passes = expand_passes.replace('Pass Arguments:  ', '')
 

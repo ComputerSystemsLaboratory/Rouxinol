@@ -59,7 +59,7 @@ class KNeighborsModel(Model):
             n_jobs=config["n_jobs"]
         )
 
-    def _predict_with_data(
+    def predict_with_data(
         self,
         data
     ):

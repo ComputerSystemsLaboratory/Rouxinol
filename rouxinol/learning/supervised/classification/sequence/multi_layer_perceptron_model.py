@@ -90,7 +90,7 @@ class MultiLayerPerceptronModel(Model):
             max_fun=config["max_fun"]
         )
 
-    def _predict_with_data(
+    def predict_with_data(
         self,
         data
     ):
