@@ -1,0 +1,9977 @@
+0:
+- -sroa
+- -simplifycfg
+- -early-cse-memssa
+- -instcombine
+- -early-cse-memssa
+1:
+- -mem2reg
+- -gvn
+- -simplifycfg
+- -licm
+- -dse
+- -gvn
+2:
+- -inferattrs
+- -mem2reg
+- -early-cse-memssa
+- -jump-threading
+- -slp-vectorizer
+- -instcombine
+- -simplifycfg
+3:
+- -sroa
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+4:
+- -instcombine
+- -sroa
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+- -jump-threading
+- -early-cse-memssa
+5:
+- -memcpyopt
+- -sroa
+- -simplifycfg
+- -early-cse-memssa
+6:
+- -mem2reg
+- -instcombine
+- -correlated-propagation
+- -simplifycfg
+- -early-cse-memssa
+- -jump-threading
+- -early-cse-memssa
+7:
+- -licm
+- -early-cse-memssa
+- -jump-threading
+- -mem2reg
+- -licm
+- -early-cse-memssa
+- -memcpyopt
+- -adce
+- -simplifycfg
+- -correlated-propagation
+8:
+- -licm
+- -sroa
+- -adce
+- -gvn
+- -jump-threading
+- -instcombine
+9:
+- -loop-rotate
+- -sroa
+- -instcombine
+- -mldst-motion
+- -jump-threading
+10:
+- -sroa
+- -simplifycfg
+- -mldst-motion
+- -jump-threading
+- -early-cse-memssa
+- -jump-threading
+- -instcombine
+- -simplifycfg
+11:
+- -tailcallelim
+- -early-cse-memssa
+- -simplifycfg
+- -jump-threading
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+12:
+- -early-cse-memssa
+- -mem2reg
+- -simplifycfg
+- -early-cse-memssa
+- -instcombine
+- -ipsccp
+- -early-cse-memssa
+- -simplifycfg
+13:
+- -early-cse-memssa
+- -instcombine
+- -mem2reg
+- -early-cse-memssa
+- -simplifycfg
+- -correlated-propagation
+- -adce
+14:
+- -sroa
+- -simplifycfg
+- -early-cse-memssa
+- -jump-threading
+- -licm
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+15:
+- -simplifycfg
+- -early-cse-memssa
+- -sroa
+- -instcombine
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+16:
+- -sroa
+- -inferattrs
+- -early-cse-memssa
+- -simplifycfg
+- -indvars
+- -instcombine
+- -licm
+- -early-cse-memssa
+17:
+- -gvn
+- -mem2reg
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+18:
+- -mem2reg
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+19:
+- -mem2reg
+- -early-cse-memssa
+- -jump-threading
+- -gvn
+- -instcombine
+20:
+- -sroa
+- -instcombine
+- -speculative-execution
+- -gvn
+- -simplifycfg
+- -instcombine
+21:
+- -mem2reg
+- -gvn
+- -instcombine
+- -mldst-motion
+- -memcpyopt
+- -simplifycfg
+- -gvn
+- -early-cse-memssa
+22:
+- -mem2reg
+- -instcombine
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+23:
+- -instcombine
+- -gvn
+- -simplifycfg
+- -early-cse-memssa
+- -instcombine
+- -jump-threading
+24:
+- -early-cse-memssa
+- -sroa
+- -instcombine
+- -simplifycfg
+- -gvn
+25:
+- -sroa
+- -instcombine
+- -early-cse-memssa
+- -jump-threading
+26:
+- -mem2reg
+- -jump-threading
+- -simplifycfg
+- -instcombine
+- -gvn
+27:
+- -tailcallelim
+- -gvn
+- -simplifycfg
+- -gvn
+- -jump-threading
+- -instcombine
+- -jump-threading
+28:
+- -mem2reg
+- -simplifycfg
+- -jump-threading
+- -gvn
+- -instcombine
+29:
+- -sroa
+- -instcombine
+- -gvn
+- -slp-vectorizer
+- -simplifycfg
+- -bdce
+30:
+- -jump-threading
+- -simplifycfg
+- -gvn
+- -instcombine
+- -simplifycfg
+31:
+- -instcombine
+- -licm
+- -indvars
+- -gvn
+- -instcombine
+- -sroa
+- -simplifycfg
+- -gvn
+32:
+- -gvn
+- -instcombine
+- -licm
+- -early-cse-memssa
+- -correlated-propagation
+- -simplifycfg
+33:
+- -instcombine
+- -simplifycfg
+- -sroa
+- -loop-rotate
+- -early-cse-memssa
+34:
+- -gvn
+- -simplifycfg
+- -correlated-propagation
+- -sroa
+- -gvn
+35:
+- -sroa
+- -early-cse-memssa
+- -instcombine
+- -jump-threading
+36:
+- -sroa
+- -instcombine
+- -simplifycfg
+- -jump-threading
+- -early-cse-memssa
+37:
+- -licm
+- -sroa
+- -early-cse-memssa
+- -simplifycfg
+- -correlated-propagation
+- -early-cse-memssa
+38:
+- -mem2reg
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+39:
+- -mem2reg
+- -early-cse-memssa
+- -simplifycfg
+- -licm
+- -jump-threading
+- -correlated-propagation
+- -instcombine
+- -early-cse-memssa
+40:
+- -instcombine
+- -gvn
+- -mldst-motion
+- -jump-threading
+- -mem2reg
+- -simplifycfg
+- -instcombine
+- -mldst-motion
+- -simplifycfg
+- -early-cse-memssa
+41:
+- -sroa
+- -simplifycfg
+- -early-cse-memssa
+- -instcombine
+42:
+- -sroa
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+- -jump-threading
+- -early-cse-memssa
+- -simplifycfg
+43:
+- -loop-rotate
+- -mem2reg
+- -instcombine
+- -jump-threading
+- -early-cse-memssa
+- -ipsccp
+44:
+- -sroa
+- -instcombine
+- -simplifycfg
+- -licm
+- -early-cse-memssa
+45:
+- -gvn
+- -instcombine
+- -mem2reg
+- -simplifycfg
+- -gvn
+46:
+- -jump-threading
+- -gvn
+- -indvars
+- -sroa
+- -tailcallelim
+- -gvn
+- -simplifycfg
+- -slp-vectorizer
+- -instcombine
+- -correlated-propagation
+- -loop-rotate
+- -simplifycfg
+- -jump-threading
+47:
+- -aggressive-instcombine
+- -sroa
+- -indvars
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+- -licm
+- -gvn
+- -simplifycfg
+48:
+- -inferattrs
+- -gvn
+- -jump-threading
+- -sroa
+- -instcombine
+- -mldst-motion
+- -simplifycfg
+- -gvn
+49:
+- -mem2reg
+- -simplifycfg
+- -early-cse-memssa
+- -instcombine
+- -early-cse-memssa
+50:
+- -sroa
+- -gvn
+- -licm
+- -simplifycfg
+- -jump-threading
+- -early-cse-memssa
+- -reassociate
+- -instcombine
+- -indvars
+- -simplifycfg
+- -early-cse-memssa
+51:
+- -sroa
+- -jump-threading
+- -licm
+- -loop-rotate
+- -inferattrs
+- -jump-threading
+- -gvn
+- -simplifycfg
+52:
+- -early-cse-memssa
+- -reassociate
+- -mem2reg
+- -slp-vectorizer
+- -early-cse-memssa
+- -reassociate
+- -mldst-motion
+- -instcombine
+- -simplifycfg
+- -mldst-motion
+- -instcombine
+- -simplifycfg
+- -gvn
+53:
+- -mem2reg
+- -simplifycfg
+- -early-cse-memssa
+- -early-cse-memssa
+54:
+- -gvn
+- -simplifycfg
+- -gvn
+- -instcombine
+- -simplifycfg
+55:
+- -simplifycfg
+- -instcombine
+- -mem2reg
+- -indvars
+- -licm
+- -loop-rotate
+- -instcombine
+- -tailcallelim
+- -gvn
+- -mldst-motion
+- -simplifycfg
+56:
+- -mem2reg
+- -early-cse-memssa
+- -speculative-execution
+- -jump-threading
+- -instcombine
+57:
+- -licm
+- -sroa
+- -bdce
+- -early-cse-memssa
+- -simplifycfg
+58:
+- -jump-threading
+- -sroa
+- -early-cse-memssa
+- -licm
+- -instcombine
+- -loop-unroll
+- -simplifycfg
+- -correlated-propagation
+- -simplifycfg
+- -instcombine
+- -simplifycfg
+59:
+- -sroa
+- -instcombine
+- -gvn
+- -simplifycfg
+- -early-cse-memssa
+- -mldst-motion
+- -instcombine
+- -simplifycfg
+60:
+- -gvn
+- -instcombine
+- -jump-threading
+- -sroa
+- -simplifycfg
+- -mldst-motion
+- -instcombine
+61:
+- -reassociate
+- -simplifycfg
+- -reassociate
+- -simplifycfg
+- -gvn
+- -gvn
+- -reassociate
+- -instcombine
+- -simplifycfg
+- -dse
+62:
+- -sroa
+- -simplifycfg
+- -instcombine
+- -gvn
+63:
+- -mem2reg
+- -loop-rotate
+- -simplifycfg
+- -early-cse-memssa
+64:
+- -simplifycfg
+- -sroa
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+65:
+- -early-cse-memssa
+- -simplifycfg
+- -sroa
+- -licm
+- -gvn
+- -simplifycfg
+- -instcombine
+66:
+- -gvn
+- -jump-threading
+- -gvn
+- -instcombine
+- -simplifycfg
+- -instcombine
+- -simplifycfg
+67:
+- -gvn
+- -mem2reg
+- -jump-threading
+68:
+- -gvn
+- -licm
+- -instcombine
+- -simplifycfg
+- -loop-rotate
+- -mem2reg
+- -speculative-execution
+- -simplifycfg
+- -gvn
+- -instcombine
+69:
+- -simplifycfg
+- -early-cse-memssa
+- -sroa
+70:
+- -mem2reg
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+71:
+- -mem2reg
+- -loop-rotate
+- -instcombine
+- -simplifycfg
+- -correlated-propagation
+- -gvn
+- -instcombine
+72:
+- -tailcallelim
+- -early-cse-memssa
+- -mldst-motion
+- -instcombine
+- -sroa
+- -gvn
+- -jump-threading
+73:
+- -tailcallelim
+- -early-cse-memssa
+- -simplifycfg
+- -loop-rotate
+- -instcombine
+- -simplifycfg
+- -mem2reg
+- -jump-threading
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+- -reassociate
+74:
+- -jump-threading
+- -gvn
+- -sroa
+- -instcombine
+- -speculative-execution
+- -simplifycfg
+- -dse
+- -instcombine
+- -gvn
+75:
+- -gvn
+- -mem2reg
+76:
+- -simplifycfg
+- -jump-threading
+- -sroa
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+77:
+- -sroa
+- -early-cse-memssa
+- -correlated-propagation
+- -jump-threading
+78:
+- -sroa
+- -licm
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+79:
+- -gvn
+- -instcombine
+- -reassociate
+- -div-rem-pairs
+- -simplifycfg
+- -instcombine
+80:
+- -early-cse-memssa
+- -sroa
+- -instcombine
+- -jump-threading
+- -simplifycfg
+- -early-cse-memssa
+81:
+- -tailcallelim
+- -gvn
+- -simplifycfg
+- -instcombine
+82:
+- -mem2reg
+- -tailcallelim
+- -licm
+- -instcombine
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+83:
+- -mem2reg
+- -gvn
+- -simplifycfg
+84:
+- -reassociate
+- -gvn
+- -sroa
+- -simplifycfg
+- -early-cse-memssa
+- -instcombine
+85:
+- -sroa
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+- -licm
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+86:
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+- -tailcallelim
+- -early-cse-memssa
+- -gvn
+- -sroa
+87:
+- -sroa
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+- -simplifycfg
+- -dse
+88:
+- -gvn
+- -mem2reg
+- -instcombine
+- -simplifycfg
+89:
+- -gvn
+- -sroa
+- -mldst-motion
+- -indvars
+- -slp-vectorizer
+- -simplifycfg
+- -memcpyopt
+- -licm
+- -gvn
+- -instcombine
+- -simplifycfg
+- -slp-vectorizer
+- -early-cse-memssa
+90:
+- -licm
+- -jump-threading
+- -sroa
+- -simplifycfg
+- -licm
+- -memcpyopt
+- -early-cse-memssa
+- -instcombine
+- -ipsccp
+- -bdce
+- -simplifycfg
+- -early-cse-memssa
+91:
+- -loop-rotate
+- -mem2reg
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+92:
+- -mem2reg
+- -licm
+- -early-cse-memssa
+- -simplifycfg
+93:
+- -mem2reg
+- -instcombine
+- -speculative-execution
+- -jump-threading
+- -licm
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+- -jump-threading
+94:
+- -gvn
+- -jump-threading
+- -simplifycfg
+- -mem2reg
+- -gvn
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+95:
+- -mem2reg
+- -instcombine
+- -speculative-execution
+- -simplifycfg
+- -gvn
+- -instcombine
+- -simplifycfg
+- -gvn
+96:
+- -aggressive-instcombine
+- -licm
+- -sroa
+- -jump-threading
+- -adce
+- -gvn
+- -simplifycfg
+97:
+- -sroa
+- -mldst-motion
+- -instcombine
+- -indvars
+- -simplifycfg
+- -mldst-motion
+- -jump-threading
+- -early-cse-memssa
+98:
+- -instcombine
+- -mem2reg
+- -simplifycfg
+- -early-cse-memssa
+- -correlated-propagation
+- -simplifycfg
+- -instcombine
+99:
+- -globalopt
+- -gvn
+- -indvars
+- -sroa
+- -instcombine
+- -licm
+- -gvn
+- -simplifycfg
+100:
+- -early-cse-memssa
+- -slp-vectorizer
+- -instcombine
+- -sroa
+- -licm
+- -loop-rotate
+- -gvn
+- -indvars
+101:
+- -early-cse-memssa
+- -instcombine
+- -sroa
+- -sccp
+- -instcombine
+- -simplifycfg
+102:
+- -sroa
+- -licm
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+- -dse
+- -early-cse-memssa
+103:
+- -mem2reg
+- -gvn
+- -dse
+104:
+- -sroa
+- -instcombine
+- -simplifycfg
+- -correlated-propagation
+- -reassociate
+- -instcombine
+- -loop-rotate
+- -gvn
+- -simplifycfg
+105:
+- -mem2reg
+- -licm
+- -simplifycfg
+- -gvn
+- -instcombine
+- -simplifycfg
+- -gvn
+106:
+- -sroa
+- -simplifycfg
+- -inferattrs
+- -jump-threading
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+- -correlated-propagation
+- -instcombine
+- -simplifycfg
+107:
+- -sroa
+108:
+- -gvn
+- -instcombine
+- -correlated-propagation
+- -simplifycfg
+- -gvn
+- -correlated-propagation
+- -simplifycfg
+- -instcombine
+- -jump-threading
+- -correlated-propagation
+109:
+- -sroa
+- -mldst-motion
+- -early-cse-memssa
+- -globalopt
+- -early-cse-memssa
+- -memcpyopt
+- -slp-vectorizer
+- -simplifycfg
+- -early-cse-memssa
+110:
+- -simplifycfg
+- -early-cse-memssa
+- -instcombine
+- -sroa
+- -sccp
+- -simplifycfg
+- -early-cse-memssa
+111:
+- -mem2reg
+- -slp-vectorizer
+- -simplifycfg
+- -gvn
+- -instcombine
+112:
+- -instcombine
+- -mem2reg
+- -early-cse-memssa
+- -simplifycfg
+113:
+- -mem2reg
+- -correlated-propagation
+- -loop-deletion
+- -correlated-propagation
+- -loop-rotate
+- -gvn
+- -simplifycfg
+- -reassociate
+114:
+- -simplifycfg
+- -jump-threading
+- -sroa
+- -gvn
+- -memcpyopt
+115:
+- -sroa
+- -licm
+- -jump-threading
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+- -gvn
+- -instcombine
+116:
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+- -correlated-propagation
+- -reassociate
+- -mem2reg
+- -early-cse-memssa
+117:
+- -sroa
+- -instcombine
+- -slp-vectorizer
+- -simplifycfg
+118:
+- -mem2reg
+- -slp-vectorizer
+- -instcombine
+- -jump-threading
+- -simplifycfg
+- -early-cse-memssa
+119:
+- -sroa
+- -simplifycfg
+- -jump-threading
+- -speculative-execution
+- -early-cse-memssa
+- -instcombine
+- -tailcallelim
+- -early-cse-memssa
+- -indvars
+- -simplifycfg
+- -instsimplify
+- -loop-rotate
+120:
+- -tailcallelim
+- -early-cse-memssa
+- -loop-vectorize
+- -mem2reg
+- -correlated-propagation
+- -instcombine
+- -gvn
+- -jump-threading
+- -simplifycfg
+- -instcombine
+121:
+- -gvn
+- -instcombine
+- -mem2reg
+- -mldst-motion
+- -reassociate
+- -licm
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+122:
+- -mem2reg
+- -jump-threading
+- -loop-rotate
+- -gvn
+- -simplifycfg
+123:
+- -mem2reg
+- -early-cse-memssa
+- -correlated-propagation
+- -jump-threading
+- -instsimplify
+- -simplifycfg
+124:
+- -sroa
+- -early-cse-memssa
+- -simplifycfg
+125:
+- -instcombine
+- -jump-threading
+- -gvn
+- -slp-vectorizer
+- -simplifycfg
+- -sroa
+- -jump-threading
+- -instcombine
+- -early-cse-memssa
+126:
+- -instcombine
+- -licm
+- -sroa
+- -jump-threading
+- -simplifycfg
+- -early-cse-memssa
+127:
+- -mem2reg
+- -early-cse-memssa
+- -simplifycfg
+- -correlated-propagation
+- -simplifycfg
+128:
+- -mem2reg
+- -licm
+- -early-cse-memssa
+- -simplifycfg
+- -gvn
+- -instcombine
+- -loop-deletion
+- -correlated-propagation
+- -simplifycfg
+- -jump-threading
+- -loop-sink
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+129:
+- -early-cse-memssa
+- -instcombine
+- -indvars
+- -loop-rotate
+- -gvn
+- -mem2reg
+130:
+- -instcombine
+- -loop-idiom
+- -early-cse-memssa
+- -slp-vectorizer
+- -gvn
+- -instcombine
+- -loop-unroll
+- -simplifycfg
+- -instsimplify
+131:
+- -gvn
+- -mem2reg
+- -functionattrs
+- -instcombine
+- -jump-threading
+- -simplifycfg
+- -early-cse-memssa
+- -instcombine
+132:
+- -instcombine
+- -gvn
+- -sroa
+133:
+- -licm
+- -simplifycfg
+- -mem2reg
+- -inferattrs
+- -early-cse-memssa
+- -instcombine
+134:
+- -sroa
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+135:
+- -licm
+- -mem2reg
+- -loop-rotate
+- -early-cse-memssa
+- -jump-threading
+- -instcombine
+- -simplifycfg
+136:
+- -sroa
+- -inferattrs
+- -early-cse-memssa
+- -instcombine
+- -tailcallelim
+- -jump-threading
+- -early-cse-memssa
+- -dse
+- -simplifycfg
+137:
+- -sroa
+- -early-cse-memssa
+138:
+- -sroa
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+139:
+- -sroa
+- -gvn
+- -instcombine
+- -simplifycfg
+140:
+- -simplifycfg
+- -instcombine
+- -gvn
+- -sroa
+- -simplifycfg
+- -gvn
+- -instcombine
+141:
+- -mem2reg
+- -instcombine
+- -early-cse-memssa
+- -slp-vectorizer
+- -instcombine
+- -simplifycfg
+142:
+- -early-cse-memssa
+- -jump-threading
+- -sroa
+- -instcombine
+- -licm
+- -gvn
+- -simplifycfg
+143:
+- -mem2reg
+- -simplifycfg
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+144:
+- -mem2reg
+- -simplifycfg
+- -early-cse-memssa
+- -licm
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+145:
+- -jump-threading
+- -mem2reg
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+146:
+- -simplifycfg
+- -sroa
+- -gvn
+- -instcombine
+147:
+- -sroa
+- -indvars
+- -speculative-execution
+- -mldst-motion
+- -early-cse-memssa
+- -simplifycfg
+- -dse
+- -licm
+- -loop-rotate
+- -gvn
+- -instsimplify
+- -jump-threading
+- -correlated-propagation
+148:
+- -gvn
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+- -instcombine
+149:
+- -licm
+- -simplifycfg
+- -gvn
+- -instcombine
+- -tailcallelim
+- -early-cse-memssa
+- -instcombine
+- -licm
+- -sroa
+- -adce
+- -simplifycfg
+- -instsimplify
+- -early-cse-memssa
+150:
+- -loop-rotate
+- -sroa
+- -jump-threading
+- -gvn
+- -simplifycfg
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+151:
+- -sroa
+- -mldst-motion
+- -instcombine
+- -jump-threading
+- -early-cse-memssa
+- -ipsccp
+- -simplifycfg
+- -memcpyopt
+- -instcombine
+- -dse
+152:
+- -mem2reg
+- -jump-threading
+- -aggressive-instcombine
+- -early-cse-memssa
+- -reassociate
+- -simplifycfg
+- -speculative-execution
+- -memcpyopt
+- -correlated-propagation
+- -early-cse-memssa
+153:
+- -sroa
+- -memcpyopt
+- -jump-threading
+- -early-cse-memssa
+- -simplifycfg
+- -dse
+154:
+- -early-cse-memssa
+- -simplifycfg
+- -gvn
+- -jump-threading
+- -instcombine
+- -slp-vectorizer
+- -instsimplify
+- -simplifycfg
+155:
+- -sroa
+- -instcombine
+- -simplifycfg
+- -gvn
+156:
+- -gvn
+- -instcombine
+157:
+- -simplifycfg
+- -early-cse-memssa
+- -sroa
+- -simplifycfg
+- -early-cse-memssa
+- -correlated-propagation
+- -adce
+- -gvn
+- -simplifycfg
+158:
+- -mem2reg
+- -gvn
+- -mldst-motion
+- -licm
+- -early-cse-memssa
+- -jump-threading
+- -instcombine
+- -simplifycfg
+- -instcombine
+- -gvn
+- -simplifycfg
+159:
+- -early-cse-memssa
+- -instcombine
+- -licm
+- -loop-rotate
+- -indvars
+- -simplifycfg
+- -instcombine
+- -sroa
+- -simplifycfg
+- -early-cse-memssa
+160:
+- -sroa
+- -jump-threading
+- -loop-rotate
+161:
+- -sroa
+- -instcombine
+- -gvn
+- -simplifycfg
+162:
+- -instcombine
+- -mem2reg
+- -mldst-motion
+- -memcpyopt
+- -indvars
+- -gvn
+- -instcombine
+- -simplifycfg
+163:
+- -mem2reg
+- -inferattrs
+- -gvn
+- -jump-threading
+- -gvn
+- -simplifycfg
+- -instcombine
+- -jump-threading
+164:
+- -mem2reg
+- -instcombine
+- -licm
+- -early-cse-memssa
+- -simplifycfg
+165:
+- -instcombine
+- -mem2reg
+- -early-cse-memssa
+- -jump-threading
+- -simplifycfg
+- -sroa
+- -instcombine
+- -gvn
+- -simplifycfg
+166:
+- -mem2reg
+- -instcombine
+- -simplifycfg
+- -gvn
+167:
+- -mem2reg
+- -simplifycfg
+- -slp-vectorizer
+- -instcombine
+- -loop-rotate
+- -early-cse-memssa
+- -simplifycfg
+168:
+- -simplifycfg
+- -tailcallelim
+- -early-cse-memssa
+- -jump-threading
+- -ipsccp
+- -sroa
+- -instcombine
+- -simplifycfg
+169:
+- -sroa
+- -early-cse-memssa
+- -instcombine
+- -globalopt
+- -adce
+- -simplifycfg
+170:
+- -early-cse-memssa
+- -memcpyopt
+- -gvn
+- -sroa
+- -licm
+- -mldst-motion
+- -loop-rotate
+- -instcombine
+- -indvars
+- -simplifycfg
+- -gvn
+- -instcombine
+- -simplifycfg
+171:
+- -sroa
+- -instcombine
+- -licm
+- -early-cse-memssa
+- -simplifycfg
+- -reassociate
+- -instcombine
+- -jump-threading
+172:
+- -sroa
+- -instcombine
+- -mldst-motion
+- -instcombine
+- -mldst-motion
+- -simplifycfg
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+173:
+- -simplifycfg
+- -early-cse-memssa
+- -licm
+- -sroa
+- -simplifycfg
+- -early-cse-memssa
+- -jump-threading
+- -instcombine
+- -simplifycfg
+- -gvn
+174:
+- -sroa
+- -early-cse-memssa
+- -loop-sink
+- -jump-threading
+- -instcombine
+175:
+- -sroa
+- -simplifycfg
+- -early-cse-memssa
+176:
+- -early-cse-memssa
+- -sroa
+177:
+- -sroa
+- -early-cse-memssa
+- -jump-threading
+178:
+- -licm
+- -reassociate
+- -early-cse-memssa
+- -instcombine
+- -slp-vectorizer
+- -simplifycfg
+- -sroa
+- -early-cse-memssa
+179:
+- -mem2reg
+- -jump-threading
+- -early-cse-memssa
+- -licm
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+180:
+- -mem2reg
+- -licm
+- -early-cse-memssa
+- -indvars
+- -jump-threading
+- -early-cse-memssa
+- -simplifycfg
+- -speculative-execution
+- -simplifycfg
+- -gvn
+- -instcombine
+- -gvn
+181:
+- -gvn
+- -mem2reg
+- -reassociate
+- -simplifycfg
+182:
+- -mem2reg
+- -simplifycfg
+- -licm
+- -instcombine
+- -loop-rotate
+- -indvars
+- -simplifycfg
+- -early-cse-memssa
+183:
+- -mem2reg
+- -licm
+- -jump-threading
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+184:
+- -gvn
+- -instcombine
+- -simplifycfg
+- -speculative-execution
+- -gvn
+- -simplifycfg
+- -sroa
+185:
+- -gvn
+- -instcombine
+- -sroa
+- -simplifycfg
+186:
+- -mem2reg
+- -speculative-execution
+- -simplifycfg
+- -early-cse-memssa
+187:
+- -mem2reg
+- -early-cse-memssa
+- -instcombine
+188:
+- -simplifycfg
+- -early-cse-memssa
+- -sroa
+- -instcombine
+- -simplifycfg
+189:
+- -early-cse-memssa
+- -instcombine
+- -sroa
+- -gvn
+- -simplifycfg
+190:
+- -sroa
+- -slp-vectorizer
+- -simplifycfg
+- -early-cse-memssa
+191:
+- -sroa
+- -instcombine
+- -simplifycfg
+- -gvn
+- -instcombine
+- -simplifycfg
+192:
+- -mem2reg
+- -indvars
+- -simplifycfg
+- -indvars
+- -memcpyopt
+- -gvn
+- -simplifycfg
+193:
+- -simplifycfg
+- -mem2reg
+- -early-cse-memssa
+- -loop-simplify
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+- -loop-rotate
+- -early-cse-memssa
+- -jump-threading
+- -simplifycfg
+194:
+- -gvn
+- -jump-threading
+- -sroa
+- -simplifycfg
+195:
+- -mem2reg
+- -simplifycfg
+- -gvn
+- -instcombine
+- -simplifycfg
+196:
+- -mem2reg
+- -gvn
+- -instcombine
+197:
+- -tailcallelim
+- -gvn
+- -instcombine
+- -simplifycfg
+198:
+- -instcombine
+- -early-cse-memssa
+- -jump-threading
+- -instcombine
+- -simplifycfg
+- -sroa
+- -dse
+- -early-cse-memssa
+- -jump-threading
+- -simplifycfg
+199:
+- -sroa
+- -instcombine
+- -licm
+- -early-cse-memssa
+- -jump-threading
+200:
+- -early-cse-memssa
+- -tailcallelim
+- -gvn
+- -sroa
+- -aggressive-instcombine
+- -jump-threading
+- -simplifycfg
+- -instsimplify
+- -early-cse-memssa
+201:
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+- -sroa
+- -early-cse-memssa
+202:
+- -sroa
+- -instcombine
+- -dse
+- -gvn
+- -simplifycfg
+203:
+- -sroa
+- -simplifycfg
+- -correlated-propagation
+- -gvn
+- -instcombine
+- -simplifycfg
+- -gvn
+- -jump-threading
+204:
+- -mem2reg
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+205:
+- -sroa
+- -jump-threading
+- -correlated-propagation
+- -loop-rotate
+- -instcombine
+- -loop-unroll
+- -simplifycfg
+- -gvn
+206:
+- -early-cse-memssa
+- -dse
+- -early-cse-memssa
+- -instcombine
+207:
+- -instcombine
+- -licm
+- -early-cse-memssa
+- -jump-threading
+- -mem2reg
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+208:
+- -mem2reg
+- -jump-threading
+- -licm
+- -early-cse-memssa
+- -simplifycfg
+- -speculative-execution
+- -instcombine
+- -simplifycfg
+209:
+- -mem2reg
+- -simplifycfg
+- -early-cse-memssa
+210:
+- -early-cse-memssa
+- -slp-vectorizer
+- -sroa
+- -instcombine
+- -simplifycfg
+- -slp-vectorizer
+211: []
+212:
+- -mem2reg
+- -early-cse-memssa
+- -simplifycfg
+213:
+- -sroa
+- -instcombine
+- -mldst-motion
+- -instcombine
+- -early-cse-memssa
+- -memcpyopt
+- -bdce
+- -simplifycfg
+214:
+- -mem2reg
+- -gvn
+- -reassociate
+- -simplifycfg
+- -sroa
+- -instcombine
+215:
+- -mem2reg
+- -simplifycfg
+- -early-cse-memssa
+- -instcombine
+216:
+- -mem2reg
+- -loop-rotate
+- -early-cse-memssa
+- -instcombine
+- -jump-threading
+217:
+- -sroa
+- -jump-threading
+- -licm
+- -early-cse-memssa
+- -jump-threading
+- -instcombine
+- -simplifycfg
+218:
+- -sroa
+- -simplifycfg
+- -mldst-motion
+- -instcombine
+- -early-cse-memssa
+- -memcpyopt
+- -instsimplify
+- -simplifycfg
+219:
+- -licm
+- -indvars
+- -mem2reg
+- -instcombine
+- -adce
+- -early-cse-memssa
+- -simplifycfg
+220:
+- -gvn
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+- -loop-rotate
+- -instcombine
+- -simplifycfg
+221:
+- -simplifycfg
+- -licm
+- -sroa
+- -jump-threading
+- -instcombine
+- -gvn
+- -simplifycfg
+222:
+- -instcombine
+- -gvn
+- -sroa
+- -gvn
+- -instcombine
+- -jump-threading
+- -early-cse-memssa
+223:
+- -sroa
+- -instcombine
+- -jump-threading
+- -early-cse-memssa
+224:
+- -sroa
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+- -slp-vectorizer
+- -bdce
+225:
+- -simplifycfg
+- -sroa
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+226:
+- -gvn
+- -sroa
+- -slp-vectorizer
+- -jump-threading
+- -adce
+227:
+- -early-cse-memssa
+- -instcombine
+- -sroa
+- -licm
+- -simplifycfg
+- -early-cse-memssa
+228:
+- -mem2reg
+- -instcombine
+- -jump-threading
+- -simplifycfg
+- -mldst-motion
+- -loop-rotate
+- -slp-vectorizer
+- -gvn
+- -instcombine
+- -simplifycfg
+229:
+- -jump-threading
+- -early-cse-memssa
+- -simplifycfg
+- -loop-rotate
+- -mem2reg
+- -instcombine
+- -indvars
+- -early-cse-memssa
+- -correlated-propagation
+- -indvars
+- -simplifycfg
+230:
+- -gvn
+- -mem2reg
+- -simplifycfg
+231:
+- -instcombine
+- -early-cse-memssa
+- -slp-vectorizer
+- -simplifycfg
+- -speculative-execution
+- -simplifycfg
+- -instcombine
+- -mem2reg
+- -early-cse-memssa
+232:
+- -mem2reg
+- -gvn
+- -instcombine
+- -simplifycfg
+233:
+- -jump-threading
+- -sroa
+- -simplifycfg
+- -early-cse-memssa
+234:
+- -mem2reg
+- -instcombine
+- -simplifycfg
+- -licm
+- -gvn
+235:
+- -mem2reg
+- -instcombine
+- -inferattrs
+- -early-cse-memssa
+- -simplifycfg
+236:
+- -tailcallelim
+- -early-cse-memssa
+- -instcombine
+- -mem2reg
+- -early-cse-memssa
+- -simplifycfg
+237:
+- -early-cse-memssa
+- -simplifycfg
+- -sroa
+- -instcombine
+- -jump-threading
+- -gvn
+238:
+- -sroa
+- -sccp
+- -jump-threading
+239:
+- -instcombine
+- -simplifycfg
+- -gvn
+- -instcombine
+- -simplifycfg
+- -instcombine
+- -reassociate
+- -gvn
+240:
+- -sroa
+- -loop-rotate
+- -slp-vectorizer
+- -gvn
+- -instcombine
+- -simplifycfg
+241:
+- -early-cse-memssa
+- -jump-threading
+- -instcombine
+- -early-cse-memssa
+- -mem2reg
+- -jump-threading
+- -memcpyopt
+- -simplifycfg
+- -early-cse-memssa
+242:
+- -gvn
+- -sroa
+- -instcombine
+243:
+- -early-cse-memssa
+- -instcombine
+- -loop-rotate
+- -sroa
+- -early-cse-memssa
+- -simplifycfg
+- -early-cse-memssa
+244:
+- -mem2reg
+- -simplifycfg
+- -indvars
+- -instcombine
+- -early-cse-memssa
+245:
+- -sroa
+- -early-cse-memssa
+- -tailcallelim
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+- -instcombine
+246:
+- -early-cse-memssa
+- -mem2reg
+- -jump-threading
+- -mldst-motion
+- -instcombine
+- -simplifycfg
+247:
+- -sroa
+- -jump-threading
+- -early-cse-memssa
+- -instcombine
+- -speculative-execution
+- -simplifycfg
+- -dse
+248:
+- -sroa
+- -speculative-execution
+- -loop-rotate
+- -gvn
+- -instcombine
+- -simplifycfg
+- -correlated-propagation
+- -instcombine
+- -gvn
+- -simplifycfg
+249:
+- -sroa
+- -instcombine
+- -gvn
+250:
+- -mem2reg
+- -early-cse-memssa
+- -licm
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+251:
+- -sroa
+- -jump-threading
+- -simplifycfg
+- -instcombine
+- -jump-threading
+- -gvn
+252:
+- -sroa
+- -instcombine
+- -early-cse-memssa
+- -jump-threading
+- -gvn
+- -simplifycfg
+- -instcombine
+253:
+- -early-cse-memssa
+- -licm
+- -gvn
+- -instcombine
+- -indvars
+- -mem2reg
+- -simplifycfg
+- -early-cse-memssa
+254:
+- -sroa
+- -simplifycfg
+- -early-cse-memssa
+- -inferattrs
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+- -correlated-propagation
+- -instcombine
+- -simplifycfg
+255:
+- -sroa
+- -loop-rotate
+- -early-cse-memssa
+- -simplifycfg
+- -dse
+256:
+- -sroa
+- -speculative-execution
+- -licm
+- -gvn
+- -indvars
+- -jump-threading
+- -simplifycfg
+- -early-cse-memssa
+- -instcombine
+257:
+- -licm
+- -mem2reg
+- -gvn
+- -instcombine
+- -simplifycfg
+- -gvn
+- -instcombine
+- -simplifycfg
+258:
+- -early-cse-memssa
+- -simplifycfg
+- -jump-threading
+- -early-cse-memssa
+- -mem2reg
+259:
+- -sroa
+- -simplifycfg
+- -gvn
+- -simplifycfg
+- -instsimplify
+260:
+- -tailcallelim
+- -early-cse-memssa
+- -instcombine
+- -correlated-propagation
+- -simplifycfg
+261:
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+- -sroa
+- -early-cse-memssa
+- -dse
+- -slp-vectorizer
+- -simplifycfg
+- -licm
+- -early-cse-memssa
+262:
+- -gvn
+- -mldst-motion
+- -simplifycfg
+- -mldst-motion
+- -jump-threading
+- -instcombine
+- -mldst-motion
+- -sroa
+- -simplifycfg
+- -instcombine
+- -gvn
+- -dse
+263:
+- -mem2reg
+- -mldst-motion
+- -loop-rotate
+- -early-cse-memssa
+- -simplifycfg
+- -dse
+264:
+- -instcombine
+- -sroa
+- -gvn
+- -simplifycfg
+265:
+- -early-cse-memssa
+- -instcombine
+- -loop-unswitch
+- -simplifycfg
+- -mem2reg
+- -licm
+- -simplifycfg
+- -early-cse-memssa
+- -correlated-propagation
+266:
+- -sroa
+- -simplifycfg
+- -early-cse-memssa
+- -instcombine
+- -licm
+- -simplifycfg
+- -early-cse-memssa
+267:
+- -loop-rotate
+- -tailcallelim
+- -gvn
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+268:
+- -sroa
+- -jump-threading
+269:
+- -sroa
+- -ipsccp
+- -jump-threading
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+270:
+- -tailcallelim
+- -early-cse-memssa
+- -instcombine
+- -gvn
+- -sroa
+- -jump-threading
+271:
+- -sroa
+- -early-cse-memssa
+- -simplifycfg
+- -speculative-execution
+- -simplifycfg
+- -instcombine
+272:
+- -early-cse-memssa
+- -jump-threading
+- -indvars
+- -sroa
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+273:
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+- -sroa
+- -jump-threading
+- -gvn
+274:
+- -licm
+- -instcombine
+- -mem2reg
+- -gvn
+- -simplifycfg
+275:
+- -simplifycfg
+- -sroa
+- -instcombine
+276:
+- -instcombine
+- -early-cse-memssa
+- -speculative-execution
+- -early-cse-memssa
+- -licm
+- -indvars
+- -sroa
+- -indvars
+- -gvn
+- -simplifycfg
+- -bdce
+- -gvn
+277:
+- -sroa
+- -instcombine
+- -slp-vectorizer
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+278:
+- -instcombine
+- -mem2reg
+- -reassociate
+- -instcombine
+- -sroa
+- -gvn
+- -simplifycfg
+279:
+- -gvn
+- -sroa
+- -instcombine
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+280:
+- -instcombine
+- -sroa
+- -licm
+- -gvn
+- -simplifycfg
+281:
+- -early-cse-memssa
+- -mldst-motion
+- -instcombine
+- -gvn
+- -instcombine
+- -simplifycfg
+- -jump-threading
+- -instcombine
+- -forceattrs
+- -gvn
+- -instcombine
+- -jump-threading
+282:
+- -mem2reg
+- -loop-rotate
+- -correlated-propagation
+- -gvn
+- -instcombine
+- -jump-threading
+283:
+- -simplifycfg
+- -mem2reg
+- -early-cse-memssa
+- -instcombine
+- -jump-threading
+284:
+- -sroa
+- -reassociate
+- -indvars
+- -early-cse-memssa
+- -loop-rotate
+- -instcombine
+- -jump-threading
+- -speculative-execution
+- -simplifycfg
+285:
+- -mem2reg
+- -instcombine
+- -gvn
+286:
+- -sroa
+- -licm
+- -ipsccp
+- -instsimplify
+- -early-cse-memssa
+- -jump-threading
+- -simplifycfg
+287:
+- -gvn
+- -instcombine
+- -jump-threading
+288:
+- -early-cse-memssa
+- -instcombine
+- -slp-vectorizer
+- -early-cse-memssa
+- -mldst-motion
+- -loop-rotate
+- -indvars
+- -simplifycfg
+- -sroa
+289:
+- -sroa
+- -instcombine
+- -tailcallelim
+- -gvn
+- -simplifycfg
+290:
+- -simplifycfg
+- -mem2reg
+- -early-cse-memssa
+- -mldst-motion
+- -jump-threading
+- -instcombine
+- -sroa
+- -simplifycfg
+- -early-cse-memssa
+- -mldst-motion
+291:
+- -simplifycfg
+- -licm
+- -instcombine
+- -gvn
+- -indvars
+- -sroa
+- -early-cse-memssa
+292:
+- -instcombine
+- -sroa
+- -simplifycfg
+- -gvn
+293:
+- -instcombine
+- -sroa
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+294:
+- -sroa
+- -gvn
+- -simplifycfg
+295:
+- -mem2reg
+- -early-cse-memssa
+- -jump-threading
+- -instcombine
+296:
+- -sroa
+- -instcombine
+- -speculative-execution
+- -simplifycfg
+- -gvn
+- -indvars
+- -reassociate
+- -instcombine
+- -jump-threading
+- -gvn
+- -simplifycfg
+- -instcombine
+297:
+- -mem2reg
+- -instcombine
+- -speculative-execution
+- -simplifycfg
+- -instcombine
+- -gvn
+- -simplifycfg
+298:
+- -early-cse-memssa
+- -jump-threading
+- -dse
+- -sroa
+- -instcombine
+- -simplifycfg
+299:
+- -sroa
+- -instcombine
+- -early-cse-memssa
+300:
+- -sroa
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+301:
+- -early-cse-memssa
+- -instcombine
+- -gvn
+- -instcombine
+- -simplifycfg
+302:
+- -early-cse-memssa
+- -mem2reg
+- -simplifycfg
+- -instcombine
+- -gvn
+- -simplifycfg
+- -gvn
+303:
+- -licm
+- -sroa
+- -early-cse-memssa
+- -bdce
+- -jump-threading
+304:
+- -gvn
+- -simplifycfg
+- -gvn
+- -instcombine
+- -jump-threading
+305:
+- -sroa
+- -jump-threading
+- -simplifycfg
+- -gvn
+- -instcombine
+306:
+- -sroa
+- -instcombine
+- -simplifycfg
+- -correlated-propagation
+- -early-cse-memssa
+- -simplifycfg
+307:
+- -sroa
+- -licm
+- -early-cse-memssa
+- -mldst-motion
+- -jump-threading
+- -gvn
+308:
+- -instcombine
+- -tailcallelim
+- -sroa
+- -early-cse-memssa
+309:
+- -loop-rotate
+- -instcombine
+- -gvn
+- -mem2reg
+- -simplifycfg
+- -early-cse-memssa
+310:
+- -licm
+- -early-cse-memssa
+- -sroa
+- -jump-threading
+- -indvars
+- -simplifycfg
+- -instcombine
+- -gvn
+- -instcombine
+- -memcpyopt
+- -loop-rotate
+- -simplifycfg
+- -early-cse-memssa
+311:
+- -sroa
+- -simplifycfg
+- -gvn
+- -licm
+- -early-cse-memssa
+- -reassociate
+- -reassociate
+- -loop-rotate
+- -instcombine
+- -early-cse-memssa
+- -correlated-propagation
+- -simplifycfg
+312:
+- -mem2reg
+- -gvn
+- -simplifycfg
+- -instcombine
+313:
+- -sroa
+- -instsimplify
+- -jump-threading
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+314:
+- -sroa
+- -jump-threading
+- -indvars
+- -early-cse-memssa
+- -simplifycfg
+315:
+- -instcombine
+- -early-cse-memssa
+- -sroa
+- -simplifycfg
+- -gvn
+316:
+- -mem2reg
+- -jump-threading
+- -instcombine
+- -gvn
+- -simplifycfg
+- -memcpyopt
+- -tailcallelim
+- -slp-vectorizer
+- -gvn
+- -instcombine
+317:
+- -instcombine
+- -mem2reg
+- -instcombine
+- -gvn
+- -simplifycfg
+- -sroa
+- -indvars
+- -inferattrs
+- -licm
+- -speculative-execution
+- -jump-threading
+- -early-cse-memssa
+- -instsimplify
+- -simplifycfg
+318:
+- -gvn
+- -gvn
+- -mem2reg
+- -simplifycfg
+- -reassociate
+- -early-cse-memssa
+- -instcombine
+319:
+- -sroa
+- -instcombine
+- -slp-vectorizer
+- -early-cse-memssa
+- -simplifycfg
+320:
+- -early-cse-memssa
+- -simplifycfg
+- -mem2reg
+- -licm
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+321:
+- -sroa
+- -gvn
+322:
+- -licm
+- -mem2reg
+- -indvars
+- -loop-rotate
+- -early-cse-memssa
+- -bdce
+- -simplifycfg
+323:
+- -early-cse-memssa
+- -loop-rotate
+- -sroa
+- -instcombine
+- -gvn
+- -simplifycfg
+324:
+- -gvn
+- -sroa
+- -simplifycfg
+- -slp-vectorizer
+- -instcombine
+- -early-cse-memssa
+- -correlated-propagation
+325:
+- -sroa
+- -simplifycfg
+- -jump-threading
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+326:
+- -sroa
+- -licm
+- -early-cse-memssa
+- -simplifycfg
+327:
+- -early-cse-memssa
+- -instcombine
+- -early-cse-memssa
+- -mem2reg
+- -simplifycfg
+328:
+- -mem2reg
+- -early-cse-memssa
+- -instcombine
+- -jump-threading
+- -loop-unroll
+- -early-cse-memssa
+- -simplifycfg
+329:
+- -early-cse-memssa
+- -instcombine
+- -mem2reg
+- -jump-threading
+- -inferattrs
+- -loop-deletion
+- -simplifycfg
+- -early-cse-memssa
+- -instcombine
+- -loop-rotate
+- -simplifycfg
+- -instsimplify
+330:
+- -mem2reg
+- -early-cse-memssa
+- -jump-threading
+- -early-cse-memssa
+- -mldst-motion
+- -simplifycfg
+- -instcombine
+- -inferattrs
+- -indvars
+- -ipsccp
+- -simplifycfg
+- -early-cse-memssa
+- -instcombine
+331:
+- -mem2reg
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+332:
+- -mem2reg
+- -slp-vectorizer
+- -loop-rotate
+- -gvn
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+333:
+- -mem2reg
+- -licm
+- -instcombine
+- -gvn
+- -simplifycfg
+334:
+- -mem2reg
+- -instcombine
+- -early-cse-memssa
+- -jump-threading
+- -simplifycfg
+335:
+- -instcombine
+- -sroa
+- -early-cse-memssa
+- -simplifycfg
+336:
+- -early-cse-memssa
+- -sroa
+- -instcombine
+- -early-cse-memssa
+- -instcombine
+- -reassociate
+- -indvars
+- -mldst-motion
+- -licm
+- -early-cse-memssa
+- -simplifycfg
+337:
+- -licm
+- -indvars
+- -early-cse-memssa
+- -sroa
+- -loop-rotate
+- -simplifycfg
+- -early-cse-memssa
+338:
+- -early-cse-memssa
+- -simplifycfg
+- -gvn
+- -licm
+- -globalopt
+- -instcombine
+- -sroa
+- -simplifycfg
+- -adce
+- -gvn
+339:
+- -early-cse-memssa
+- -mem2reg
+- -instcombine
+- -speculative-execution
+- -simplifycfg
+- -early-cse-memssa
+340:
+- -gvn
+- -instcombine
+- -mem2reg
+- -tailcallelim
+- -memcpyopt
+- -licm
+- -gvn
+- -simplifycfg
+341:
+- -early-cse-memssa
+- -mem2reg
+- -tailcallelim
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+342:
+- -gvn
+- -instcombine
+- -simplifycfg
+- -ipsccp
+- -instcombine
+- -globalopt
+- -gvn
+343:
+- -simplifycfg
+- -sroa
+- -licm
+- -instcombine
+- -jump-threading
+- -early-cse-memssa
+344:
+- -sroa
+- -correlated-propagation
+- -simplifycfg
+- -reassociate
+- -licm
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+- -instsimplify
+345:
+- -early-cse-memssa
+- -sroa
+- -licm
+- -jump-threading
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+346:
+- -simplifycfg
+- -early-cse-memssa
+- -loop-rotate
+- -simplifycfg
+- -globalopt
+- -sroa
+- -gvn
+- -instcombine
+- -memcpyopt
+- -gvn
+- -reassociate
+- -simplifycfg
+347:
+- -licm
+- -mem2reg
+- -simplifycfg
+- -early-cse-memssa
+- -reassociate
+348:
+- -early-cse-memssa
+- -loop-vectorize
+- -mldst-motion
+- -sroa
+- -instcombine
+- -licm
+- -gvn
+- -simplifycfg
+- -instcombine
+- -correlated-propagation
+- -jump-threading
+- -early-cse-memssa
+- -simplifycfg
+349:
+- -instcombine
+- -mem2reg
+- -loop-rotate
+- -simplifycfg
+350:
+- -gvn
+- -instcombine
+- -simplifycfg
+- -mem2reg
+- -early-cse-memssa
+351:
+- -sroa
+- -correlated-propagation
+- -simplifycfg
+- -early-cse-memssa
+352:
+- -sroa
+- -jump-threading
+- -simplifycfg
+- -jump-threading
+- -ipsccp
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+353:
+- -instcombine
+- -mem2reg
+- -instcombine
+- -gvn
+- -sroa
+- -simplifycfg
+- -early-cse-memssa
+- -simplifycfg
+354:
+- -jump-threading
+- -mem2reg
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+- -jump-threading
+355:
+- -globalopt
+- -early-cse-memssa
+- -simplifycfg
+- -licm
+- -sroa
+- -instcombine
+- -early-cse-memssa
+- -jump-threading
+- -instsimplify
+- -bdce
+356:
+- -loop-rotate
+- -mem2reg
+- -mldst-motion
+- -simplifycfg
+- -instcombine
+- -jump-threading
+- -correlated-propagation
+- -indvars
+- -licm
+- -early-cse-memssa
+- -simplifycfg
+357:
+- -loop-rotate
+- -sroa
+- -correlated-propagation
+- -simplifycfg
+- -gvn
+- -instcombine
+358:
+- -sroa
+- -tailcallelim
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+- -jump-threading
+359:
+- -gvn
+- -gvn
+- -instcombine
+- -mem2reg
+- -simplifycfg
+- -early-cse-memssa
+- -jump-threading
+360:
+- -sroa
+- -indvars
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+- -mldst-motion
+- -instcombine
+- -gvn
+- -simplifycfg
+361:
+- -loop-rotate
+- -licm
+- -indvars
+- -mem2reg
+- -instcombine
+- -loop-idiom
+- -jump-threading
+- -loop-deletion
+- -early-cse-memssa
+- -simplifycfg
+362:
+- -inferattrs
+- -simplifycfg
+- -early-cse-memssa
+- -instcombine
+- -early-cse-memssa
+- -jump-threading
+- -mem2reg
+- -simplifycfg
+363:
+- -licm
+- -inline
+- -gvn
+- -simplifycfg
+- -instcombine
+364:
+- -simplifycfg
+- -sroa
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+- -dse
+- -early-cse-memssa
+365:
+- -gvn
+- -gvn
+- -early-cse-memssa
+- -instcombine
+- -gvn
+- -adce
+366:
+- -simplifycfg
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+- -sroa
+- -early-cse-memssa
+367:
+- -sroa
+- -simplifycfg
+- -jump-threading
+- -early-cse-memssa
+- -reassociate
+- -reassociate
+- -slp-vectorizer
+- -mldst-motion
+- -loop-rotate
+- -simplifycfg
+- -early-cse-memssa
+368:
+- -sroa
+- -jump-threading
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+- -jump-threading
+369:
+- -mem2reg
+- -jump-threading
+- -early-cse-memssa
+370:
+- -inferattrs
+- -tailcallelim
+- -mem2reg
+- -instcombine
+- -dse
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+371:
+- -gvn
+- -adce
+- -mem2reg
+- -jump-threading
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+372:
+- -early-cse-memssa
+- -slp-vectorizer
+- -simplifycfg
+- -instcombine
+- -sroa
+- -early-cse-memssa
+373:
+- -gvn
+- -simplifycfg
+- -instcombine
+- -sroa
+- -early-cse-memssa
+- -simplifycfg
+374:
+- -mem2reg
+- -instcombine
+375:
+- -early-cse-memssa
+- -instcombine
+- -indvars
+- -jump-threading
+- -licm
+- -mem2reg
+- -slp-vectorizer
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+376:
+- -early-cse-memssa
+- -instcombine
+- -loop-rotate
+- -sroa
+- -simplifycfg
+377:
+- -simplifycfg
+- -early-cse-memssa
+- -jump-threading
+- -instcombine
+- -mem2reg
+- -early-cse-memssa
+- -simplifycfg
+378:
+- -gvn
+- -correlated-propagation
+- -mem2reg
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+379:
+- -gvn
+- -instcombine
+- -gvn
+- -simplifycfg
+380:
+- -sroa
+- -early-cse-memssa
+- -dse
+- -instcombine
+- -jump-threading
+381:
+- -sroa
+- -instcombine
+- -jump-threading
+- -gvn
+382:
+- -mem2reg
+- -instcombine
+- -early-cse-memssa
+- -globalopt
+- -loop-rotate
+- -simplifycfg
+- -correlated-propagation
+- -simplifycfg
+383:
+- -sroa
+- -instcombine
+- -simplifycfg
+- -loop-unswitch
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+384:
+- -sroa
+- -jump-threading
+- -early-cse-memssa
+- -instcombine
+385:
+- -sroa
+- -early-cse-memssa
+- -mldst-motion
+- -simplifycfg
+386:
+- -mem2reg
+- -jump-threading
+- -instcombine
+- -early-cse-memssa
+387:
+- -mem2reg
+- -instcombine
+- -licm
+- -adce
+- -early-cse-memssa
+- -simplifycfg
+388:
+- -early-cse-memssa
+- -jump-threading
+- -mem2reg
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+- -early-cse-memssa
+389:
+- -sroa
+- -ipsccp
+390:
+- -sroa
+- -early-cse-memssa
+- -slp-vectorizer
+- -gvn
+- -licm
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+391:
+- -sroa
+- -gvn
+- -instcombine
+392:
+- -mem2reg
+- -div-rem-pairs
+- -simplifycfg
+- -indvars
+- -speculative-execution
+- -instcombine
+- -reassociate
+- -reassociate
+- -early-cse-memssa
+- -reassociate
+- -simplifycfg
+- -licm
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+393:
+- -gvn
+- -instcombine
+- -sroa
+- -mldst-motion
+- -instcombine
+- -simplifycfg
+- -gvn
+394:
+- -jump-threading
+- -sroa
+- -ipsccp
+- -loop-deletion
+- -early-cse-memssa
+- -jump-threading
+- -instcombine
+- -simplifycfg
+395:
+- -early-cse-memssa
+- -simplifycfg
+- -mem2reg
+- -loop-rotate
+- -early-cse-memssa
+- -instcombine
+- -jump-threading
+396:
+- -sroa
+- -early-cse-memssa
+- -licm
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+- -memcpyopt
+- -bdce
+397:
+- -instcombine
+- -gvn
+- -instcombine
+- -simplifycfg
+- -gvn
+398:
+- -licm
+- -early-cse-memssa
+- -mem2reg
+- -reassociate
+- -gvn
+- -simplifycfg
+- -instcombine
+- -gvn
+399:
+- -mem2reg
+- -simplifycfg
+- -gvn
+400:
+- -sroa
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+- -jump-threading
+- -correlated-propagation
+- -licm
+401:
+- -early-cse-memssa
+- -mem2reg
+- -instcombine
+- -correlated-propagation
+- -simplifycfg
+402:
+- -simplifycfg
+- -jump-threading
+- -mem2reg
+- -instcombine
+- -jump-threading
+- -simplifycfg
+- -early-cse-memssa
+403:
+- -instcombine
+- -early-cse-memssa
+- -jump-threading
+- -mem2reg
+- -simplifycfg
+- -gvn
+- -jump-threading
+404:
+- -sroa
+- -early-cse-memssa
+- -jump-threading
+- -instcombine
+- -correlated-propagation
+- -early-cse-memssa
+405:
+- -mem2reg
+- -instcombine
+- -indvars
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+406:
+- -mem2reg
+- -early-cse-memssa
+- -dse
+- -indvars
+- -instcombine
+- -simplifycfg
+407:
+- -loop-rotate
+- -sroa
+- -gvn
+- -simplifycfg
+- -instcombine
+408:
+- -dse
+- -early-cse-memssa
+- -instcombine
+- -sroa
+- -jump-threading
+- -early-cse-memssa
+409:
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+- -sroa
+- -instcombine
+410:
+- -licm
+- -mem2reg
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+411:
+- -early-cse-memssa
+- -slp-vectorizer
+- -instcombine
+- -simplifycfg
+- -mem2reg
+- -gvn
+412:
+- -simplifycfg
+- -mem2reg
+- -inferattrs
+- -jump-threading
+- -licm
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+- -reassociate
+413:
+- -mem2reg
+- -loop-unroll
+- -gvn
+- -instcombine
+- -simplifycfg
+414:
+- -early-cse-memssa
+- -mem2reg
+- -jump-threading
+- -correlated-propagation
+- -licm
+- -instcombine
+- -globalopt
+- -simplifycfg
+- -instcombine
+- -correlated-propagation
+- -early-cse-memssa
+- -simplifycfg
+415:
+- -early-cse-memssa
+- -jump-threading
+- -dse
+- -indvars
+- -slp-vectorizer
+- -mem2reg
+- -loop-rotate
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+416:
+- -sroa
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+- -indvars
+- -instcombine
+- -jump-threading
+- -early-cse-memssa
+- -licm
+- -simplifycfg
+- -early-cse-memssa
+- -reassociate
+417:
+- -gvn
+- -instcombine
+- -early-cse-memssa
+- -mldst-motion
+- -instcombine
+- -simplifycfg
+418:
+- -instcombine
+- -gvn
+- -sroa
+- -jump-threading
+- -simplifycfg
+419:
+- -gvn
+- -instcombine
+- -jump-threading
+- -instcombine
+- -sroa
+- -simplifycfg
+- -licm
+- -early-cse-memssa
+420:
+- -reassociate
+- -sroa
+- -reassociate
+- -gvn
+- -simplifycfg
+- -dse
+421:
+- -gvn
+- -mldst-motion
+- -sroa
+- -instcombine
+- -jump-threading
+- -simplifycfg
+- -early-cse-memssa
+422:
+- -instcombine
+- -loop-rotate
+- -mem2reg
+- -licm
+- -gvn
+- -simplifycfg
+423:
+- -licm
+- -reassociate
+- -gvn
+- -instcombine
+- -simplifycfg
+- -jump-threading
+- -slp-vectorizer
+- -gvn
+- -sroa
+- -bdce
+424:
+- -mem2reg
+- -simplifycfg
+- -early-cse-memssa
+- -instcombine
+- -licm
+- -memcpyopt
+- -simplifycfg
+- -early-cse-memssa
+425:
+- -simplifycfg
+- -sroa
+- -early-cse-memssa
+- -mldst-motion
+- -dse
+- -indvars
+- -instcombine
+- -gvn
+- -simplifycfg
+426:
+- -mem2reg
+- -simplifycfg
+- -instcombine
+- -gvn
+- -correlated-propagation
+- -simplifycfg
+- -early-cse-memssa
+- -simplifycfg
+427:
+- -mem2reg
+- -jump-threading
+- -instcombine
+- -simplifycfg
+- -gvn
+428:
+- -gvn
+- -instcombine
+- -simplifycfg
+- -licm
+- -jump-threading
+- -early-cse-memssa
+429:
+- -sroa
+- -aggressive-instcombine
+- -licm
+- -mldst-motion
+- -early-cse-memssa
+- -simplifycfg
+430:
+- -mem2reg
+- -simplifycfg
+- -early-cse-memssa
+- -jump-threading
+- -instcombine
+- -simplifycfg
+431:
+- -early-cse-memssa
+- -slp-vectorizer
+- -simplifycfg
+- -early-cse-memssa
+- -sroa
+432:
+- -jump-threading
+- -gvn
+- -tailcallelim
+- -instcombine
+- -simplifycfg
+- -gvn
+- -instcombine
+- -jump-threading
+433:
+- -sroa
+- -early-cse-memssa
+- -instcombine
+- -mldst-motion
+- -jump-threading
+- -simplifycfg
+434:
+- -simplifycfg
+- -mem2reg
+- -reassociate
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+435:
+- -gvn
+- -simplifycfg
+- -instcombine
+- -sroa
+- -early-cse-memssa
+436:
+- -sroa
+- -ipsccp
+- -early-cse-memssa
+- -loop-rotate
+- -indvars
+- -instcombine
+- -simplifycfg
+437:
+- -sroa
+- -licm
+- -inferattrs
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+438:
+- -aggressive-instcombine
+- -sroa
+- -early-cse-memssa
+- -simplifycfg
+439:
+- -sroa
+- -gvn
+- -simplifycfg
+- -instcombine
+- -jump-threading
+- -simplifycfg
+- -early-cse-memssa
+440:
+- -sroa
+- -simplifycfg
+- -licm
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+441:
+- -early-cse-memssa
+- -gvn
+- -instcombine
+- -indvars
+- -early-cse-memssa
+- -memcpyopt
+- -reassociate
+- -simplifycfg
+442:
+- -mem2reg
+- -instcombine
+- -jump-threading
+- -instcombine
+- -early-cse-memssa
+- -ipsccp
+443:
+- -instcombine
+- -mem2reg
+- -simplifycfg
+- -early-cse-memssa
+444:
+- -early-cse-memssa
+- -mem2reg
+- -licm
+- -slp-vectorizer
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+445:
+- -sroa
+- -jump-threading
+- -simplifycfg
+- -gvn
+- -reassociate
+- -instcombine
+- -simplifycfg
+- -instcombine
+- -simplifycfg
+446:
+- -early-cse-memssa
+- -mem2reg
+- -simplifycfg
+- -jump-threading
+- -early-cse-memssa
+- -instcombine
+- -dse
+447:
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+- -sroa
+- -jump-threading
+448:
+- -early-cse-memssa
+- -gvn
+- -instcombine
+- -loop-rotate
+- -gvn
+- -simplifycfg
+449:
+- -sroa
+- -ipsccp
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+450:
+- -mem2reg
+- -early-cse-memssa
+- -dse
+- -simplifycfg
+451:
+- -loop-sink
+- -sroa
+- -gvn
+- -correlated-propagation
+- -instcombine
+- -simplifycfg
+- -licm
+- -jump-threading
+- -gvn
+- -loop-rotate
+- -simplifycfg
+- -jump-threading
+- -instcombine
+- -inferattrs
+- -simplifycfg
+- -early-cse-memssa
+- -simplifycfg
+452:
+- -sroa
+- -jump-threading
+- -gvn
+- -instsimplify
+453:
+- -mem2reg
+- -jump-threading
+- -simplifycfg
+- -instcombine
+- -gvn
+- -simplifycfg
+- -instcombine
+454:
+- -licm
+- -instcombine
+- -early-cse-memssa
+- -gvn
+- -mem2reg
+- -instcombine
+- -gvn
+- -simplifycfg
+455:
+- -instcombine
+- -mem2reg
+- -jump-threading
+- -gvn
+- -simplifycfg
+- -gvn
+- -instcombine
+456:
+- -mem2reg
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+457:
+- -early-cse-memssa
+- -instcombine
+- -mem2reg
+458:
+- -mem2reg
+- -instcombine
+- -jump-threading
+- -gvn
+- -simplifycfg
+459:
+- -early-cse-memssa
+- -memcpyopt
+- -mem2reg
+- -mldst-motion
+- -memcpyopt
+- -simplifycfg
+- -early-cse-memssa
+- -instsimplify
+460:
+- -mem2reg
+- -tailcallelim
+- -loop-rotate
+- -slp-vectorizer
+- -instcombine
+- -slp-vectorizer
+- -gvn
+- -indvars
+- -reassociate
+- -mldst-motion
+- -simplifycfg
+- -jump-threading
+- -correlated-propagation
+- -instcombine
+- -mldst-motion
+- -speculative-execution
+- -licm
+- -gvn
+- -simplifycfg
+461:
+- -sroa
+- -simplifycfg
+- -early-cse-memssa
+- -jump-threading
+- -loop-rotate
+- -early-cse-memssa
+- -simplifycfg
+462:
+- -licm
+- -early-cse-memssa
+- -indvars
+- -mem2reg
+- -jump-threading
+- -instcombine
+- -bdce
+- -simplifycfg
+- -early-cse-memssa
+463:
+- -early-cse-memssa
+- -reassociate
+- -speculative-execution
+- -gvn
+- -mldst-motion
+- -instcombine
+- -simplifycfg
+- -mldst-motion
+464:
+- -early-cse-memssa
+- -sroa
+- -memcpyopt
+- -slp-vectorizer
+- -simplifycfg
+- -instcombine
+- -jump-threading
+- -tailcallelim
+- -early-cse-memssa
+- -simplifycfg
+465:
+- -sroa
+- -licm
+- -gvn
+- -simplifycfg
+- -instcombine
+466:
+- -simplifycfg
+- -mem2reg
+- -loop-load-elim
+- -jump-threading
+- -gvn
+- -instcombine
+- -simplifycfg
+- -gvn
+467:
+- -sroa
+- -slp-vectorizer
+- -gvn
+468:
+- -mem2reg
+- -gvn
+- -instcombine
+- -simplifycfg
+- -gvn
+- -inferattrs
+- -early-cse-memssa
+- -simplifycfg
+469:
+- -mem2reg
+- -jump-threading
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+470:
+- -early-cse-memssa
+- -instcombine
+- -mem2reg
+- -slp-vectorizer
+- -instcombine
+- -sroa
+- -simplifycfg
+- -early-cse-memssa
+471:
+- -mem2reg
+- -instcombine
+- -gvn
+- -bdce
+472:
+- -instcombine
+- -mem2reg
+- -licm
+- -early-cse-memssa
+- -memcpyopt
+- -jump-threading
+- -gvn
+- -loop-sink
+- -simplifycfg
+- -early-cse-memssa
+473:
+- -mem2reg
+- -simplifycfg
+- -early-cse-memssa
+- -instcombine
+- -dse
+474:
+- -sroa
+- -speculative-execution
+- -early-cse-memssa
+- -jump-threading
+- -loop-simplify
+- -instcombine
+- -licm
+- -jump-threading
+- -early-cse-memssa
+- -simplifycfg
+475:
+- -gvn
+- -dse
+- -instcombine
+- -jump-threading
+- -mem2reg
+476:
+- -sroa
+- -gvn
+- -jump-threading
+- -simplifycfg
+477:
+- -early-cse-memssa
+- -sroa
+- -simplifycfg
+478:
+- -early-cse-memssa
+- -strip-dead-prototypes
+- -licm
+- -sroa
+- -early-cse-memssa
+- -bdce
+- -simplifycfg
+- -instcombine
+479:
+- -instcombine
+- -sroa
+- -gvn
+480:
+- -sroa
+- -sccp
+- -jump-threading
+- -simplifycfg
+- -adce
+481:
+- -sroa
+- -jump-threading
+- -licm
+- -loop-rotate
+- -inferattrs
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+482:
+- -simplifycfg
+- -sroa
+- -loop-unswitch
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+- -simplifycfg
+483:
+- -instcombine
+- -mem2reg
+- -simplifycfg
+- -early-cse-memssa
+- -simplifycfg
+- -early-cse-memssa
+484:
+- -simplifycfg
+- -sroa
+- -jump-threading
+- -gvn
+- -simplifycfg
+- -instcombine
+485:
+- -licm
+- -mem2reg
+- -gvn
+- -instcombine
+- -simplifycfg
+486:
+- -mem2reg
+- -loop-rotate
+- -simplifycfg
+- -instcombine
+- -licm
+- -sroa
+- -indvars
+- -early-cse-memssa
+- -simplifycfg
+487:
+- -instcombine
+- -simplifycfg
+- -sroa
+- -instcombine
+- -jump-threading
+- -early-cse-memssa
+488:
+- -simplifycfg
+- -sroa
+- -jump-threading
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+489:
+- -instcombine
+- -mem2reg
+- -indvars
+- -instcombine
+- -mldst-motion
+- -early-cse-memssa
+- -simplifycfg
+490:
+- -inferattrs
+- -mem2reg
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+- -instcombine
+- -loop-rotate
+- -simplifycfg
+- -early-cse-memssa
+491:
+- -early-cse-memssa
+- -mldst-motion
+- -sroa
+- -instcombine
+- -simplifycfg
+- -gvn
+492:
+- -mem2reg
+- -inferattrs
+- -instcombine
+- -indvars
+- -gvn
+- -adce
+- -simplifycfg
+493:
+- -instcombine
+- -jump-threading
+- -sroa
+- -instcombine
+- -slp-vectorizer
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+494:
+- -gvn
+- -mem2reg
+- -early-cse-memssa
+- -dse
+- -memcpyopt
+- -simplifycfg
+- -instcombine
+495:
+- -sroa
+- -simplifycfg
+- -loop-rotate
+496:
+- -early-cse-memssa
+- -sroa
+- -simplifycfg
+- -instcombine
+497:
+- -simplifycfg
+- -gvn
+- -dse
+- -instcombine
+- -sroa
+- -simplifycfg
+- -early-cse-memssa
+498:
+- -licm
+- -gvn
+- -instcombine
+- -loop-rotate
+- -jump-threading
+- -sroa
+- -correlated-propagation
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+499:
+- -sroa
+- -instcombine
+- -slp-vectorizer
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+500:
+- -mem2reg
+- -instcombine
+- -early-cse-memssa
+- -jump-threading
+501:
+- -instcombine
+- -mem2reg
+502:
+- -instcombine
+- -gvn
+- -mem2reg
+- -jump-threading
+- -reassociate
+503:
+- -dse
+- -sroa
+- -licm
+- -simplifycfg
+- -early-cse-memssa
+- -instcombine
+504:
+- -tailcallelim
+- -sroa
+- -early-cse-memssa
+- -simplifycfg
+- -jump-threading
+- -gvn
+- -instcombine
+- -speculative-execution
+- -simplifycfg
+- -gvn
+- -instcombine
+505:
+- -licm
+- -loop-rotate
+- -indvars
+- -simplifycfg
+- -instcombine
+- -inferattrs
+- -gvn
+- -jump-threading
+- -instcombine
+- -indvars
+- -early-cse-memssa
+- -simplifycfg
+506:
+- -early-cse-memssa
+- -mldst-motion
+- -gvn
+- -instcombine
+- -simplifycfg
+507:
+- -simplifycfg
+- -sroa
+- -gvn
+- -simplifycfg
+- -instcombine
+508:
+- -instcombine
+- -sroa
+- -jump-threading
+- -early-cse-memssa
+- -instcombine
+- -mldst-motion
+- -simplifycfg
+- -early-cse-memssa
+509:
+- -gvn
+- -instcombine
+- -div-rem-pairs
+- -simplifycfg
+510:
+- -inferattrs
+- -sroa
+- -jump-threading
+- -early-cse-memssa
+- -sccp
+- -simplifycfg
+- -instcombine
+511:
+- -instcombine
+- -mem2reg
+- -early-cse-memssa
+512:
+- -sroa
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+- -licm
+- -indvars
+- -simplifycfg
+- -early-cse-memssa
+513:
+- -mem2reg
+- -gvn
+- -jump-threading
+514:
+- -instcombine
+- -early-cse-memssa
+- -indvars
+- -gvn
+- -simplifycfg
+- -instcombine
+515:
+- -licm
+- -early-cse-memssa
+- -sroa
+- -sccp
+- -jump-threading
+- -instcombine
+- -simplifycfg
+516:
+- -gvn
+- -simplifycfg
+- -sroa
+- -bdce
+- -gvn
+- -simplifycfg
+517:
+- -gvn
+- -instcombine
+- -sroa
+- -simplifycfg
+- -gvn
+518:
+- -instcombine
+- -sroa
+- -early-cse-memssa
+- -reassociate
+- -gvn
+- -speculative-execution
+- -simplifycfg
+- -instcombine
+- -jump-threading
+519:
+- -jump-threading
+- -instcombine
+- -gvn
+- -instcombine
+- -simplifycfg
+- -mem2reg
+- -gvn
+520:
+- -gvn
+- -instcombine
+- -inferattrs
+- -early-cse-memssa
+- -loop-load-elim
+- -simplifycfg
+521:
+- -sroa
+- -instcombine
+- -jump-threading
+- -gvn
+- -simplifycfg
+- -instcombine
+522:
+- -loop-sink
+- -mem2reg
+- -simplifycfg
+- -loop-unswitch
+- -gvn
+- -simplifycfg
+523:
+- -instcombine
+- -gvn
+- -jump-threading
+- -instcombine
+- -simplifycfg
+- -gvn
+524:
+- -mem2reg
+- -instcombine
+- -dse
+- -gvn
+- -slp-vectorizer
+- -dse
+- -simplifycfg
+- -early-cse-memssa
+525:
+- -early-cse-memssa
+- -mem2reg
+- -instcombine
+- -jump-threading
+526:
+- -sroa
+- -simplifycfg
+- -gvn
+527:
+- -early-cse-memssa
+- -mem2reg
+- -instcombine
+- -gvn
+- -simplifycfg
+528:
+- -mem2reg
+- -loop-rotate
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+- -loop-deletion
+- -instcombine
+- -indvars
+529:
+- -sroa
+- -instcombine
+530:
+- -licm
+- -jump-threading
+- -sroa
+- -early-cse-memssa
+- -instcombine
+531:
+- -early-cse-memssa
+- -dse
+- -mem2reg
+- -instcombine
+- -simplifycfg
+532:
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+- -sroa
+- -licm
+- -reassociate
+- -loop-rotate
+- -simplifycfg
+- -indvars
+- -early-cse-memssa
+533:
+- -gvn
+- -instcombine
+- -simplifycfg
+534:
+- -instcombine
+- -early-cse-memssa
+- -slp-vectorizer
+- -mem2reg
+- -gvn
+- -instcombine
+- -simplifycfg
+- -dse
+- -early-cse-memssa
+535:
+- -sroa
+- -gvn
+- -simplifycfg
+- -aggressive-instcombine
+536:
+- -early-cse-memssa
+- -simplifycfg
+- -early-cse-memssa
+- -mem2reg
+- -simplifycfg
+537:
+- -simplifycfg
+- -early-cse-memssa
+- -sroa
+- -simplifycfg
+- -instcombine
+538:
+- -instcombine
+- -early-cse-memssa
+- -gvn
+- -simplifycfg
+- -jump-threading
+- -ipsccp
+- -instcombine
+- -simplifycfg
+539:
+- -gvn
+- -mem2reg
+- -simplifycfg
+- -instcombine
+540:
+- -sroa
+- -simplifycfg
+- -indvars
+- -early-cse-memssa
+- -ipsccp
+- -instcombine
+- -jump-threading
+541:
+- -inferattrs
+- -simplifycfg
+- -sroa
+- -gvn
+- -instcombine
+- -simplifycfg
+542:
+- -sroa
+- -gvn
+- -instcombine
+- -jump-threading
+543:
+- -instcombine
+- -gvn
+- -instcombine
+- -simplifycfg
+- -indvars
+- -gvn
+- -instcombine
+544:
+- -sroa
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+- -jump-threading
+545:
+- -sroa
+- -instcombine
+- -jump-threading
+- -licm
+- -early-cse-memssa
+546:
+- -sroa
+- -mldst-motion
+- -instcombine
+- -mldst-motion
+- -instcombine
+- -simplifycfg
+- -gvn
+547:
+- -gvn
+- -sroa
+- -instcombine
+- -correlated-propagation
+- -simplifycfg
+- -gvn
+548:
+- -instcombine
+- -mem2reg
+- -early-cse-memssa
+- -simplifycfg
+- -gvn
+- -instcombine
+549:
+- -mem2reg
+- -mldst-motion
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+- -ipsccp
+- -simplifycfg
+- -instcombine
+550:
+- -sroa
+- -gvn
+- -jump-threading
+- -memcpyopt
+- -instcombine
+551:
+- -simplifycfg
+- -sroa
+- -mldst-motion
+- -simplifycfg
+- -early-cse-memssa
+552:
+- -simplifycfg
+- -sroa
+- -jump-threading
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+553:
+- -mem2reg
+- -licm
+- -instcombine
+- -jump-threading
+- -loop-unswitch
+- -early-cse-memssa
+- -loop-deletion
+- -early-cse-memssa
+- -simplifycfg
+- -instsimplify
+554:
+- -jump-threading
+- -early-cse-memssa
+- -gvn
+- -jump-threading
+- -instcombine
+- -indvars
+- -inferattrs
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+- -sroa
+555:
+- -instcombine
+- -mem2reg
+- -speculative-execution
+- -simplifycfg
+- -early-cse-memssa
+- -instcombine
+- -correlated-propagation
+- -simplifycfg
+- -early-cse-memssa
+- -jump-threading
+- -reassociate
+556:
+- -jump-threading
+- -tailcallelim
+- -gvn
+- -instcombine
+557:
+- -early-cse-memssa
+- -mem2reg
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+- -adce
+558:
+- -mem2reg
+- -instcombine
+- -licm
+- -gvn
+- -simplifycfg
+559:
+- -reassociate
+- -sroa
+- -instcombine
+- -gvn
+- -simplifycfg
+560:
+- -mem2reg
+- -licm
+- -simplifycfg
+- -gvn
+- -slp-vectorizer
+- -simplifycfg
+- -instcombine
+561:
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+- -instcombine
+- -loop-rotate
+- -sroa
+- -gvn
+- -jump-threading
+562:
+- -mem2reg
+- -simplifycfg
+- -instcombine
+- -gvn
+563:
+- -mem2reg
+- -simplifycfg
+- -gvn
+- -instcombine
+564:
+- -jump-threading
+- -mem2reg
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+- -jump-threading
+565:
+- -jump-threading
+- -sroa
+- -simplifycfg
+- -early-cse-memssa
+- -reassociate
+- -memcpyopt
+- -slp-vectorizer
+- -loop-unroll
+- -correlated-propagation
+- -gvn
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+566:
+- -licm
+- -gvn
+- -jump-threading
+- -instcombine
+- -simplifycfg
+567:
+- -licm
+- -tailcallelim
+- -gvn
+- -mldst-motion
+- -slp-vectorizer
+- -jump-threading
+- -instcombine
+- -simplifycfg
+- -mldst-motion
+- -correlated-propagation
+- -sroa
+- -simplifycfg
+- -early-cse-memssa
+568:
+- -early-cse-memssa
+- -simplifycfg
+- -correlated-propagation
+- -instcombine
+- -early-cse-memssa
+- -correlated-propagation
+- -licm
+- -sroa
+- -instcombine
+- -indvars
+- -adce
+- -simplifycfg
+- -early-cse-memssa
+569:
+- -early-cse-memssa
+- -loop-rotate
+- -mem2reg
+- -correlated-propagation
+- -simplifycfg
+- -instcombine
+570:
+- -early-cse-memssa
+- -simplifycfg
+- -memcpyopt
+- -mem2reg
+- -early-cse-memssa
+- -instcombine
+- -jump-threading
+571:
+- -sroa
+- -indvars
+- -licm
+- -gvn
+- -simplifycfg
+- -instcombine
+572:
+- -mem2reg
+- -instcombine
+- -gvn
+- -simplifycfg
+- -jump-threading
+- -instcombine
+573:
+- -aggressive-instcombine
+- -early-cse-memssa
+- -sroa
+- -simplifycfg
+- -gvn
+574:
+- -loop-unswitch
+- -mem2reg
+- -gvn
+- -licm
+- -jump-threading
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+- -inferattrs
+- -early-cse-memssa
+- -simplifycfg
+575:
+- -jump-threading
+- -sroa
+- -early-cse-memssa
+- -simplifycfg
+- -licm
+- -mldst-motion
+- -gvn
+- -loop-rotate
+- -instcombine
+- -indvars
+- -simplifycfg
+- -early-cse-memssa
+- -correlated-propagation
+- -bdce
+576:
+- -early-cse-memssa
+- -mem2reg
+- -simplifycfg
+- -gvn
+- -instcombine
+- -simplifycfg
+577:
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+- -sroa
+578:
+- -jump-threading
+- -gvn
+- -jump-threading
+- -instcombine
+- -sroa
+- -gvn
+- -simplifycfg
+579:
+- -early-cse-memssa
+- -instcombine
+- -sroa
+- -simplifycfg
+- -loop-rotate
+- -instcombine
+- -early-cse-memssa
+580:
+- -simplifycfg
+- -instcombine
+- -sroa
+- -licm
+- -indvars
+- -early-cse-memssa
+- -instcombine
+- -early-cse-memssa
+581:
+- -dse
+582:
+- -mem2reg
+- -instcombine
+- -speculative-execution
+- -simplifycfg
+- -gvn
+- -jump-threading
+- -bdce
+583:
+- -jump-threading
+- -sroa
+- -loop-unswitch
+- -early-cse-memssa
+- -loop-rotate
+- -simplifycfg
+- -instcombine
+- -jump-threading
+584:
+- -mem2reg
+- -instcombine
+- -jump-threading
+- -early-cse-memssa
+- -simplifycfg
+585:
+- -mem2reg
+- -jump-threading
+- -gvn
+- -licm
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+586:
+- -early-cse-memssa
+- -sroa
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+587:
+- -sroa
+- -instcombine
+- -loop-rotate
+- -simplifycfg
+- -indvars
+588:
+- -jump-threading
+- -sroa
+- -gvn
+- -simplifycfg
+589:
+- -mem2reg
+- -simplifycfg
+- -gvn
+- -bdce
+- -simplifycfg
+590:
+- -instcombine
+- -mem2reg
+- -instcombine
+- -licm
+- -sroa
+- -slp-vectorizer
+- -gvn
+- -instsimplify
+- -simplifycfg
+591:
+- -jump-threading
+- -mem2reg
+- -aggressive-instcombine
+- -reassociate
+- -licm
+- -correlated-propagation
+- -indvars
+- -gvn
+- -bdce
+- -simplifycfg
+592:
+- -sroa
+- -instcombine
+- -simplifycfg
+- -gvn
+- -jump-threading
+- -instcombine
+593:
+- -mem2reg
+- -jump-threading
+- -early-cse-memssa
+- -speculative-execution
+- -early-cse-memssa
+- -sroa
+- -instcombine
+594:
+- -mem2reg
+- -instcombine
+- -simplifycfg
+- -speculative-execution
+- -jump-threading
+- -early-cse-memssa
+- -instcombine
+595:
+- -gvn
+- -simplifycfg
+- -sroa
+- -instcombine
+- -speculative-execution
+- -early-cse-memssa
+- -simplifycfg
+- -reassociate
+- -gvn
+596:
+- -simplifycfg
+- -instcombine
+- -sroa
+- -gvn
+- -simplifycfg
+- -instcombine
+597:
+- -mem2reg
+- -indvars
+- -loop-rotate
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+598:
+- -aggressive-instcombine
+- -mem2reg
+- -gvn
+- -indvars
+- -gvn
+- -simplifycfg
+599:
+- -gvn
+- -mem2reg
+- -reassociate
+- -jump-threading
+- -simplifycfg
+- -gvn
+- -instcombine
+600:
+- -gvn
+- -instcombine
+- -jump-threading
+- -gvn
+- -instcombine
+601:
+- -sroa
+- -instcombine
+- -licm
+- -simplifycfg
+- -gvn
+602:
+- -sroa
+- -instcombine
+- -simplifycfg
+- -instcombine
+- -gvn
+- -instcombine
+- -early-cse-memssa
+- -correlated-propagation
+- -reassociate
+603:
+- -sroa
+- -tailcallelim
+- -early-cse-memssa
+- -jump-threading
+- -instcombine
+604:
+- -reassociate
+- -early-cse-memssa
+- -mem2reg
+- -jump-threading
+- -reassociate
+- -instcombine
+- -early-cse-memssa
+605:
+- -early-cse-memssa
+- -mem2reg
+- -instcombine
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+- -jump-threading
+606:
+- -early-cse-memssa
+- -mldst-motion
+- -sroa
+- -licm
+- -early-cse-memssa
+- -ipsccp
+- -simplifycfg
+- -instcombine
+607:
+- -simplifycfg
+- -gvn
+- -instcombine
+- -mem2reg
+- -gvn
+608:
+- -early-cse-memssa
+- -simplifycfg
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+609:
+- -gvn
+- -instcombine
+- -simplifycfg
+- -jump-threading
+610:
+- -mem2reg
+- -instcombine
+- -simplifycfg
+611:
+- -instcombine
+- -sroa
+- -licm
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+612:
+- -early-cse-memssa
+- -instcombine
+- -mem2reg
+- -gvn
+613:
+- -tailcallelim
+- -early-cse-memssa
+- -aggressive-instcombine
+- -early-cse-memssa
+- -simplifycfg
+- -mem2reg
+614:
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+- -gvn
+- -sroa
+- -simplifycfg
+615:
+- -sroa
+- -instcombine
+- -gvn
+- -instcombine
+- -simplifycfg
+616:
+- -loop-rotate
+- -mem2reg
+- -jump-threading
+- -licm
+- -loop-rotate
+- -early-cse-memssa
+- -simplifycfg
+617:
+- -licm
+- -loop-rotate
+- -early-cse-memssa
+- -mem2reg
+- -simplifycfg
+- -correlated-propagation
+- -loop-idiom
+- -instcombine
+- -simplifycfg
+- -gvn
+618:
+- -loop-rotate
+- -gvn
+- -instcombine
+- -mem2reg
+- -simplifycfg
+619:
+- -mem2reg
+- -licm
+- -loop-rotate
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+620:
+- -aggressive-instcombine
+- -mem2reg
+- -slp-vectorizer
+- -simplifycfg
+- -early-cse-memssa
+621:
+- -mem2reg
+- -loop-deletion
+- -gvn
+- -speculative-execution
+- -sccp
+- -instcombine
+- -simplifycfg
+- -jump-threading
+- -correlated-propagation
+- -gvn
+- -instcombine
+622:
+- -loop-load-elim
+- -sroa
+- -jump-threading
+- -simplifycfg
+- -loop-unswitch
+- -instcombine
+- -early-cse-memssa
+623:
+- -loop-rotate
+- -early-cse-memssa
+- -mem2reg
+- -simplifycfg
+624:
+- -sroa
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+- -slp-vectorizer
+625:
+- -licm
+- -sroa
+- -adce
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+626:
+- -simplifycfg
+- -sroa
+- -early-cse-memssa
+- -adce
+- -simplifycfg
+627:
+- -instcombine
+- -sroa
+- -early-cse-memssa
+- -jump-threading
+- -simplifycfg
+628:
+- -early-cse-memssa
+- -sroa
+- -instcombine
+- -dse
+- -simplifycfg
+- -early-cse-memssa
+629:
+- -instcombine
+- -gvn
+- -indvars
+- -early-cse-memssa
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+630:
+- -jump-threading
+- -tailcallelim
+- -gvn
+- -simplifycfg
+- -gvn
+- -simplifycfg
+- -jump-threading
+- -instcombine
+- -simplifycfg
+631:
+- -early-cse-memssa
+- -instcombine
+- -sroa
+- -jump-threading
+- -ipsccp
+- -simplifycfg
+- -early-cse-memssa
+- -instcombine
+- -jump-threading
+632:
+- -gvn
+- -instcombine
+- -sroa
+- -dse
+- -jump-threading
+633:
+- -early-cse-memssa
+- -mem2reg
+- -simplifycfg
+- -gvn
+- -indvars
+- -jump-threading
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+634:
+- -mem2reg
+- -loop-rotate
+- -gvn
+- -instcombine
+- -simplifycfg
+- -correlated-propagation
+- -instcombine
+- -simplifycfg
+635:
+- -simplifycfg
+- -sroa
+- -instcombine
+- -jump-threading
+- -licm
+- -slp-vectorizer
+- -correlated-propagation
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+636:
+- -instcombine
+- -early-cse-memssa
+- -instcombine
+- -sroa
+637:
+- -sroa
+- -mldst-motion
+- -early-cse-memssa
+- -jump-threading
+638:
+- -tailcallelim
+- -sroa
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+- -simplifycfg
+639:
+- -sroa
+- -loop-rotate
+- -indvars
+- -simplifycfg
+- -mldst-motion
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+640:
+- -early-cse-memssa
+- -reassociate
+- -early-cse-memssa
+- -loop-rotate
+- -dse
+- -early-cse-memssa
+- -mem2reg
+- -simplifycfg
+- -loop-idiom
+- -adce
+- -memcpyopt
+- -instcombine
+- -indvars
+- -simplifycfg
+- -early-cse-memssa
+641:
+- -loop-rotate
+- -mem2reg
+- -mldst-motion
+- -early-cse-memssa
+- -reassociate
+- -simplifycfg
+- -ipsccp
+- -instcombine
+642:
+- -sroa
+- -early-cse-memssa
+- -instcombine
+- -inferattrs
+- -early-cse-memssa
+- -simplifycfg
+- -instsimplify
+643:
+- -instcombine
+- -sroa
+- -reassociate
+- -instsimplify
+- -simplifycfg
+- -sroa
+- -adce
+- -early-cse-memssa
+- -simplifycfg
+644:
+- -sroa
+- -licm
+- -jump-threading
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+645:
+- -instcombine
+- -gvn
+- -jump-threading
+- -sroa
+- -gvn
+- -instcombine
+- -simplifycfg
+- -gvn
+646:
+- -mem2reg
+- -loop-unroll
+- -indvars
+- -loop-unroll
+- -ipsccp
+- -gvn
+- -instcombine
+- -slp-vectorizer
+- -bdce
+- -simplifycfg
+647:
+- -reassociate
+- -gvn
+- -reassociate
+- -instcombine
+- -licm
+- -gvn
+- -simplifycfg
+648:
+- -instsimplify
+- -sroa
+- -jump-threading
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+649:
+- -gvn
+- -jump-threading
+- -sroa
+650:
+- -simplifycfg
+- -sroa
+- -instcombine
+- -simplifycfg
+- -gvn
+651:
+- -sroa
+- -simplifycfg
+- -early-cse-memssa
+- -memcpyopt
+- -instcombine
+652:
+- -mem2reg
+- -instcombine
+- -simplifycfg
+- -inferattrs
+- -early-cse-memssa
+653:
+- -early-cse-memssa
+- -jump-threading
+- -memcpyopt
+- -sroa
+- -simplifycfg
+- -loop-rotate
+- -early-cse-memssa
+- -mldst-motion
+- -instcombine
+- -simplifycfg
+654:
+- -sroa
+- -gvn
+- -simplifycfg
+- -instcombine
+655:
+- -mem2reg
+- -simplifycfg
+- -mldst-motion
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+656:
+- -sroa
+- -jump-threading
+- -licm
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+657:
+- -jump-threading
+- -gvn
+- -mem2reg
+- -simplifycfg
+- -correlated-propagation
+- -simplifycfg
+- -instcombine
+658:
+- -sroa
+- -instcombine
+- -gvn
+- -jump-threading
+- -simplifycfg
+- -instcombine
+- -correlated-propagation
+- -instsimplify
+659:
+- -sroa
+- -gvn
+- -indvars
+- -slp-vectorizer
+- -indvars
+- -instcombine
+- -simplifycfg
+660:
+- -early-cse-memssa
+- -dse
+- -instcombine
+- -sroa
+- -simplifycfg
+- -early-cse-memssa
+661:
+- -sroa
+- -jump-threading
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+662:
+- -sroa
+- -bdce
+663:
+- -mem2reg
+- -globalopt
+- -mldst-motion
+- -gvn
+- -mldst-motion
+- -jump-threading
+- -simplifycfg
+- -early-cse-memssa
+664:
+- -early-cse-memssa
+- -simplifycfg
+- -mem2reg
+- -early-cse-memssa
+- -instcombine
+665:
+- -licm
+- -mem2reg
+- -licm
+- -loop-rotate
+- -simplifycfg
+- -jump-threading
+- -instcombine
+- -tailcallelim
+- -early-cse-memssa
+- -simplifycfg
+666:
+- -gvn
+- -indvars
+- -instcombine
+- -sroa
+- -loop-rotate
+- -loop-idiom
+- -loop-deletion
+- -simplifycfg
+- -instcombine
+- -jump-threading
+- -early-cse-memssa
+667:
+- -gvn
+- -early-cse-memssa
+- -mem2reg
+- -simplifycfg
+- -instcombine
+668:
+- -licm
+- -gvn
+- -sroa
+- -licm
+- -instcombine
+- -ipsccp
+- -simplifycfg
+- -early-cse-memssa
+669:
+- -mem2reg
+- -jump-threading
+- -inferattrs
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+670:
+- -early-cse-memssa
+- -sroa
+- -tailcallelim
+- -loop-load-elim
+- -jump-threading
+671:
+- -instcombine
+- -simplifycfg
+- -sroa
+672:
+- -reassociate
+- -mem2reg
+- -gvn
+- -simplifycfg
+- -gvn
+- -simplifycfg
+- -instcombine
+- -gvn
+673:
+- -sroa
+- -early-cse-memssa
+- -jump-threading
+- -instcombine
+- -simplifycfg
+- -gvn
+- -instcombine
+- -dse
+674:
+- -sroa
+- -loop-rotate
+- -licm
+- -simplifycfg
+- -instcombine
+- -gvn
+- -simplifycfg
+675:
+- -licm
+- -loop-rotate
+- -sroa
+- -loop-unroll
+- -sroa
+- -gvn
+- -simplifycfg
+- -instcombine
+- -correlated-propagation
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+676:
+- -tailcallelim
+- -gvn
+- -simplifycfg
+- -instcombine
+- -simplifycfg
+677:
+- -instcombine
+- -early-cse-memssa
+- -instcombine
+- -early-cse-memssa
+- -instcombine
+- -gvn
+- -sroa
+- -gvn
+678:
+- -sroa
+- -simplifycfg
+- -gvn
+- -instcombine
+- -jump-threading
+679:
+- -simplifycfg
+- -sroa
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+680:
+- -mem2reg
+- -correlated-propagation
+- -simplifycfg
+- -early-cse-memssa
+- -instcombine
+681:
+- -sroa
+- -licm
+- -instcombine
+- -gvn
+- -simplifycfg
+- -mldst-motion
+682:
+- -instcombine
+- -loop-rotate
+- -sroa
+- -early-cse-memssa
+- -licm
+- -simplifycfg
+- -instcombine
+683:
+- -jump-threading
+- -sroa
+- -instcombine
+- -simplifycfg
+- -gvn
+- -simplifycfg
+- -jump-threading
+- -early-cse-memssa
+684:
+- -mem2reg
+- -gvn
+- -inferattrs
+- -licm
+- -simplifycfg
+- -gvn
+- -instcombine
+685:
+- -gvn
+- -mem2reg
+- -simplifycfg
+- -gvn
+686:
+- -early-cse-memssa
+- -instcombine
+- -speculative-execution
+- -early-cse-memssa
+- -mem2reg
+- -simplifycfg
+687:
+- -mem2reg
+- -instcombine
+- -loop-rotate
+- -licm
+- -early-cse-memssa
+- -simplifycfg
+688:
+- -mem2reg
+- -instcombine
+- -early-cse-memssa
+689:
+- -simplifycfg
+- -memcpyopt
+- -sroa
+- -licm
+- -instcombine
+- -early-cse-memssa
+690:
+- -licm
+- -lower-constant-intrinsics
+- -early-cse-memssa
+- -sroa
+- -instcombine
+- -gvn
+- -simplifycfg
+691:
+- -sroa
+- -indvars
+- -loop-rotate
+- -gvn
+692:
+- -loop-rotate
+- -sroa
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+693:
+- -simplifycfg
+- -mem2reg
+- -jump-threading
+- -instcombine
+- -early-cse-memssa
+694:
+- -sroa
+- -slp-vectorizer
+- -slp-vectorizer
+- -early-cse-memssa
+- -jump-threading
+- -memcpyopt
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+695:
+- -instcombine
+- -jump-threading
+- -licm
+- -sroa
+- -adce
+- -correlated-propagation
+- -correlated-propagation
+- -gvn
+- -simplifycfg
+696:
+- -tailcallelim
+- -gvn
+- -instcombine
+697:
+- -licm
+- -loop-unroll
+- -mem2reg
+- -simplifycfg
+- -instcombine
+- -globalopt
+- -gvn
+698:
+- -mem2reg
+- -early-cse-memssa
+- -reassociate
+- -simplifycfg
+699:
+- -simplifycfg
+- -gvn
+- -instcombine
+- -sroa
+- -jump-threading
+- -gvn
+- -jump-threading
+700:
+- -loop-rotate
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+- -mem2reg
+701:
+- -simplifycfg
+- -gvn
+- -instcombine
+702:
+- -early-cse-memssa
+- -instcombine
+- -sroa
+- -reassociate
+- -early-cse-memssa
+- -instcombine
+- -loop-rotate
+- -speculative-execution
+- -early-cse-memssa
+- -simplifycfg
+703:
+- -simplifycfg
+- -gvn
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+- -bdce
+704:
+- -jump-threading
+- -gvn
+- -instcombine
+- -gvn
+- -instcombine
+- -sroa
+- -simplifycfg
+- -gvn
+705:
+- -early-cse-memssa
+- -sroa
+- -licm
+- -indvars
+- -instcombine
+- -jump-threading
+- -early-cse-memssa
+- -simplifycfg
+- -correlated-propagation
+- -instcombine
+706:
+- -mem2reg
+- -jump-threading
+- -gvn
+- -indvars
+- -licm
+- -correlated-propagation
+- -early-cse-memssa
+- -simplifycfg
+707:
+- -gvn
+- -jump-threading
+- -simplifycfg
+- -tailcallelim
+- -sroa
+- -early-cse-memssa
+- -simplifycfg
+708:
+- -sroa
+- -jump-threading
+- -gvn
+- -simplifycfg
+- -correlated-propagation
+- -bdce
+- -jump-threading
+709:
+- -simplifycfg
+- -mem2reg
+- -jump-threading
+- -correlated-propagation
+- -mldst-motion
+- -gvn
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+710:
+- -mem2reg
+- -indvars
+- -simplifycfg
+- -loop-idiom
+- -instcombine
+- -loop-deletion
+- -simplifycfg
+- -early-cse-memssa
+711:
+- -instcombine
+- -early-cse-memssa
+- -loop-vectorize
+- -early-cse-memssa
+- -instcombine
+- -mem2reg
+- -jump-threading
+- -gvn
+- -instcombine
+- -simplifycfg
+- -dse
+712:
+- -sroa
+- -early-cse-memssa
+- -licm
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+713:
+- -memcpyopt
+- -mem2reg
+- -instcombine
+- -memcpyopt
+- -reassociate
+- -gvn
+714:
+- -mem2reg
+- -simplifycfg
+- -early-cse-memssa
+- -dse
+715:
+- -early-cse-memssa
+- -sroa
+- -correlated-propagation
+- -early-cse-memssa
+- -instcombine
+- -reassociate
+- -licm
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+- -jump-threading
+- -dse
+- -reassociate
+- -instcombine
+- -early-cse-memssa
+716:
+- -simplifycfg
+- -sroa
+- -instcombine
+- -jump-threading
+- -early-cse-memssa
+717:
+- -tailcallelim
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+718:
+- -simplifycfg
+- -mem2reg
+- -licm
+- -correlated-propagation
+- -early-cse-memssa
+- -loop-unroll
+- -simplifycfg
+719:
+- -licm
+- -sroa
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+720:
+- -sroa
+- -jump-threading
+- -gvn
+- -instcombine
+- -simplifycfg
+- -gvn
+721:
+- -mem2reg
+- -jump-threading
+- -early-cse-memssa
+- -loop-rotate
+- -simplifycfg
+- -tailcallelim
+- -instcombine
+722:
+- -instcombine
+- -sroa
+- -simplifycfg
+- -indvars
+- -early-cse-memssa
+- -slp-vectorizer
+- -mldst-motion
+- -instcombine
+- -licm
+- -loop-rotate
+- -correlated-propagation
+- -early-cse-memssa
+- -simplifycfg
+723:
+- -sroa
+- -simplifycfg
+- -early-cse-memssa
+- -jump-threading
+724:
+- -sroa
+- -jump-threading
+- -simplifycfg
+- -early-cse-memssa
+- -instcombine
+725:
+- -mem2reg
+- -instcombine
+- -early-cse-memssa
+- -slp-vectorizer
+- -jump-threading
+- -instcombine
+- -simplifycfg
+726:
+- -mem2reg
+- -gvn
+- -inferattrs
+- -instcombine
+- -mldst-motion
+- -jump-threading
+- -licm
+- -gvn
+- -simplifycfg
+727:
+- -licm
+- -jump-threading
+- -sroa
+- -early-cse-memssa
+728:
+- -early-cse-memssa
+- -jump-threading
+- -mem2reg
+729:
+- -early-cse-memssa
+- -instcombine
+- -mem2reg
+- -simplifycfg
+730:
+- -gvn
+- -instcombine
+- -simplifycfg
+- -instcombine
+- -simplifycfg
+731:
+- -simplifycfg
+- -instcombine
+- -simplifycfg
+- -dse
+- -sroa
+- -gvn
+- -early-cse-memssa
+732:
+- -licm
+- -simplifycfg
+- -sroa
+- -licm
+- -speculative-execution
+- -loop-rotate
+- -jump-threading
+- -simplifycfg
+- -instcombine
+- -simplifycfg
+- -gvn
+733:
+- -sroa
+- -gvn
+- -simplifycfg
+- -jump-threading
+- -early-cse-memssa
+734:
+- -early-cse-memssa
+- -mem2reg
+- -instcombine
+- -simplifycfg
+735:
+- -gvn
+- -instcombine
+- -mem2reg
+- -simplifycfg
+- -early-cse-memssa
+736:
+- -licm
+- -loop-rotate
+- -bdce
+- -simplifycfg
+- -gvn
+- -instcombine
+- -simplifycfg
+- -indvars
+- -licm
+- -speculative-execution
+- -simplifycfg
+- -mem2reg
+- -adce
+- -gvn
+- -instcombine
+- -speculative-execution
+- -sroa
+- -simplifycfg
+737:
+- -mem2reg
+- -mldst-motion
+- -simplifycfg
+- -early-cse-memssa
+738:
+- -gvn
+- -jump-threading
+- -instcombine
+739:
+- -sroa
+- -jump-threading
+- -simplifycfg
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+740:
+- -mem2reg
+- -jump-threading
+- -gvn
+- -instcombine
+- -simplifycfg
+- -loop-rotate
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+741:
+- -jump-threading
+- -tailcallelim
+- -gvn
+- -instcombine
+- -simplifycfg
+- -gvn
+- -sroa
+742:
+- -early-cse-memssa
+- -instcombine
+- -sroa
+- -gvn
+- -jump-threading
+743:
+- -instcombine
+- -sroa
+- -simplifycfg
+- -early-cse-memssa
+744:
+- -early-cse-memssa
+- -sroa
+- -instcombine
+- -simplifycfg
+745:
+- -instcombine
+- -gvn
+- -loop-rotate
+- -simplifycfg
+- -jump-threading
+- -early-cse-memssa
+- -mem2reg
+- -simplifycfg
+746:
+- -instcombine
+- -sroa
+- -speculative-execution
+- -simplifycfg
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+747:
+- -sroa
+- -simplifycfg
+- -globals-aa
+- -early-cse-memssa
+- -jump-threading
+- -instcombine
+- -licm
+- -simplifycfg
+- -early-cse-memssa
+- -instcombine
+748:
+- -mem2reg
+- -gvn
+- -jump-threading
+- -instcombine
+- -simplifycfg
+- -gvn
+- -jump-threading
+- -simplifycfg
+- -instcombine
+749:
+- -mem2reg
+- -indvars
+- -simplifycfg
+- -loop-rotate
+- -gvn
+- -instcombine
+- -simplifycfg
+750:
+- -early-cse-memssa
+- -jump-threading
+- -instcombine
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+- -licm
+- -indvars
+- -sroa
+- -bdce
+- -simplifycfg
+- -correlated-propagation
+- -instcombine
+- -early-cse-memssa
+751:
+- -simplifycfg
+- -gvn
+- -sroa
+- -instcombine
+- -jump-threading
+- -gvn
+- -jump-threading
+752:
+- -instcombine
+- -mem2reg
+- -adce
+- -gvn
+- -simplifycfg
+753:
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+- -mem2reg
+- -early-cse-memssa
+- -simplifycfg
+754:
+- -early-cse-memssa
+- -instcombine
+- -licm
+- -sroa
+- -jump-threading
+- -early-cse-memssa
+- -simplifycfg
+755:
+- -gvn
+- -mem2reg
+- -simplifycfg
+- -memcpyopt
+- -early-cse-memssa
+- -instcombine
+- -dse
+756:
+- -mem2reg
+- -loop-unswitch
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+757:
+- -mem2reg
+- -jump-threading
+- -early-cse-memssa
+- -dse
+- -instcombine
+- -correlated-propagation
+- -reassociate
+- -loop-sink
+- -early-cse-memssa
+- -indvars
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+758:
+- -instcombine
+- -jump-threading
+- -gvn
+- -mem2reg
+- -simplifycfg
+759:
+- -mem2reg
+- -mldst-motion
+- -early-cse-memssa
+- -instcombine
+- -dse
+- -simplifycfg
+- -jump-threading
+- -instsimplify
+760:
+- -inferattrs
+- -gvn
+- -instcombine
+- -simplifycfg
+761:
+- -sroa
+- -instcombine
+- -simplifycfg
+762:
+- -sroa
+- -early-cse-memssa
+- -jump-threading
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+763:
+- -mem2reg
+- -early-cse-memssa
+- -jump-threading
+- -gvn
+- -simplifycfg
+- -memcpyopt
+- -instcombine
+764:
+- -mem2reg
+- -instcombine
+- -jump-threading
+- -simplifycfg
+- -early-cse-memssa
+765:
+- -instcombine
+- -early-cse-memssa
+- -indvars
+- -sroa
+- -gvn
+- -memcpyopt
+- -simplifycfg
+- -instcombine
+766:
+- -sroa
+- -loop-unswitch
+- -jump-threading
+- -instcombine
+- -early-cse-memssa
+- -indvars
+- -loop-unroll
+- -instsimplify
+- -simplifycfg
+- -sroa
+767:
+- -mem2reg
+- -early-cse-memssa
+- -indvars
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+768:
+- -early-cse-memssa
+- -loop-unswitch
+- -gvn
+- -instcombine
+- -indvars
+- -loop-rotate
+- -gvn
+- -simplifycfg
+769:
+- -simplifycfg
+- -gvn
+- -simplifycfg
+- -jump-threading
+- -sroa
+- -simplifycfg
+770:
+- -sroa
+- -bdce
+- -instcombine
+- -gvn
+- -mldst-motion
+- -licm
+- -jump-threading
+- -speculative-execution
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+771:
+- -gvn
+- -simplifycfg
+- -gvn
+- -instcombine
+- -simplifycfg
+- -licm
+- -early-cse-memssa
+772:
+- -simplifycfg
+- -early-cse-memssa
+- -callsite-splitting
+- -early-cse-memssa
+- -instcombine
+- -mldst-motion
+- -slp-vectorizer
+- -simplifycfg
+- -mem2reg
+- -early-cse-memssa
+773:
+- -jump-threading
+- -sroa
+- -instcombine
+- -simplifycfg
+- -gvn
+774:
+- -sroa
+- -simplifycfg
+- -gvn
+- -instcombine
+- -correlated-propagation
+775:
+- -sroa
+- -reassociate
+- -sccp
+- -jump-threading
+776:
+- -jump-threading
+- -sroa
+- -instcombine
+- -licm
+- -jump-threading
+- -early-cse-memssa
+777:
+- -mem2reg
+- -instcombine
+- -jump-threading
+- -simplifycfg
+- -correlated-propagation
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+- -inferattrs
+- -early-cse-memssa
+778:
+- -jump-threading
+- -simplifycfg
+- -gvn
+- -simplifycfg
+- -instcombine
+779:
+- -gvn
+- -mem2reg
+- -speculative-execution
+- -gvn
+- -simplifycfg
+- -gvn
+- -aggressive-instcombine
+- -simplifycfg
+- -dse
+780:
+- -mem2reg
+- -instcombine
+- -gvn
+- -simplifycfg
+- -reassociate
+- -gvn
+781:
+- -instcombine
+- -sroa
+- -slp-vectorizer
+- -early-cse-memssa
+- -simplifycfg
+782:
+- -sroa
+- -instcombine
+- -early-cse-memssa
+- -tailcallelim
+- -simplifycfg
+783:
+- -mem2reg
+- -instcombine
+- -jump-threading
+- -inferattrs
+- -simplifycfg
+- -ipsccp
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+784:
+- -sroa
+- -instcombine
+- -gvn
+- -simplifycfg
+- -jump-threading
+- -early-cse-memssa
+- -simplifycfg
+785:
+- -sroa
+- -licm
+- -instcombine
+- -gvn
+- -simplifycfg
+786:
+- -mem2reg
+- -simplifycfg
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+787:
+- -sroa
+- -early-cse-memssa
+- -simplifycfg
+- -early-cse-memssa
+- -slp-vectorizer
+- -instsimplify
+788:
+- -mem2reg
+- -licm
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+789:
+- -instcombine
+- -simplifycfg
+- -loop-rotate
+- -jump-threading
+- -gvn
+- -mem2reg
+- -simplifycfg
+790:
+- -simplifycfg
+- -mem2reg
+791:
+- -mem2reg
+- -inferattrs
+- -early-cse-memssa
+- -simplifycfg
+792:
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+- -licm
+- -instcombine
+- -sroa
+- -loop-rotate
+- -licm
+- -bdce
+- -early-cse-memssa
+- -simplifycfg
+793:
+- -sroa
+- -inferattrs
+- -jump-threading
+- -reassociate
+- -instcombine
+- -early-cse-memssa
+- -jump-threading
+- -simplifycfg
+- -instcombine
+794:
+- -sroa
+- -correlated-propagation
+- -licm
+- -instcombine
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+795:
+- -jump-threading
+- -sroa
+- -simplifycfg
+- -gvn
+- -jump-threading
+- -indvars
+- -loop-rotate
+- -instcombine
+- -gvn
+796:
+- -instcombine
+- -sroa
+- -mldst-motion
+- -memcpyopt
+- -instcombine
+- -gvn
+- -simplifycfg
+797:
+- -loop-rotate
+- -mem2reg
+- -indvars
+- -early-cse-memssa
+- -loop-idiom
+- -instcombine
+- -indvars
+- -licm
+- -correlated-propagation
+- -simplifycfg
+- -instcombine
+- -simplifycfg
+798:
+- -sroa
+- -loop-rotate
+- -mldst-motion
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+- -jump-threading
+- -correlated-propagation
+- -jump-threading
+- -instcombine
+- -gvn
+- -jump-threading
+- -simplifycfg
+- -gvn
+799:
+- -sroa
+- -instcombine
+- -licm
+- -jump-threading
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+800:
+- -adce
+- -sroa
+- -loop-rotate
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+- -loop-unroll
+- -simplifycfg
+- -sroa
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+801:
+- -mem2reg
+- -inferattrs
+- -gvn
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+802:
+- -licm
+- -speculative-execution
+- -gvn
+- -mem2reg
+- -instcombine
+- -licm
+- -gvn
+- -loop-unroll
+- -jump-threading
+- -memcpyopt
+- -simplifycfg
+- -early-cse-memssa
+- -simplifycfg
+803:
+- -gvn
+- -jump-threading
+- -instcombine
+- -simplifycfg
+- -jump-threading
+- -early-cse-memssa
+- -instcombine
+804:
+- -mem2reg
+- -simplifycfg
+- -jump-threading
+- -instcombine
+- -gvn
+- -reassociate
+- -correlated-propagation
+- -simplifycfg
+805:
+- -instcombine
+- -gvn
+- -early-cse-memssa
+- -sroa
+- -correlated-propagation
+- -simplifycfg
+806:
+- -early-cse-memssa
+- -instcombine
+- -sroa
+- -jump-threading
+- -early-cse-memssa
+807:
+- -early-cse-memssa
+- -instcombine
+- -gvn
+- -tailcallelim
+- -jump-threading
+- -gvn
+- -inferattrs
+- -instcombine
+- -simplifycfg
+- -instcombine
+- -gvn
+- -simplifycfg
+808:
+- -tailcallelim
+- -gvn
+- -mldst-motion
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+- -simplifycfg
+809:
+- -sroa
+- -jump-threading
+- -gvn
+- -instcombine
+- -simplifycfg
+- -speculative-execution
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+810:
+- -tailcallelim
+- -early-cse-memssa
+- -instcombine
+- -sroa
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+811:
+- -gvn
+- -simplifycfg
+- -correlated-propagation
+- -instcombine
+- -loop-rotate
+- -jump-threading
+- -gvn
+812:
+- -early-cse-memssa
+- -mem2reg
+- -licm
+- -simplifycfg
+- -slp-vectorizer
+- -early-cse-memssa
+813:
+- -mem2reg
+- -jump-threading
+- -gvn
+- -loop-rotate
+- -early-cse-memssa
+- -instcombine
+- -speculative-execution
+- -correlated-propagation
+- -instcombine
+- -jump-threading
+- -simplifycfg
+- -early-cse-memssa
+- -dse
+814:
+- -early-cse-memssa
+- -sroa
+- -globalopt
+- -instcombine
+- -licm
+- -simplifycfg
+- -jump-threading
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+815:
+- -early-cse-memssa
+- -globalopt
+- -early-cse-memssa
+- -simplifycfg
+- -mem2reg
+- -instcombine
+816:
+- -inferattrs
+- -early-cse-memssa
+- -memcpyopt
+- -sroa
+- -gvn
+- -simplifycfg
+- -adce
+817:
+- -licm
+- -early-cse-memssa
+- -sroa
+- -instcombine
+- -jump-threading
+- -early-cse-memssa
+818:
+- -loop-unswitch
+- -mem2reg
+- -jump-threading
+- -licm
+- -early-cse-memssa
+- -instcombine
+819:
+- -simplifycfg
+- -gvn
+- -instcombine
+- -tailcallelim
+- -jump-threading
+- -gvn
+- -sroa
+820:
+- -sroa
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+- -gvn
+821:
+- -sroa
+- -instcombine
+- -gvn
+- -simplifycfg
+- -instcombine
+822:
+- -mem2reg
+- -instcombine
+- -indvars
+- -simplifycfg
+- -early-cse-memssa
+823:
+- -mem2reg
+- -gvn
+- -jump-threading
+- -instsimplify
+- -simplifycfg
+824:
+- -gvn
+- -gvn
+- -instcombine
+825:
+- -instcombine
+- -gvn
+- -instcombine
+- -jump-threading
+- -simplifycfg
+- -sroa
+- -slp-vectorizer
+- -jump-threading
+- -instcombine
+826:
+- -loop-unroll
+- -mem2reg
+- -ipsccp
+- -mldst-motion
+- -simplifycfg
+- -instcombine
+- -inferattrs
+- -early-cse-memssa
+- -simplifycfg
+- -memcpyopt
+- -bdce
+827:
+- -simplifycfg
+- -instcombine
+- -licm
+- -sroa
+- -simplifycfg
+- -gvn
+- -adce
+828:
+- -early-cse-memssa
+- -instcombine
+- -sroa
+- -licm
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+829:
+- -mem2reg
+- -slp-vectorizer
+- -early-cse-memssa
+- -instcombine
+830:
+- -jump-threading
+- -mem2reg
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+- -inferattrs
+- -early-cse-memssa
+- -correlated-propagation
+- -simplifycfg
+- -instcombine
+831:
+- -mem2reg
+- -early-cse-memssa
+- -early-cse-memssa
+- -mldst-motion
+- -simplifycfg
+- -early-cse-memssa
+- -instcombine
+832:
+- -tailcallelim
+- -mem2reg
+- -early-cse-memssa
+- -simplifycfg
+- -dse
+833:
+- -tailcallelim
+- -instcombine
+- -sroa
+- -ipsccp
+834:
+- -tailcallelim
+- -jump-threading
+- -early-cse-memssa
+- -simplifycfg
+- -dse
+- -mem2reg
+835:
+- -jump-threading
+- -loop-rotate
+- -mem2reg
+- -licm
+- -indvars
+- -slp-vectorizer
+- -gvn
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+836:
+- -jump-threading
+- -instcombine
+- -licm
+- -simplifycfg
+- -gvn
+- -sroa
+- -simplifycfg
+837:
+- -instcombine
+- -mem2reg
+- -instcombine
+- -sroa
+- -simplifycfg
+- -early-cse-memssa
+838:
+- -mem2reg
+- -simplifycfg
+- -early-cse-memssa
+- -licm
+- -instcombine
+- -mldst-motion
+- -speculative-execution
+- -early-cse-memssa
+- -simplifycfg
+839:
+- -early-cse-memssa
+- -mldst-motion
+- -mem2reg
+- -instcombine
+- -simplifycfg
+- -speculative-execution
+- -early-cse-memssa
+- -loop-rotate
+- -simplifycfg
+840:
+- -sroa
+- -gvn
+- -instcombine
+- -jump-threading
+- -simplifycfg
+841:
+- -instcombine
+- -gvn
+- -instcombine
+- -simplifycfg
+842:
+- -mem2reg
+- -instcombine
+- -jump-threading
+- -correlated-propagation
+- -simplifycfg
+- -gvn
+- -simplifycfg
+- -instcombine
+- -gvn
+843:
+- -early-cse-memssa
+- -instcombine
+- -mem2reg
+- -speculative-execution
+- -early-cse-memssa
+- -jump-threading
+- -simplifycfg
+- -dse
+- -instcombine
+- -indvars
+- -sroa
+- -simplifycfg
+844:
+- -mem2reg
+- -early-cse-memssa
+- -simplifycfg
+- -indvars
+- -instcombine
+845:
+- -sroa
+- -correlated-propagation
+- -instcombine
+- -jump-threading
+- -loop-unroll
+- -simplifycfg
+- -early-cse-memssa
+846:
+- -sroa
+- -indvars
+- -jump-threading
+- -correlated-propagation
+- -instcombine
+- -simplifycfg
+- -indvars
+- -early-cse-memssa
+- -simplifycfg
+847:
+- -instcombine
+- -jump-threading
+- -simplifycfg
+- -early-cse-memssa
+- -sroa
+- -jump-threading
+- -instcombine
+- -early-cse-memssa
+848:
+- -gvn
+- -sroa
+- -jump-threading
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+849:
+- -early-cse-memssa
+- -mem2reg
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+850:
+- -sroa
+- -early-cse-memssa
+- -indvars
+- -simplifycfg
+- -instcombine
+851:
+- -mem2reg
+- -gvn
+- -simplifycfg
+- -early-cse-memssa
+852:
+- -simplifycfg
+- -sroa
+- -instsimplify
+853:
+- -sroa
+- -licm
+- -gvn
+- -instcombine
+- -simplifycfg
+- -gvn
+- -simplifycfg
+- -early-cse-memssa
+854:
+- -early-cse-memssa
+- -instcombine
+- -jump-threading
+- -simplifycfg
+- -instcombine
+855:
+- -sroa
+- -simplifycfg
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+856:
+- -mem2reg
+- -jump-threading
+- -instcombine
+- -early-cse-memssa
+- -lcssa
+- -early-cse-memssa
+- -simplifycfg
+- -jump-threading
+- -correlated-propagation
+- -instcombine
+- -jump-threading
+- -early-cse-memssa
+- -jump-threading
+- -speculative-execution
+- -early-cse-memssa
+- -jump-threading
+- -simplifycfg
+857:
+- -sroa
+- -early-cse-memssa
+- -simplifycfg
+- -ipsccp
+- -jump-threading
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+858:
+- -gvn
+- -simplifycfg
+- -instcombine
+- -jump-threading
+- -mem2reg
+859:
+- -mem2reg
+- -slp-vectorizer
+- -gvn
+- -instcombine
+- -jump-threading
+860:
+- -early-cse-memssa
+- -simplifycfg
+- -mem2reg
+- -jump-threading
+861:
+- -simplifycfg
+- -sroa
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+- -early-cse-memssa
+862:
+- -instcombine
+- -mem2reg
+- -gvn
+- -simplifycfg
+863:
+- -early-cse-memssa
+- -globals-aa
+- -early-cse-memssa
+- -mem2reg
+- -jump-threading
+- -instcombine
+864:
+- -early-cse-memssa
+- -instcombine
+- -sroa
+- -early-cse-memssa
+- -simplifycfg
+865:
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+- -sroa
+- -jump-threading
+- -early-cse-memssa
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+866:
+- -mem2reg
+- -instcombine
+- -simplifycfg
+- -instsimplify
+- -licm
+- -inferattrs
+- -correlated-propagation
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+867:
+- -inferattrs
+- -sroa
+- -simplifycfg
+- -instcombine
+- -gvn
+868:
+- -sroa
+- -simplifycfg
+- -mldst-motion
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+- -loop-rotate
+- -instcombine
+869:
+- -sroa
+- -instcombine
+- -jump-threading
+- -simplifycfg
+- -mldst-motion
+- -early-cse-memssa
+870:
+- -jump-threading
+- -simplifycfg
+- -sroa
+- -early-cse-memssa
+- -jump-threading
+871:
+- -simplifycfg
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+- -sroa
+872:
+- -mem2reg
+- -aggressive-instcombine
+- -early-cse-memssa
+- -simplifycfg
+873:
+- -mem2reg
+- -instsimplify
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+874:
+- -gvn
+- -gvn
+- -mldst-motion
+- -jump-threading
+- -sroa
+- -tailcallelim
+- -correlated-propagation
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+875:
+- -gvn
+- -instcombine
+- -simplifycfg
+- -mem2reg
+- -mldst-motion
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+876:
+- -loop-rotate
+- -early-cse-memssa
+- -simplifycfg
+- -mem2reg
+- -early-cse-memssa
+- -instcombine
+877:
+- -mem2reg
+- -early-cse-memssa
+- -instcombine
+- -slp-vectorizer
+- -indvars
+- -instcombine
+- -simplifycfg
+878:
+- -mem2reg
+- -instcombine
+- -indvars
+- -loop-rotate
+- -simplifycfg
+- -instcombine
+- -gvn
+879:
+- -early-cse-memssa
+- -instcombine
+- -tailcallelim
+- -gvn
+- -mldst-motion
+- -simplifycfg
+- -instcombine
+- -simplifycfg
+- -sroa
+- -gvn
+880:
+- -tailcallelim
+- -early-cse-memssa
+- -sroa
+- -simplifycfg
+- -early-cse-memssa
+- -simplifycfg
+881:
+- -jump-threading
+- -mem2reg
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+882:
+- -instcombine
+- -gvn
+- -sroa
+- -jump-threading
+883:
+- -instcombine
+- -sroa
+- -instcombine
+- -gvn
+- -instcombine
+- -gvn
+- -simplifycfg
+884:
+- -mem2reg
+- -early-cse-memssa
+- -instcombine
+- -correlated-propagation
+- -loop-rotate
+- -indvars
+- -instcombine
+- -indvars
+- -simplifycfg
+- -reassociate
+- -correlated-propagation
+- -early-cse-memssa
+885:
+- -early-cse-memssa
+- -sroa
+- -jump-threading
+- -instcombine
+- -jump-threading
+886:
+- -mem2reg
+- -gvn
+- -simplifycfg
+- -gvn
+- -instcombine
+- -simplifycfg
+- -gvn
+- -loop-rotate
+887:
+- -sroa
+- -jump-threading
+- -loop-rotate
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+888:
+- -instcombine
+889:
+- -early-cse-memssa
+- -jump-threading
+- -instcombine
+- -simplifycfg
+- -sroa
+- -early-cse-memssa
+890:
+- -licm
+- -indvars
+- -early-cse-memssa
+- -loop-rotate
+- -simplifycfg
+- -mem2reg
+- -instcombine
+- -simplifycfg
+- -gvn
+891:
+- -simplifycfg
+- -sroa
+- -instcombine
+- -gvn
+- -dse
+- -simplifycfg
+- -slp-vectorizer
+- -jump-threading
+- -instcombine
+892:
+- -early-cse-memssa
+- -gvn
+- -memcpyopt
+- -instcombine
+- -simplifycfg
+893:
+- -mem2reg
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+894:
+- -sroa
+- -early-cse-memssa
+- -mldst-motion
+- -instcombine
+- -gvn
+- -jump-threading
+- -simplifycfg
+- -dse
+- -licm
+- -correlated-propagation
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+895:
+- -sroa
+- -jump-threading
+- -instcombine
+- -gvn
+896:
+- -gvn
+- -instcombine
+- -mem2reg
+- -early-cse-memssa
+- -simplifycfg
+- -sroa
+- -gvn
+- -simplifycfg
+897:
+- -simplifycfg
+- -mem2reg
+- -correlated-propagation
+- -loop-rotate
+- -indvars
+- -gvn
+- -instcombine
+- -jump-threading
+- -inferattrs
+- -gvn
+- -indvars
+- -instcombine
+- -simplifycfg
+898:
+- -sroa
+- -mldst-motion
+- -simplifycfg
+- -early-cse-memssa
+- -instcombine
+899:
+- -simplifycfg
+- -sroa
+- -early-cse-memssa
+900:
+- -early-cse-memssa
+- -licm
+- -instcombine
+- -sroa
+- -adce
+- -loop-rotate
+- -indvars
+- -gvn
+- -simplifycfg
+901:
+- -gvn
+- -instcombine
+- -simplifycfg
+- -sroa
+- -early-cse-memssa
+902:
+- -gvn
+- -loop-rotate
+- -mem2reg
+- -slp-vectorizer
+- -instcombine
+- -indvars
+- -early-cse-memssa
+903:
+- -mem2reg
+- -licm
+- -ipsccp
+- -jump-threading
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+- -correlated-propagation
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+904:
+- -early-cse-memssa
+- -sroa
+- -jump-threading
+- -simplifycfg
+- -instcombine
+905:
+- -early-cse-memssa
+- -indvars
+- -reassociate
+- -instcombine
+- -sroa
+- -early-cse-memssa
+- -tailcallelim
+- -early-cse-memssa
+- -simplifycfg
+906:
+- -gvn
+- -jump-threading
+- -tailcallelim
+- -gvn
+- -instcombine
+- -simplifycfg
+907:
+- -jump-threading
+- -sroa
+- -licm
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+908:
+- -mem2reg
+- -reassociate
+- -instcombine
+- -simplifycfg
+- -gvn
+909:
+- -mem2reg
+- -gvn
+- -slp-vectorizer
+- -instcombine
+- -simplifycfg
+- -jump-threading
+910:
+- -mem2reg
+- -early-cse-memssa
+- -simplifycfg
+- -jump-threading
+- -instcombine
+- -early-cse-memssa
+911:
+- -instcombine
+- -licm
+- -sroa
+- -jump-threading
+- -early-cse-memssa
+912:
+- -early-cse-memssa
+913:
+- -early-cse-memssa
+- -jump-threading
+- -early-cse-memssa
+- -instcombine
+- -jump-threading
+- -mem2reg
+- -simplifycfg
+- -early-cse-memssa
+914:
+- -instcombine
+- -tailcallelim
+- -early-cse-memssa
+- -gvn
+- -simplifycfg
+- -instcombine
+915:
+- -sroa
+- -gvn
+- -instcombine
+- -simplifycfg
+- -loop-rotate
+- -jump-threading
+- -instcombine
+- -gvn
+- -simplifycfg
+916:
+- -simplifycfg
+- -sroa
+- -mldst-motion
+- -early-cse-memssa
+- -loop-sink
+- -jump-threading
+- -early-cse-memssa
+- -simplifycfg
+- -dse
+- -instcombine
+917:
+- -sroa
+- -jump-threading
+- -gvn
+918:
+- -jump-threading
+- -early-cse-memssa
+- -loop-unswitch
+- -sroa
+- -sccp
+- -bdce
+- -loop-deletion
+- -jump-threading
+919:
+- -mem2reg
+- -instcombine
+- -slp-vectorizer
+- -simplifycfg
+- -gvn
+- -bdce
+920:
+- -mem2reg
+- -instcombine
+- -gvn
+- -loop-unroll
+- -jump-threading
+- -simplifycfg
+- -slp-vectorizer
+- -instcombine
+- -early-cse-memssa
+921:
+- -mem2reg
+- -jump-threading
+- -instcombine
+- -gvn
+- -reassociate
+- -gvn
+- -simplifycfg
+- -jump-threading
+- -instcombine
+922:
+- -sroa
+- -jump-threading
+- -simplifycfg
+- -licm
+- -early-cse-memssa
+- -bdce
+- -instcombine
+- -loop-rotate
+- -jump-threading
+- -early-cse-memssa
+- -correlated-propagation
+- -simplifycfg
+923:
+- -sroa
+- -early-cse-memssa
+- -simplifycfg
+- -inferattrs
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+924:
+- -sroa
+- -speculative-execution
+- -early-cse-memssa
+- -instcombine
+- -gvn
+- -loop-rotate
+- -simplifycfg
+- -jump-threading
+- -instcombine
+- -early-cse-memssa
+925:
+- -simplifycfg
+- -mem2reg
+- -early-cse-memssa
+- -jump-threading
+- -indvars
+- -simplifycfg
+- -instcombine
+926:
+- -mem2reg
+- -early-cse-memssa
+- -jump-threading
+927:
+- -mem2reg
+- -early-cse-memssa
+- -licm
+- -instcombine
+- -jump-threading
+- -early-cse-memssa
+- -simplifycfg
+928:
+- -mem2reg
+- -speculative-execution
+- -jump-threading
+- -simplifycfg
+- -correlated-propagation
+- -speculative-execution
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+- -speculative-execution
+- -simplifycfg
+- -instcombine
+- -simplifycfg
+- -gvn
+929:
+- -instcombine
+- -early-cse-memssa
+- -indvars
+- -sroa
+- -licm
+- -early-cse-memssa
+- -simplifycfg
+930:
+- -sroa
+- -instcombine
+- -mldst-motion
+- -instcombine
+- -loop-rotate
+- -early-cse-memssa
+- -indvars
+- -simplifycfg
+- -jump-threading
+931:
+- -sroa
+- -simplifycfg
+- -gvn
+- -instcombine
+932:
+- -early-cse-memssa
+- -sroa
+- -simplifycfg
+- -ipsccp
+- -early-cse-memssa
+- -instcombine
+- -jump-threading
+933:
+- -mem2reg
+- -simplifycfg
+- -instcombine
+- -correlated-propagation
+- -early-cse-memssa
+- -simplifycfg
+934:
+- -sroa
+- -simplifycfg
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+935:
+- -early-cse-memssa
+- -dse
+936:
+- -instcombine
+- -simplifycfg
+- -sroa
+- -gvn
+- -simplifycfg
+- -correlated-propagation
+- -gvn
+937:
+- -jump-threading
+- -mem2reg
+- -early-cse-memssa
+938:
+- -early-cse-memssa
+- -sroa
+- -simplifycfg
+- -early-cse-memssa
+- -instcombine
+939:
+- -mem2reg
+- -aggressive-instcombine
+- -correlated-propagation
+- -early-cse-memssa
+- -jump-threading
+- -adce
+940:
+- -sroa
+- -instcombine
+- -jump-threading
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+941:
+- -instcombine
+- -gvn
+- -jump-threading
+- -mem2reg
+- -simplifycfg
+- -gvn
+- -instcombine
+- -simplifycfg
+942:
+- -simplifycfg
+- -mem2reg
+- -jump-threading
+- -instsimplify
+- -instcombine
+- -jump-threading
+- -early-cse-memssa
+943:
+- -instcombine
+- -mldst-motion
+- -early-cse-memssa
+- -sroa
+- -simplifycfg
+- -mldst-motion
+- -jump-threading
+- -early-cse-memssa
+- -instcombine
+944:
+- -mem2reg
+- -jump-threading
+- -simplifycfg
+- -ipsccp
+- -instcombine
+945:
+- -mem2reg
+- -simplifycfg
+- -licm
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+946:
+- -inferattrs
+- -sroa
+- -early-cse-memssa
+- -instcombine
+- -licm
+- -simplifycfg
+- -early-cse-memssa
+947:
+- -instcombine
+- -gvn
+- -sroa
+- -early-cse-memssa
+- -simplifycfg
+- -mldst-motion
+- -instcombine
+- -inferattrs
+- -early-cse-memssa
+- -correlated-propagation
+- -simplifycfg
+- -gvn
+948:
+- -early-cse-memssa
+- -instcombine
+- -sroa
+- -simplifycfg
+- -instcombine
+949:
+- -gvn
+- -loop-rotate
+- -instcombine
+- -sroa
+- -gvn
+- -loop-idiom
+- -indvars
+- -jump-threading
+950:
+- -instcombine
+- -gvn
+- -simplifycfg
+- -instcombine
+- -mem2reg
+- -early-cse-memssa
+- -dse
+951:
+- -mem2reg
+- -instcombine
+- -gvn
+- -simplifycfg
+952:
+- -licm
+- -early-cse-memssa
+- -sroa
+- -loop-rotate
+- -tailcallelim
+- -jump-threading
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+953:
+- -licm
+- -jump-threading
+- -mem2reg
+- -early-cse-memssa
+- -adce
+954:
+- -mem2reg
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+- -loop-rotate
+- -reassociate
+- -jump-threading
+- -instcombine
+- -simplifycfg
+- -instcombine
+955:
+- -sroa
+- -jump-threading
+- -correlated-propagation
+- -early-cse-memssa
+- -simplifycfg
+956:
+- -early-cse-memssa
+- -mem2reg
+- -instcombine
+- -licm
+- -loop-rotate
+- -simplifycfg
+- -early-cse-memssa
+- -instcombine
+957:
+- -mem2reg
+- -simplifycfg
+- -slp-vectorizer
+- -gvn
+- -instsimplify
+- -simplifycfg
+- -memcpyopt
+- -gvn
+- -dse
+- -instsimplify
+958:
+- -sroa
+- -licm
+- -sccp
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+- -inferattrs
+- -early-cse-memssa
+- -jump-threading
+- -early-cse-memssa
+959:
+- -mem2reg
+- -instcombine
+- -loop-unswitch
+- -early-cse-memssa
+- -simplifycfg
+960:
+- -gvn
+- -simplifycfg
+- -jump-threading
+- -instcombine
+- -jump-threading
+- -simplifycfg
+- -sroa
+- -early-cse-memssa
+961:
+- -sroa
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+- -inferattrs
+- -gvn
+- -simplifycfg
+- -licm
+- -jump-threading
+- -gvn
+- -instcombine
+962:
+- -sroa
+- -mldst-motion
+- -instcombine
+- -simplifycfg
+- -mldst-motion
+- -early-cse-memssa
+963:
+- -reassociate
+- -mem2reg
+- -loop-rotate
+- -gvn
+- -indvars
+- -simplifycfg
+964:
+- -tailcallelim
+- -early-cse-memssa
+- -licm
+- -jump-threading
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+965:
+- -simplifycfg
+- -sroa
+- -early-cse-memssa
+- -inferattrs
+- -indvars
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+966:
+- -reassociate
+- -sroa
+- -gvn
+- -instcombine
+- -simplifycfg
+- -reassociate
+- -instcombine
+967:
+- -sroa
+- -instcombine
+- -early-cse-memssa
+- -jump-threading
+- -instcombine
+- -correlated-propagation
+- -simplifycfg
+968:
+- -gvn
+- -memcpyopt
+- -mem2reg
+- -gvn
+- -instcombine
+969:
+- -mem2reg
+- -instcombine
+- -gvn
+- -jump-threading
+970:
+- -mem2reg
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+971:
+- -licm
+- -gvn
+- -licm
+- -jump-threading
+- -early-cse-memssa
+- -instcombine
+- -mem2reg
+- -simplifycfg
+- -early-cse-memssa
+972:
+- -tailcallelim
+- -sroa
+- -instcombine
+- -licm
+- -early-cse-memssa
+- -simplifycfg
+973:
+- -mem2reg
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+- -jump-threading
+- -slp-vectorizer
+- -early-cse-memssa
+974:
+- -mem2reg
+- -jump-threading
+- -ipsccp
+- -instcombine
+- -early-cse-memssa
+- -jump-threading
+- -early-cse-memssa
+- -correlated-propagation
+- -instsimplify
+- -jump-threading
+- -simplifycfg
+975:
+- -sroa
+- -licm
+- -correlated-propagation
+- -simplifycfg
+- -instcombine
+- -gvn
+- -early-cse-memssa
+- -simplifycfg
+976:
+- -gvn
+- -gvn
+- -simplifycfg
+- -instcombine
+- -jump-threading
+977:
+- -sroa
+- -slp-vectorizer
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+978:
+- -mem2reg
+- -licm
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+- -slp-vectorizer
+- -jump-threading
+- -indvars
+- -early-cse-memssa
+- -simplifycfg
+979:
+- -sroa
+- -early-cse-memssa
+- -instcombine
+- -mldst-motion
+- -jump-threading
+- -instcombine
+- -simplifycfg
+980:
+- -jump-threading
+- -mem2reg
+- -licm
+- -early-cse-memssa
+- -simplifycfg
+- -early-cse-memssa
+- -simplifycfg
+981:
+- -mem2reg
+- -instcombine
+- -jump-threading
+- -early-cse-memssa
+- -indvars
+- -instcombine
+- -jump-threading
+- -simplifycfg
+- -early-cse-memssa
+982:
+- -simplifycfg
+- -instcombine
+- -loop-rotate
+- -sroa
+- -simplifycfg
+- -early-cse-memssa
+983:
+- -sroa
+- -instcombine
+- -simplifycfg
+- -gvn
+- -simplifycfg
+- -early-cse-memssa
+984:
+- -mem2reg
+- -instcombine
+- -early-cse-memssa
+- -licm
+- -loop-rotate
+- -jump-threading
+- -loop-rotate
+- -gvn
+- -jump-threading
+- -simplifycfg
+- -instcombine
+985:
+- -licm
+- -mem2reg
+- -early-cse-memssa
+- -jump-threading
+- -instsimplify
+986:
+- -gvn
+- -instcombine
+- -sroa
+- -simplifycfg
+- -gvn
+- -simplifycfg
+987:
+- -instcombine
+- -sroa
+- -early-cse-memssa
+- -dse
+- -simplifycfg
+988:
+- -mem2reg
+- -loop-rotate
+- -gvn
+- -indvars
+- -simplifycfg
+- -instcombine
+- -correlated-propagation
+- -licm
+- -jump-threading
+- -gvn
+- -simplifycfg
+- -early-cse-memssa
+989:
+- -mem2reg
+- -indvars
+- -memcpyopt
+- -slp-vectorizer
+- -early-cse-memssa
+- -mldst-motion
+- -simplifycfg
+- -gvn
+990:
+- -mem2reg
+- -simplifycfg
+991:
+- -sroa
+- -loop-rotate
+- -reassociate
+- -licm
+- -instcombine
+- -indvars
+- -early-cse-memssa
+- -mldst-motion
+- -correlated-propagation
+- -jump-threading
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+992:
+- -mem2reg
+- -jump-threading
+993:
+- -instcombine
+- -mem2reg
+- -jump-threading
+- -gvn
+994:
+- -sroa
+- -loop-rotate
+- -early-cse-memssa
+- -instcombine
+- -correlated-propagation
+- -jump-threading
+- -simplifycfg
+- -early-cse-memssa
+995:
+- -sroa
+- -jump-threading
+- -early-cse-memssa
+996:
+- -instcombine
+- -sroa
+- -simplifycfg
+- -early-cse-memssa
+- -correlated-propagation
+997:
+- -licm
+- -simplifycfg
+- -instsimplify
+- -sroa
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+- -indvars
+- -adce
+- -instcombine
+- -indvars
+- -early-cse-memssa
+- -simplifycfg
+998:
+- -early-cse-memssa
+- -instcombine
+- -jump-threading
+- -licm
+- -gvn
+- -mem2reg
+- -simplifycfg
+- -correlated-propagation
+- -adce
+999:
+- -instcombine
+- -mem2reg
+- -sccp
+- -jump-threading
+- -tailcallelim
+- -simplifycfg
+- -mldst-motion
+- -gvn
+- -ipsccp
+- -gvn
+- -dse
+- -instcombine
+1000:
+- -mem2reg
+- -indvars
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+- -early-cse-memssa
+- -simplifycfg
+1001:
+- -sroa
+- -licm
+- -globalopt
+- -instcombine
+- -jump-threading
+- -early-cse-memssa
+1002:
+- -gvn
+- -tailcallelim
+- -instcombine
+- -simplifycfg
+- -gvn
+- -simplifycfg
+- -gvn
+- -sroa
+- -jump-threading
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+- -correlated-propagation
+1003:
+- -tailcallelim
+- -gvn
+- -instcombine
+- -simplifycfg
+- -jump-threading
+1004:
+- -sroa
+- -jump-threading
+- -tailcallelim
+- -instcombine
+- -licm
+- -loop-unswitch
+- -ipsccp
+- -instsimplify
+- -early-cse-memssa
+- -simplifycfg
+1005:
+- -loop-vectorize
+- -mem2reg
+- -gvn
+- -licm
+- -simplifycfg
+- -jump-threading
+- -indvars
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+1006:
+- -gvn
+- -instcombine
+- -jump-threading
+- -tailcallelim
+- -early-cse-memssa
+- -sroa
+1007:
+- -tailcallelim
+- -mem2reg
+- -licm
+- -indvars
+- -loop-rotate
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+1008:
+- -mem2reg
+- -instcombine
+- -simplifycfg
+- -gvn
+- -simplifycfg
+- -loop-rotate
+- -early-cse-memssa
+- -instcombine
+1009:
+- -inferattrs
+- -instcombine
+- -gvn
+- -simplifycfg
+- -instcombine
+1010:
+- -simplifycfg
+- -mem2reg
+- -mldst-motion
+- -simplifycfg
+- -early-cse-memssa
+1011:
+- -jump-threading
+- -sroa
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+- -gvn
+- -jump-threading
+- -instcombine
+1012:
+- -sroa
+- -instcombine
+- -mldst-motion
+- -simplifycfg
+- -gvn
+- -simplifycfg
+- -jump-threading
+- -instcombine
+1013:
+- -sroa
+- -indvars
+- -early-cse-memssa
+- -jump-threading
+- -instcombine
+1014:
+- -jump-threading
+- -mem2reg
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+- -gvn
+- -loop-rotate
+- -jump-threading
+- -licm
+- -loop-idiom
+- -simplifycfg
+- -early-cse-memssa
+- -loop-unroll
+- -instcombine
+- -ipsccp
+- -simplifycfg
+1015:
+- -jump-threading
+- -inferattrs
+- -aggressive-instcombine
+- -sroa
+- -early-cse-memssa
+1016:
+- -gvn
+- -mldst-motion
+- -indvars
+- -instcombine
+- -simplifycfg
+- -mldst-motion
+- -sroa
+- -gvn
+1017:
+- -mem2reg
+- -indvars
+- -mldst-motion
+- -gvn
+- -instcombine
+- -dse
+- -mldst-motion
+- -simplifycfg
+1018:
+- -jump-threading
+- -instcombine
+- -gvn
+- -mem2reg
+- -jump-threading
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+1019:
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+- -sroa
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+1020:
+- -instcombine
+- -sroa
+- -simplifycfg
+- -early-cse-memssa
+- -ipsccp
+- -mldst-motion
+1021:
+- -gvn
+- -instcombine
+- -gvn
+- -mem2reg
+- -jump-threading
+1022:
+- -sroa
+- -gvn
+- -instcombine
+- -loop-rotate
+- -simplifycfg
+- -gvn
+1023:
+- -tailcallelim
+- -gvn
+- -jump-threading
+- -instcombine
+- -simplifycfg
+1024:
+- -mem2reg
+- -ipsccp
+- -simplifycfg
+- -instcombine
+- -correlated-propagation
+- -early-cse-memssa
+- -simplifycfg
+- -jump-threading
+1025:
+- -licm
+- -gvn
+- -instcombine
+- -jump-threading
+1026:
+- -early-cse-memssa
+- -sroa
+- -instcombine
+- -slp-vectorizer
+- -licm
+- -early-cse-memssa
+- -simplifycfg
+1027:
+- -sroa
+- -simplifycfg
+- -licm
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+1028:
+- -gvn
+- -reassociate
+- -early-cse-memssa
+- -reassociate
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+1029:
+- -instcombine
+- -jump-threading
+- -mem2reg
+- -early-cse-memssa
+1030:
+- -sroa
+- -jump-threading
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+1031:
+- -licm
+- -indvars
+- -sroa
+- -instcombine
+- -loop-rotate
+- -gvn
+- -simplifycfg
+1032:
+- -inferattrs
+- -mem2reg
+- -instsimplify
+- -simplifycfg
+- -jump-threading
+- -correlated-propagation
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+1033:
+- -sroa
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+- -licm
+- -jump-threading
+- -early-cse-memssa
+1034:
+- -mem2reg
+1035:
+- -sroa
+- -instcombine
+- -simplifycfg
+- -bdce
+- -gvn
+1036:
+- -loop-rotate
+- -mem2reg
+- -indvars
+- -sccp
+- -simplifycfg
+- -inferattrs
+- -gvn
+- -aggressive-instcombine
+- -early-cse-memssa
+1037:
+- -mem2reg
+- -jump-threading
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+1038:
+- -licm
+- -mem2reg
+- -indvars
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+1039:
+- -simplifycfg
+- -early-cse-memssa
+- -mem2reg
+1040:
+- -mem2reg
+- -simplifycfg
+- -early-cse-memssa
+- -instcombine
+- -jump-threading
+- -early-cse-memssa
+1041:
+- -licm
+- -early-cse-memssa
+- -sroa
+- -jump-threading
+- -instcombine
+1042:
+- -licm
+- -early-cse-memssa
+- -instcombine
+- -mem2reg
+- -simplifycfg
+- -gvn
+1043:
+- -licm
+- -simplifycfg
+- -instcombine
+- -sroa
+- -licm
+- -early-cse-memssa
+- -speculative-execution
+- -jump-threading
+- -early-cse-memssa
+- -adce
+- -simplifycfg
+- -jump-threading
+1044:
+- -sroa
+- -jump-threading
+- -instcombine
+1045:
+- -early-cse-memssa
+- -instcombine
+- -sroa
+- -licm
+- -instcombine
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+- -dse
+1046:
+- -tailcallelim
+- -early-cse-memssa
+- -instcombine
+- -gvn
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+- -dse
+1047:
+- -mem2reg
+- -instcombine
+- -licm
+- -early-cse-memssa
+- -mldst-motion
+- -simplifycfg
+1048:
+- -instcombine
+- -inferattrs
+- -licm
+- -memcpyopt
+- -early-cse-memssa
+- -sroa
+- -simplifycfg
+- -instcombine
+1049:
+- -early-cse-memssa
+- -speculative-execution
+- -mem2reg
+- -mldst-motion
+- -gvn
+- -loop-rotate
+- -simplifycfg
+- -early-cse-memssa
+1050:
+- -sroa
+- -gvn
+- -jump-threading
+- -inferattrs
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+1051:
+- -early-cse-memssa
+- -simplifycfg
+- -gvn
+- -instcombine
+- -simplifycfg
+1052:
+- -mem2reg
+- -gvn
+- -aggressive-instcombine
+- -simplifycfg
+1053:
+- -mem2reg
+- -instcombine
+- -jump-threading
+- -gvn
+- -simplifycfg
+- -early-cse-memssa
+- -simplifycfg
+1054:
+- -sroa
+- -mldst-motion
+- -gvn
+- -bdce
+- -indvars
+- -simplifycfg
+- -jump-threading
+- -loop-rotate
+- -gvn
+- -instcombine
+1055:
+- -loop-rotate
+- -sroa
+- -gvn
+- -adce
+- -jump-threading
+1056:
+- -sroa
+- -jump-threading
+- -reassociate
+- -gvn
+- -loop-rotate
+1057:
+- -mem2reg
+- -simplifycfg
+- -instcombine
+- -simplifycfg
+- -loop-rotate
+- -simplifycfg
+- -early-cse-memssa
+1058:
+- -early-cse-memssa
+- -instcombine
+- -mem2reg
+- -gvn
+- -simplifycfg
+1059:
+- -mem2reg
+- -early-cse-memssa
+- -sroa
+- -mldst-motion
+- -simplifycfg
+1060:
+- -mem2reg
+- -reassociate
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+1061:
+- -sroa
+- -correlated-propagation
+- -loop-rotate
+- -indvars
+- -instcombine
+- -indvars
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+1062:
+- -mldst-motion
+- -sroa
+- -gvn
+- -simplifycfg
+- -instcombine
+- -gvn
+1063:
+- -early-cse-memssa
+- -instcombine
+- -sroa
+- -early-cse-memssa
+- -memcpyopt
+- -instcombine
+- -simplifycfg
+1064:
+- -sroa
+- -aggressive-instcombine
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+1065:
+- -early-cse-memssa
+- -mem2reg
+- -instcombine
+- -ipsccp
+- -early-cse-memssa
+- -simplifycfg
+- -reassociate
+1066:
+- -simplifycfg
+- -sroa
+- -simplifycfg
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+1067:
+- -instcombine
+- -licm
+- -indvars
+- -sroa
+- -gvn
+- -instcombine
+- -jump-threading
+1068:
+- -mem2reg
+- -early-cse-memssa
+- -simplifycfg
+- -jump-threading
+- -instcombine
+- -jump-threading
+1069:
+- -gvn
+- -instcombine
+- -jump-threading
+- -simplifycfg
+- -sroa
+- -early-cse-memssa
+- -early-cse-memssa
+- -memcpyopt
+- -instcombine
+- -slp-vectorizer
+1070:
+- -sroa
+- -mldst-motion
+- -speculative-execution
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+1071:
+- -mem2reg
+- -instcombine
+- -slp-vectorizer
+- -jump-threading
+- -gvn
+- -correlated-propagation
+1072:
+- -jump-threading
+- -gvn
+- -memcpyopt
+- -instcombine
+- -mem2reg
+- -simplifycfg
+1073:
+- -gvn
+- -instcombine
+- -gvn
+- -sroa
+- -simplifycfg
+- -instcombine
+1074:
+- -aggressive-instcombine
+- -licm
+- -gvn
+- -instcombine
+- -bdce
+- -simplifycfg
+1075:
+- -simplifycfg
+- -early-cse-memssa
+- -mem2reg
+- -instcombine
+- -licm
+- -tailcallelim
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+1076:
+- -sroa
+- -early-cse-memssa
+- -simplifycfg
+- -jump-threading
+- -simplifycfg
+- -ipsccp
+1077:
+- -instcombine
+- -mem2reg
+- -instcombine
+- -simplifycfg
+- -sroa
+- -gvn
+1078:
+- -sroa
+- -memcpyopt
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+- -mldst-motion
+- -early-cse-memssa
+- -simplifycfg
+1079:
+- -loop-rotate
+- -sroa
+- -gvn
+- -instcombine
+- -indvars
+- -correlated-propagation
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+1080:
+- -mem2reg
+- -jump-threading
+- -simplifycfg
+- -jump-threading
+- -licm
+- -instcombine
+- -gvn
+- -simplifycfg
+1081:
+- -jump-threading
+- -mem2reg
+- -indvars
+- -mldst-motion
+- -adce
+- -simplifycfg
+- -instcombine
+1082:
+- -sroa
+- -memcpyopt
+- -simplifycfg
+- -licm
+- -gvn
+- -instcombine
+1083:
+- -sroa
+- -simplifycfg
+- -instcombine
+- -jump-threading
+1084:
+- -sroa
+- -jump-threading
+- -instcombine
+- -slp-vectorizer
+- -early-cse-memssa
+- -simplifycfg
+1085:
+- -mem2reg
+- -early-cse-memssa
+- -simplifycfg
+- -loop-rotate
+1086:
+- -gvn
+- -slp-vectorizer
+- -sroa
+- -simplifycfg
+- -instsimplify
+- -early-cse-memssa
+1087:
+- -mldst-motion
+- -mem2reg
+- -correlated-propagation
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+1088:
+- -instcombine
+- -early-cse-memssa
+- -jump-threading
+- -simplifycfg
+- -early-cse-memssa
+- -jump-threading
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+1089:
+- -jump-threading
+- -sroa
+- -early-cse-memssa
+1090:
+- -tailcallelim
+- -early-cse-memssa
+- -mldst-motion
+- -sroa
+- -ipsccp
+- -simplifycfg
+- -jump-threading
+- -speculative-execution
+- -gvn
+- -instcombine
+- -simplifycfg
+1091:
+- -simplifycfg
+- -sroa
+- -instcombine
+- -early-cse-memssa
+- -ipsccp
+- -jump-threading
+- -simplifycfg
+1092:
+- -sroa
+- -simplifycfg
+- -early-cse-memssa
+- -adce
+- -simplifycfg
+- -instcombine
+1093:
+- -simplifycfg
+- -mem2reg
+- -instcombine
+- -inferattrs
+- -gvn
+- -simplifycfg
+- -licm
+- -early-cse-memssa
+- -simplifycfg
+1094:
+- -mem2reg
+- -mldst-motion
+- -gvn
+- -jump-threading
+- -instcombine
+- -dse
+- -simplifycfg
+1095:
+- -tailcallelim
+- -gvn
+- -gvn
+- -instcombine
+- -simplifycfg
+1096:
+- -sroa
+- -early-cse-memssa
+- -jump-threading
+- -loop-vectorize
+- -instcombine
+- -simplifycfg
+- -licm
+- -simplifycfg
+- -loop-rotate
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+1097:
+- -sroa
+- -early-cse-memssa
+- -reassociate
+- -jump-threading
+- -gvn
+- -instcombine
+- -gvn
+- -simplifycfg
+- -instsimplify
+1098:
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+- -mem2reg
+- -simplifycfg
+1099:
+- -sroa
+- -loop-unroll
+- -simplifycfg
+- -correlated-propagation
+- -indvars
+- -correlated-propagation
+- -simplifycfg
+- -instcombine
+- -gvn
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+- -jump-threading
+- -slp-vectorizer
+- -gvn
+- -bdce
+- -simplifycfg
+1100:
+- -memcpyopt
+- -gvn
+- -jump-threading
+- -instcombine
+- -loop-sink
+- -simplifycfg
+- -instsimplify
+1101:
+- -jump-threading
+- -mem2reg
+- -gvn
+- -indvars
+- -correlated-propagation
+- -simplifycfg
+- -instcombine
+- -correlated-propagation
+- -simplifycfg
+- -early-cse-memssa
+1102:
+- -mem2reg
+- -early-cse-memssa
+- -mldst-motion
+- -simplifycfg
+- -instcombine
+1103:
+- -mem2reg
+- -gvn
+1104:
+- -sroa
+- -gvn
+- -jump-threading
+1105:
+- -simplifycfg
+- -sroa
+- -licm
+- -gvn
+1106:
+- -sroa
+- -simplifycfg
+- -gvn
+- -correlated-propagation
+- -instcombine
+1107:
+- -early-cse-memssa
+- -licm
+- -instcombine
+- -mem2reg
+- -early-cse-memssa
+- -simplifycfg
+- -adce
+1108:
+- -sroa
+- -mldst-motion
+- -early-cse-memssa
+- -simplifycfg
+1109:
+- -mem2reg
+- -simplifycfg
+- -instcombine
+- -jump-threading
+- -early-cse-memssa
+1110:
+- -instcombine
+- -early-cse-memssa
+- -mem2reg
+- -jump-threading
+1111:
+- -sroa
+- -early-cse-memssa
+- -simplifycfg
+- -jump-threading
+- -instcombine
+1112:
+- -mem2reg
+- -gvn
+- -simplifycfg
+- -instcombine
+- -gvn
+- -dse
+1113:
+- -sroa
+- -slp-vectorizer
+- -gvn
+- -reassociate
+- -instcombine
+- -simplifycfg
+1114:
+- -sroa
+- -mldst-motion
+- -early-cse-memssa
+- -instcombine
+- -dse
+- -simplifycfg
+1115:
+- -simplifycfg
+- -sroa
+- -instcombine
+- -jump-threading
+- -instcombine
+- -simplifycfg
+- -instcombine
+1116:
+- -mem2reg
+- -gvn
+- -simplifycfg
+- -instsimplify
+1117:
+- -simplifycfg
+- -early-cse-memssa
+- -slp-vectorizer
+- -sroa
+- -reassociate
+1118:
+- -sroa
+- -slp-vectorizer
+- -gvn
+- -simplifycfg
+- -early-cse-memssa
+- -indvars
+- -simplifycfg
+- -instcombine
+1119:
+- -gvn
+- -early-cse-memssa
+- -correlated-propagation
+- -jump-threading
+- -sroa
+1120:
+- -instcombine
+- -sroa
+- -simplifycfg
+1121:
+- -mem2reg
+- -gvn
+- -instcombine
+- -ipsccp
+- -simplifycfg
+1122:
+- -tailcallelim
+- -licm
+- -sroa
+- -simplifycfg
+- -early-cse-memssa
+- -instcombine
+1123:
+- -licm
+- -tailcallelim
+- -early-cse-memssa
+- -jump-threading
+- -gvn
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+- -adce
+1124:
+- -sroa
+- -early-cse-memssa
+- -instcombine
+- -licm
+- -instcombine
+- -simplifycfg
+- -ipsccp
+- -early-cse-memssa
+1125:
+- -sroa
+- -simplifycfg
+- -jump-threading
+- -early-cse-memssa
+- -jump-threading
+1126:
+- -instcombine
+- -memcpyopt
+- -sroa
+- -gvn
+- -simplifycfg
+- -adce
+1127:
+- -early-cse-memssa
+- -mldst-motion
+- -gvn
+- -mem2reg
+- -simplifycfg
+- -indvars
+- -gvn
+- -correlated-propagation
+- -instcombine
+- -gvn
+- -mldst-motion
+- -simplifycfg
+1128:
+- -licm
+- -sroa
+- -licm
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+1129:
+- -sroa
+- -instcombine
+- -simplifycfg
+- -gvn
+- -instsimplify
+1130:
+- -licm
+- -sroa
+- -loop-unroll
+- -early-cse-memssa
+- -reassociate
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+1131:
+- -early-cse-memssa
+- -instcombine
+- -adce
+- -tailcallelim
+- -mem2reg
+- -simplifycfg
+- -jump-threading
+- -early-cse-memssa
+1132:
+- -licm
+- -inferattrs
+- -gvn
+- -instcombine
+- -simplifycfg
+- -gvn
+- -mem2reg
+- -simplifycfg
+- -instcombine
+- -ipsccp
+1133:
+- -licm
+- -mem2reg
+- -early-cse-memssa
+- -jump-threading
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+- -adce
+1134:
+- -simplifycfg
+- -mem2reg
+- -instcombine
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+1135:
+- -early-cse-memssa
+- -simplifycfg
+- -mem2reg
+- -instcombine
+- -early-cse-memssa
+- -slp-vectorizer
+- -simplifycfg
+- -instcombine
+1136:
+- -reassociate
+- -mem2reg
+- -loop-rotate
+- -indvars
+- -simplifycfg
+- -slp-vectorizer
+- -instcombine
+- -early-cse-memssa
+1137:
+- -mem2reg
+- -inferattrs
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+- -correlated-propagation
+- -simplifycfg
+1138:
+- -sroa
+- -licm
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+1139:
+- -mem2reg
+- -licm
+- -gvn
+- -instcombine
+- -simplifycfg
+1140:
+- -jump-threading
+- -instcombine
+- -gvn
+- -simplifycfg
+- -instcombine
+- -simplifycfg
+1141:
+- -simplifycfg
+- -sroa
+- -gvn
+- -instcombine
+- -simplifycfg
+1142:
+- -sroa
+- -mldst-motion
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+- -jump-threading
+1143:
+- -gvn
+- -instcombine
+- -simplifycfg
+- -instcombine
+1144:
+- -early-cse-memssa
+- -jump-threading
+- -sroa
+- -mldst-motion
+1145:
+- -gvn
+- -instcombine
+- -mem2reg
+- -simplifycfg
+1146:
+- -simplifycfg
+- -mem2reg
+- -inferattrs
+- -instcombine
+- -gvn
+1147:
+- -loop-rotate
+- -simplifycfg
+- -mem2reg
+- -gvn
+- -instcombine
+- -jump-threading
+- -gvn
+- -simplifycfg
+1148:
+- -simplifycfg
+- -mem2reg
+- -instcombine
+- -licm
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+1149:
+- -jump-threading
+- -simplifycfg
+- -sroa
+- -correlated-propagation
+- -instcombine
+- -jump-threading
+- -simplifycfg
+- -instcombine
+1150:
+- -inferattrs
+- -early-cse-memssa
+- -sroa
+- -gvn
+- -instcombine
+1151:
+- -instcombine
+- -mem2reg
+- -jump-threading
+- -loop-rotate
+- -early-cse-memssa
+1152:
+- -tailcallelim
+- -instcombine
+- -gvn
+- -jump-threading
+- -simplifycfg
+- -mem2reg
+- -simplifycfg
+- -gvn
+- -instcombine
+- -early-cse-memssa
+- -jump-threading
+1153:
+- -simplifycfg
+- -mem2reg
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+1154:
+- -aggressive-instcombine
+- -inferattrs
+- -sroa
+- -mldst-motion
+- -early-cse-memssa
+- -simplifycfg
+- -early-cse-memssa
+1155:
+- -reassociate
+- -simplifycfg
+- -early-cse-memssa
+- -reassociate
+- -instcombine
+- -early-cse-memssa
+- -sroa
+- -simplifycfg
+1156:
+- -gvn
+- -instcombine
+- -jump-threading
+- -sroa
+- -instcombine
+- -simplifycfg
+- -memcpyopt
+- -gvn
+- -instcombine
+1157:
+- -early-cse-memssa
+- -mem2reg
+- -instcombine
+1158:
+- -sroa
+- -instcombine
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+- -indvars
+1159:
+- -loop-vectorize
+- -sroa
+- -early-cse-memssa
+- -simplifycfg
+- -speculative-execution
+- -simplifycfg
+- -instcombine
+- -reassociate
+- -loop-rotate
+- -reassociate
+- -simplifycfg
+- -gvn
+- -instcombine
+- -speculative-execution
+- -simplifycfg
+- -early-cse-memssa
+1160:
+- -licm
+- -indvars
+- -sroa
+- -simplifycfg
+- -instcombine
+- -gvn
+- -indvars
+- -correlated-propagation
+- -simplifycfg
+1161:
+- -instcombine
+- -early-cse-memssa
+- -sroa
+- -instcombine
+- -simplifycfg
+- -speculative-execution
+- -early-cse-memssa
+- -simplifycfg
+- -speculative-execution
+- -simplifycfg
+- -speculative-execution
+- -simplifycfg
+- -jump-threading
+- -early-cse-memssa
+1162:
+- -sroa
+- -early-cse-memssa
+- -instcombine
+- -early-cse-memssa
+- -jump-threading
+- -simplifycfg
+1163:
+- -gvn
+- -instcombine
+- -mldst-motion
+- -simplifycfg
+- -sroa
+- -memcpyopt
+- -instcombine
+- -simplifycfg
+- -gvn
+1164:
+- -instcombine
+- -early-cse-memssa
+- -jump-threading
+- -early-cse-memssa
+- -jump-threading
+- -early-cse-memssa
+- -jump-threading
+- -simplifycfg
+- -gvn
+- -jump-threading
+- -instcombine
+- -simplifycfg
+- -gvn
+1165:
+- -gvn
+- -jump-threading
+- -simplifycfg
+- -instcombine
+- -sroa
+- -ipsccp
+1166:
+- -mem2reg
+- -simplifycfg
+- -licm
+- -early-cse-memssa
+- -loop-unroll
+- -simplifycfg
+- -indvars
+- -instcombine
+- -licm
+- -early-cse-memssa
+- -simplifycfg
+1167:
+- -mem2reg
+- -ipsccp
+- -jump-threading
+- -licm
+- -instcombine
+- -gvn
+- -jump-threading
+1168:
+- -tailcallelim
+- -simplifycfg
+- -gvn
+- -reassociate
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+1169:
+- -sroa
+- -instcombine
+- -jump-threading
+- -correlated-propagation
+- -slp-vectorizer
+- -simplifycfg
+- -licm
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+1170:
+- -mem2reg
+- -gvn
+- -simplifycfg
+- -instcombine
+- -jump-threading
+- -correlated-propagation
+- -early-cse-memssa
+1171:
+- -early-cse-memssa
+- -tailcallelim
+- -instcombine
+- -gvn
+- -sroa
+- -jump-threading
+- -early-cse-memssa
+- -memcpyopt
+- -instcombine
+- -inferattrs
+- -simplifycfg
+- -early-cse-memssa
+1172:
+- -early-cse-memssa
+- -simplifycfg
+- -mem2reg
+- -early-cse-memssa
+- -instcombine
+- -jump-threading
+1173:
+- -sroa
+- -loop-unroll
+- -jump-threading
+- -instcombine
+- -indvars
+1174:
+- -licm
+- -gvn
+- -instcombine
+- -simplifycfg
+1175:
+- -sroa
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+1176:
+- -mem2reg
+- -simplifycfg
+- -early-cse-memssa
+- -instcombine
+- -licm
+- -simplifycfg
+- -tailcallelim
+- -early-cse-memssa
+1177:
+- -gvn
+- -instcombine
+- -simplifycfg
+- -speculative-execution
+- -loop-rotate
+- -instcombine
+- -jump-threading
+- -inferattrs
+- -gvn
+- -correlated-propagation
+- -instsimplify
+- -simplifycfg
+1178:
+- -sroa
+- -instcombine
+- -jump-threading
+- -adce
+- -simplifycfg
+1179:
+- -mem2reg
+- -indvars
+- -instcombine
+- -licm
+- -simplifycfg
+- -early-cse-memssa
+- -ipsccp
+1180:
+- -gvn
+- -instcombine
+- -slp-vectorizer
+- -sroa
+- -simplifycfg
+- -early-cse-memssa
+1181:
+- -mem2reg
+- -jump-threading
+- -gvn
+- -simplifycfg
+- -instcombine
+1182:
+- -jump-threading
+- -mem2reg
+- -gvn
+- -instcombine
+- -simplifycfg
+1183:
+- -tailcallelim
+- -instcombine
+- -gvn
+- -gvn
+- -simplifycfg
+- -early-cse-memssa
+- -jump-threading
+- -correlated-propagation
+- -instcombine
+- -early-cse-memssa
+- -dse
+- -simplifycfg
+1184:
+- -simplifycfg
+- -instcombine
+- -sroa
+- -simplifycfg
+- -early-cse-memssa
+1185:
+- -sroa
+- -early-cse-memssa
+- -aggressive-instcombine
+- -simplifycfg
+1186:
+- -early-cse-memssa
+- -speculative-execution
+- -gvn
+- -instcombine
+- -simplifycfg
+- -jump-threading
+- -gvn
+1187:
+- -gvn
+- -sroa
+- -instcombine
+- -simplifycfg
+1188:
+- -gvn
+- -instcombine
+- -inferattrs
+- -mem2reg
+- -simplifycfg
+- -dse
+- -gvn
+- -jump-threading
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+1189:
+- -mem2reg
+- -licm
+- -instcombine
+- -simplifycfg
+- -instcombine
+- -gvn
+1190:
+- -licm
+- -mem2reg
+- -jump-threading
+- -gvn
+- -loop-rotate
+- -correlated-propagation
+- -loop-rotate
+- -jump-threading
+- -loop-rotate
+- -instcombine
+- -simplifycfg
+1191:
+- -sroa
+- -correlated-propagation
+- -gvn
+- -simplifycfg
+- -instsimplify
+- -gvn
+1192:
+- -instcombine
+- -early-cse-memssa
+- -slp-vectorizer
+- -sroa
+- -simplifycfg
+- -early-cse-memssa
+- -instcombine
+- -dse
+1193:
+- -gvn
+- -slp-vectorizer
+- -simplifycfg
+- -instcombine
+- -sroa
+- -simplifycfg
+- -early-cse-memssa
+1194:
+- -early-cse-memssa
+- -mldst-motion
+- -instcombine
+- -simplifycfg
+- -mem2reg
+- -early-cse-memssa
+- -simplifycfg
+1195:
+- -early-cse-memssa
+- -gvn
+- -instcombine
+- -simplifycfg
+1196:
+- -mem2reg
+- -instcombine
+- -mldst-motion
+- -simplifycfg
+- -early-cse-memssa
+1197:
+- -sroa
+- -simplifycfg
+- -ipsccp
+- -early-cse-memssa
+1198:
+- -sroa
+- -simplifycfg
+- -jump-threading
+- -gvn
+- -loop-vectorize
+- -simplifycfg
+- -instsimplify
+1199:
+- -mem2reg
+- -early-cse-memssa
+- -memcpyopt
+- -instsimplify
+- -simplifycfg
+1200:
+- -early-cse-memssa
+- -jump-threading
+- -simplifycfg
+- -sroa
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+1201:
+- -jump-threading
+- -mem2reg
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+- -reassociate
+- -instcombine
+- -jump-threading
+- -early-cse-memssa
+- -simplifycfg
+1202:
+- -mem2reg
+- -indvars
+- -licm
+- -gvn
+- -loop-rotate
+- -instcombine
+- -simplifycfg
+1203:
+- -early-cse-memssa
+- -reassociate
+- -instcombine
+- -sroa
+- -speculative-execution
+- -early-cse-memssa
+- -jump-threading
+- -reassociate
+- -instcombine
+- -simplifycfg
+1204:
+- -mem2reg
+- -gvn
+- -instcombine
+- -simplifycfg
+- -gvn
+- -instcombine
+1205:
+- -instcombine
+- -sroa
+- -licm
+- -early-cse-memssa
+- -ipsccp
+- -indvars
+- -instsimplify
+- -simplifycfg
+1206:
+- -instcombine
+- -inferattrs
+- -mem2reg
+- -licm
+- -simplifycfg
+- -early-cse-memssa
+1207:
+- -gvn
+- -sroa
+- -instcombine
+- -jump-threading
+- -early-cse-memssa
+- -simplifycfg
+1208:
+- -sroa
+- -instcombine
+- -early-cse-memssa
+- -jump-threading
+- -simplifycfg
+1209:
+- -jump-threading
+- -bdce
+- -simplifycfg
+- -licm
+- -early-cse-memssa
+- -simplifycfg
+- -mem2reg
+1210:
+- -gvn
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+- -sroa
+1211:
+- -mem2reg
+- -instcombine
+- -licm
+- -early-cse-memssa
+- -indvars
+- -simplifycfg
+- -instcombine
+1212:
+- -early-cse-memssa
+- -sroa
+- -simplifycfg
+- -early-cse-memssa
+1213:
+- -mem2reg
+- -simplifycfg
+- -gvn
+- -simplifycfg
+- -instsimplify
+1214:
+- -instcombine
+- -licm
+- -sroa
+- -early-cse-memssa
+- -simplifycfg
+- -inferattrs
+- -early-cse-memssa
+- -dse
+- -instcombine
+1215:
+- -sroa
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+- -dse
+1216:
+- -tailcallelim
+- -gvn
+- -instcombine
+- -sroa
+- -licm
+- -early-cse-memssa
+- -simplifycfg
+1217:
+- -simplifycfg
+- -mem2reg
+- -licm
+- -loop-rotate
+- -inferattrs
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+1218:
+- -sroa
+- -licm
+- -loop-rotate
+- -gvn
+- -correlated-propagation
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+1219:
+- -gvn
+- -indvars
+- -sroa
+- -early-cse-memssa
+- -simplifycfg
+1220:
+- -sroa
+- -inferattrs
+- -instcombine
+- -correlated-propagation
+- -early-cse-memssa
+- -simplifycfg
+- -jump-threading
+- -instcombine
+- -jump-threading
+- -correlated-propagation
+- -indvars
+- -simplifycfg
+- -instcombine
+1221:
+- -mem2reg
+- -memcpyopt
+- -early-cse-memssa
+- -simplifycfg
+1222:
+- -sroa
+- -memcpyopt
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+1223:
+- -tailcallelim
+- -early-cse-memssa
+1224:
+- -mem2reg
+- -indvars
+- -licm
+- -mldst-motion
+- -gvn
+- -jump-threading
+- -instcombine
+- -gvn
+1225:
+- -sroa
+- -early-cse-memssa
+- -licm
+- -inferattrs
+- -simplifycfg
+- -jump-threading
+- -indvars
+- -memcpyopt
+- -early-cse-memssa
+- -simplifycfg
+- -aggressive-instcombine
+1226:
+- -instcombine
+- -mem2reg
+- -gvn
+- -dse
+- -slp-vectorizer
+1227:
+- -instcombine
+- -gvn
+1228:
+- -mem2reg
+- -instcombine
+- -jump-threading
+- -gvn
+- -bdce
+- -simplifycfg
+1229:
+- -licm
+- -gvn
+- -jump-threading
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+- -instsimplify
+1230:
+- -instcombine
+- -mem2reg
+- -instcombine
+- -gvn
+- -simplifycfg
+- -gvn
+- -sroa
+- -simplifycfg
+- -gvn
+1231:
+- -sroa
+- -jump-threading
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+1232:
+- -gvn
+- -jump-threading
+- -sroa
+- -simplifycfg
+- -speculative-execution
+- -jump-threading
+- -early-cse-memssa
+1233:
+- -mem2reg
+- -correlated-propagation
+- -adce
+- -simplifycfg
+- -gvn
+1234:
+- -gvn
+- -correlated-propagation
+- -simplifycfg
+- -instcombine
+- -jump-threading
+- -gvn
+1235:
+- -mem2reg
+- -mldst-motion
+- -simplifycfg
+- -mldst-motion
+- -instcombine
+- -early-cse-memssa
+1236:
+- -instcombine
+- -gvn
+- -ipsccp
+- -instcombine
+- -jump-threading
+- -mem2reg
+- -gvn
+- -simplifycfg
+1237:
+- -early-cse-memssa
+- -jump-threading
+- -reassociate
+- -early-cse-memssa
+- -reassociate
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+- -loop-unroll
+- -mem2reg
+- -instcombine
+- -indvars
+- -correlated-propagation
+- -simplifycfg
+1238:
+- -gvn
+- -tailcallelim
+- -simplifycfg
+- -gvn
+- -instcombine
+1239:
+- -early-cse-memssa
+- -instcombine
+- -sroa
+- -dse
+- -jump-threading
+- -memcpyopt
+- -licm
+- -early-cse-memssa
+1240:
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+- -sroa
+- -instcombine
+- -correlated-propagation
+- -jump-threading
+1241:
+- -gvn
+- -instcombine
+- -loop-rotate
+- -indvars
+- -early-cse-memssa
+- -jump-threading
+- -sroa
+1242:
+- -gvn
+- -mldst-motion
+- -sroa
+- -simplifycfg
+- -gvn
+1243:
+- -sroa
+- -mldst-motion
+- -loop-unroll
+- -loop-rotate
+- -simplifycfg
+- -sroa
+- -licm
+- -early-cse-memssa
+- -instcombine
+1244:
+- -early-cse-memssa
+- -reassociate
+- -loop-sink
+- -simplifycfg
+- -early-cse-memssa
+- -instcombine
+- -mem2reg
+- -simplifycfg
+- -instcombine
+1245:
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+- -dse
+- -mem2reg
+- -gvn
+- -mldst-motion
+- -simplifycfg
+- -jump-threading
+- -instcombine
+- -simplifycfg
+- -gvn
+1246:
+- -jump-threading
+- -gvn
+- -ipsccp
+- -jump-threading
+- -instcombine
+- -simplifycfg
+1247:
+- -instcombine
+- -licm
+- -mem2reg
+- -jump-threading
+- -instsimplify
+- -indvars
+- -gvn
+1248:
+- -reassociate
+- -mem2reg
+- -simplifycfg
+- -early-cse-memssa
+- -slp-vectorizer
+- -bdce
+1249:
+- -early-cse-memssa
+- -instcombine
+- -tailcallelim
+- -gvn
+- -simplifycfg
+- -instcombine
+- -simplifycfg
+- -speculative-execution
+- -gvn
+1250:
+- -simplifycfg
+- -mem2reg
+- -licm
+- -early-cse-memssa
+- -instcombine
+- -early-cse-memssa
+- -indvars
+- -simplifycfg
+- -instsimplify
+- -jump-threading
+1251:
+- -instsimplify
+- -early-cse-memssa
+- -slp-vectorizer
+- -gvn
+- -dse
+- -instcombine
+1252:
+- -jump-threading
+- -sroa
+- -correlated-propagation
+- -simplifycfg
+1253:
+- -mem2reg
+- -loop-rotate
+- -gvn
+- -instcombine
+- -indvars
+- -simplifycfg
+- -early-cse-memssa
+- -jump-threading
+- -gvn
+- -loop-unswitch
+- -ipsccp
+- -instcombine
+- -simplifycfg
+1254:
+- -sroa
+- -gvn
+- -simplifycfg
+- -dse
+- -instcombine
+- -loop-rotate
+- -simplifycfg
+- -correlated-propagation
+1255:
+- -early-cse-memssa
+- -mem2reg
+- -instcombine
+- -jump-threading
+- -simplifycfg
+- -early-cse-memssa
+1256:
+- -mem2reg
+- -simplifycfg
+- -instcombine
+- -early-cse-memssa
+- -indvars
+- -simplifycfg
+- -instcombine
+1257:
+- -sroa
+- -instcombine
+- -simplifycfg
+- -ipsccp
+- -correlated-propagation
+- -early-cse-memssa
+- -jump-threading
+- -correlated-propagation
+1258:
+- -sroa
+- -instcombine
+- -memcpyopt
+- -early-cse-memssa
+- -simplifycfg
+1259:
+- -sroa
+- -loop-load-elim
+- -jump-threading
+- -gvn
+- -instcombine
+- -speculative-execution
+- -indvars
+- -simplifycfg
+- -jump-threading
+- -gvn
+- -instcombine
+1260:
+- -licm
+- -simplifycfg
+- -sroa
+- -indvars
+- -loop-rotate
+- -instcombine
+- -indvars
+- -gvn
+- -simplifycfg
+1261:
+- -early-cse-memssa
+- -simplifycfg
+- -instcombine
+- -sroa
+- -indvars
+1262:
+- -licm
+- -sroa
+- -simplifycfg
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+1263:
+- -early-cse-memssa
+- -instcombine
+- -jump-threading
+- -early-cse-memssa
+- -sroa
+1264:
+- -mem2reg
+- -jump-threading
+- -loop-rotate
+- -gvn
+- -jump-threading
+- -instcombine
+- -simplifycfg
+- -instcombine
+1265:
+- -jump-threading
+- -sroa
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+1266:
+- -gvn
+- -sroa
+- -jump-threading
+- -simplifycfg
+- -instcombine
+- -simplifycfg
+1267:
+- -mem2reg
+- -early-cse-memssa
+- -instcombine
+- -jump-threading
+- -simplifycfg
+1268:
+- -instcombine
+- -gvn
+- -loop-rotate
+- -jump-threading
+- -mem2reg
+- -simplifycfg
+- -early-cse-memssa
+1269:
+- -jump-threading
+- -gvn
+- -instcombine
+- -licm
+- -sroa
+- -early-cse-memssa
+- -simplifycfg
+1270:
+- -sroa
+- -aggressive-instcombine
+- -gvn
+- -simplifycfg
+- -licm
+- -gvn
+1271:
+- -licm
+- -reassociate
+- -early-cse-memssa
+- -dse
+- -loop-rotate
+- -instcombine
+- -simplifycfg
+1272:
+- -sroa
+- -jump-threading
+- -instcombine
+- -early-cse-memssa
+1273:
+- -mem2reg
+- -gvn
+- -indvars
+- -instcombine
+- -reassociate
+- -early-cse-memssa
+- -simplifycfg
+1274:
+- -sroa
+- -instcombine
+- -correlated-propagation
+- -simplifycfg
+- -early-cse-memssa
+- -simplifycfg
+1275:
+- -loop-idiom
+- -early-cse-memssa
+- -mem2reg
+- -simplifycfg
+- -instcombine
+- -correlated-propagation
+- -simplifycfg
+1276:
+- -sroa
+- -simplifycfg
+- -jump-threading
+- -gvn
+- -jump-threading
+1277:
+- -jump-threading
+- -licm
+- -gvn
+- -mem2reg
+- -instcombine
+- -simplifycfg
+- -bdce
+- -instcombine
+- -correlated-propagation
+- -simplifycfg
+- -gvn
+1278:
+- -mem2reg
+- -early-cse-memssa
+- -loop-unswitch
+- -jump-threading
+- -memcpyopt
+- -instcombine
+- -early-cse-memssa
+1279:
+- -gvn
+- -sroa
+- -jump-threading
+- -instcombine
+- -gvn
+1280:
+- -simplifycfg
+- -gvn
+- -instcombine
+- -sroa
+- -reassociate
+- -simplifycfg
+- -early-cse-memssa
+1281:
+- -licm
+- -early-cse-memssa
+- -inferattrs
+- -gvn
+- -slp-vectorizer
+- -sroa
+- -simplifycfg
+- -correlated-propagation
+- -mldst-motion
+- -instcombine
+- -licm
+- -early-cse-memssa
+- -simplifycfg
+1282:
+- -licm
+- -instcombine
+- -indvars
+- -sroa
+- -loop-rotate
+- -early-cse-memssa
+- -jump-threading
+- -simplifycfg
+- -early-cse-memssa
+- -dse
+1283:
+- -early-cse-memssa
+- -licm
+- -indvars
+- -sroa
+- -simplifycfg
+- -early-cse-memssa
+- -speculative-execution
+- -simplifycfg
+- -instcombine
+- -licm
+- -bdce
+- -speculative-execution
+- -indvars
+- -simplifycfg
+- -early-cse-memssa
+1284:
+- -gvn
+- -simplifycfg
+- -mem2reg
+- -instcombine
+- -jump-threading
+1285:
+- -tailcallelim
+- -licm
+- -sroa
+- -early-cse-memssa
+- -indvars
+- -instcombine
+- -simplifycfg
+- -early-cse-memssa
+1286:
+- -sroa
+- -instcombine
+- -mldst-motion
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+1287:
+- -licm
+- -mem2reg
+- -bdce
+- -instcombine
+- -early-cse-memssa
+- -simplifycfg
+1288:
+- -mem2reg
+- -simplifycfg
+- -slp-vectorizer
+- -jump-threading
+- -early-cse-memssa
+- -instcombine
+- -simplifycfg
+1289:
+- -jump-threading
+- -mem2reg
+- -instcombine
+- -early-cse-memssa
+- -instcombine
+- -memcpyopt
+- -reassociate
