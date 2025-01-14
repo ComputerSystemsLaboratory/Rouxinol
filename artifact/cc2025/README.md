@@ -30,7 +30,7 @@ conda activate rouxinol
 ```
 
 ---
-# **Reproduce CC2025 Results**
+# **Reproduce CC 2025 Results**
 
 You need to set the following variables. *ROUXINOL'S DATA DIRECTORY* is the directory where the data (LLVM IR, executable, representations, and statistics) will be stored. *ROUXINOL DIRECTORY* is the installation directory of Rouxinol. *CONDA DIRECTORY* is the installation directory of Anaconda. *ROUXINOL'S DATASET DIRECTORY* is the directory that contains OpenJudge Dataset; it is an optional variable, and if it is not set, Rouxinol will use the default directory (see Rouxinol/rouxinol/dataset.py). Always use absolute path.
 
