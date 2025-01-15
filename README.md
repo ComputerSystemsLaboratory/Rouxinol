@@ -89,4 +89,4 @@ The repository has the following organization.
 
 # **Publication**
 
-Anderson Faustino da Silva, Jeronimo Castrillon, Fernando Magno Quintão Pereira, "**A Comparative Study on the Accuracy and the Speed of Static and Dynamic Program Classifiers**", Proceedings of the 34th ACM SIGPLAN International Conference on Compiler Construction (CC 2025), Association for Computing Machinery, New York, NY, USA, Mar 2025.
+Anderson Faustino da Silva, Jeronimo Castrillon, Fernando Magno Quintão Pereira, [A Comparative Study on the Accuracy and the Speed of Static and Dynamic Program Classifiers](https://homepages.dcc.ufmg.br/~fernando/publications/papers/CC25_Faustino.pdf), Proceedings of the 34th ACM SIGPLAN International Conference on Compiler Construction (CC 2025), Association for Computing Machinery, New York, NY, USA, Mar 2025.
