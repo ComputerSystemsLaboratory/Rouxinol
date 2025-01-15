@@ -167,14 +167,20 @@ def main(argv):
     # Training and test
     model = model_class()
     model.train(data_train, data_train)
-    f1, acc, recall, precision, pred = model.predict(data_test)
 
-    stats = {"f1": f1, "acc": acc, "recall": recall, "precision": precision, "pred": pred.tolist()}
+    f1, acc, recall, precision, y_test, y_pred = model.predict(data_test)
+
+    if FLGAS.representation != "programl":
+        y_pred = y_pred.tolist()
+
+    stats = {"f1": f1, "acc": acc, "recall": recall, "precision": precision, "y_test": y_test,"y_pred": y_pred}
+    dataset_name = os.path.basename(samples_filename)
+    representation = f"{FLAGS.representation}_static" if FLAGS.static else FLAGS.representation
     stats_filename = get_next_filename(
-                    os.path.join(data_directory, FLAGS.label_dir, "stats", f"stats_{suffix}"),
-                    "yml"
+                        os.path.join(FLAGS.data_directory, "stats", f"stats_{representation}_{FLAGS.label_dir}_{FLAGS.label_dir}_{dataset_name[:-4]}_{FLAGS.problems}_{FLAGS.samples[0]}"),
+                        "yml"
                 )
-    with open(os.path.join(data_directory, FLAGS.label_dir, "stats", stats_filename), "w") as fout:
+    with open(os.path.join(FLAGS.data_directory, stats_filename), "w") as fout:
         yl.dump(stats, fout)
 
 
