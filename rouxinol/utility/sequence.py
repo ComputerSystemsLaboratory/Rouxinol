@@ -480,7 +480,7 @@ def create_random_sequences(nof_sequences,
                             factor,
                             ssa,
                             shuffle,
-                            update_,
+                            apply_update,
                             repetition,
                             original,
                             passes):
@@ -506,7 +506,7 @@ def create_random_sequences(nof_sequences,
     shuffle : bool
         Enable shuffle?
 
-    update : bool
+    apply_update : bool
         Enable update?
 
     repetition : bool
@@ -515,8 +515,8 @@ def create_random_sequences(nof_sequences,
     original : bool
         Insert the orginal?
 
-    passes_filename : str
-        The yaml filename which describes the available passes.
+    passes : list
+        The available passes to use.
 
     Return
     ------
@@ -527,7 +527,7 @@ def create_random_sequences(nof_sequences,
         lg.error('adjust MAXIMUM lenght. MAXIMUM \
         should be less than 70% of |PASSES|')
         sys.exit(1)
-    if not (original or update_ or shuffle):
+    if not (original or apply_update or shuffle):
         lg.error('Error: it is necessary to use at \
         least one argument (-original, -update, -shuffle)')
         sys.exit(1)
@@ -565,7 +565,7 @@ def create_random_sequences(nof_sequences,
                     counter += 1
                     if counter >= nof_sequences:
                         break
-        if update_:
+        if apply_update:
             seq = update(seq)
             seq = sanitize(seq)
 

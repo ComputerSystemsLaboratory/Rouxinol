@@ -26,7 +26,7 @@ function install_ollvm {
 }
 
 if [ $# -ne 2 ]; then
-    echo "Usage: install {conda directory} {number of workers}"
+    echo "Usage: install_deps.sh {conda directory} {number of workers}"
     exit 1
 fi
 
