@@ -128,11 +128,13 @@ def main(argv):
     )
 
     # Store the representation
-    for representation in data:
-        problem = representation["info"]["problem"]
-        basename =  representation["info"]["basename"]
-        embeddings = representation["x"]
-        if FLAGS.representation == "cfggrindHistogram":
+    representation = "energyHistogram" if all("energy" in s for s in FLAGS.events) else FLAGS.representation
+
+    for data_info in data:
+        problem = data_info["info"]["problem"]
+        basename =  data_info["info"]["basename"]
+        embeddings = data_info["x"]
+        if representation == "cfggrindHistogram":
             hybrid, dynamic = embeddings
             os.makedirs(os.path.join(output_directory, problem, "cfggrindHybridHistogram"), exist_ok=True)
             with open(os.path.join(output_directory, problem, "cfggrindHybridHistogram", f"{basename}.yml"), "w") as fout:
@@ -140,34 +142,34 @@ def main(argv):
             os.makedirs(os.path.join(output_directory, problem, "cfggrindDynamicHistogram"), exist_ok=True)
             with open(os.path.join(output_directory, problem, "cfggrindDynamicHistogram", f"{basename}.yml"), "w") as fout:
                 yl.dump(dynamic, fout)
-        elif FLAGS.representation == "inst2vec":
+        elif representation == "inst2vec":
             preprocessed, emb = embeddings
             os.makedirs(os.path.join(output_directory, problem, "inst2vecPreprocessed"), exist_ok=True)
             np.savez_compressed(os.path.join(output_directory, problem, "inst2vecPreprocessed", basename), embeddings=preprocessed)
             os.makedirs(os.path.join(output_directory, problem, "inst2vecEmbeddings"), exist_ok=True)
             np.savez_compressed(os.path.join(output_directory, problem, "inst2vecEmbeddings", basename), embeddings=emb)
-        elif FLAGS.representation == "inst2VecPreprocessed":
+        elif representation == "inst2VecPreprocessed":
             os.makedirs(os.path.join(output_directory, problem, "inst2vecPreprocessed"), exist_ok=True)
             np.savez_compressed(os.path.join(output_directory, problem, "inst2vecPreprocessed", basename), embeddings=embeddings)
-        elif FLAGS.representation == "inst2vecEmbeddings":
+        elif representation == "inst2vecEmbeddings":
             os.makedirs(os.path.join(output_directory, problem, "inst2vecEmbeddings"), exist_ok=True)
             np.savez_compressed(os.path.join(output_directory, problem, "inst2vecEmbeddings", basename), embeddings=embeddings)            
-        else:
-            os.makedirs(os.path.join(output_directory, problem, FLAGS.representation), exist_ok=True)
-            with open(os.path.join(output_directory, problem, FLAGS.representation, f"{basename}.yml"), "w") as fout:
+        else: 
+            os.makedirs(os.path.join(output_directory, problem, representation), exist_ok=True)
+            with open(os.path.join(output_directory, problem, representation, f"{basename}.yml"), "w") as fout:
                 yl.dump(embeddings, fout)
 
     # Store the statistics
     ir_filename = get_next_filename(
-                        os.path.join(stats_directory, f"elapsed_i_{FLAGS.representation}"),
+                        os.path.join(stats_directory, f"elapsed_i_{representation}"),
                         "yml"
                     )
     exe_filename = get_next_filename(
-                        os.path.join(stats_directory, f"elapsed_e_{FLAGS.representation}"),
+                        os.path.join(stats_directory, f"elapsed_e_{representation}"),
                         "yml"
                     )
     repr_filename = get_next_filename(
-                        os.path.join(stats_directory, f"elapsed_r_{FLAGS.representation}"),
+                        os.path.join(stats_directory, f"elapsed_r_{representation}"),
                         "yml"
                     )
     
