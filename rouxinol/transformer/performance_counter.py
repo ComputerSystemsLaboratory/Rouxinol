@@ -49,24 +49,76 @@ class PerformanceCounterHistogramBuilder(RepresentationBuilder):
         self,
     ):
         return self.__src_type
-        
-    def _remove_pcnt_running(
-        self,
-        input_string
+
+    def _parse_performance_counters(
+        self, 
+        data_string
     ):
-        # Define the pattern to search for  
-        pattern1 = '"pcnt-running" : '
-        pattern2 = '"metric-value" : '
+        # Set of valid performance counters
+        valid_counters = {
+            "branch-instructions",
+            "branch-load-misses",
+            "branch-loads",
+            "branch-misses",
+            "cache-misses",
+            "cache-references",
+            "cycles",
+            "dTLB-load-misses",
+            "dTLB-loads",
+            "dTLB-store-misses",
+            "dTLB-stores",
+            "faults",
+            "instructions",
+            "iTLB-load-misses",
+            "iTLB-loads",
+            "L1-dcache-load-misses",
+            "L1-dcache-loads",
+            "L1-dcache-stores",
+            "L1-icache-load-misses",
+            "L1-dcache-prefetches",
+            "L1-icache-loads",
+            "stalled-cycles-backend",
+            "stalled-cycles-frontend",
+            "LLC-load-misses",
+            "LLC-loads",
+            "LLC-store-misses",
+            "LLC-stores"            
+        }
 
-        # Find the starting index of the pattern  
-        start_index = input_string.find(pattern1) 
-        end_index = input_string.find(pattern2)
+        performance_counters = {}
 
-        # If the pattern is found, proceed to remove it  
-        if start_index != -1 and end_index != -1:
-            input_string = input_string[:start_index] + input_string[end_index:]      
-        
-        return input_string
+        for line in data_string:
+            if (
+                line.strip()
+                and not line.startswith("#")
+                and not line.startswith(" Performance counter stats")
+            ):
+                parts = line.split()
+                if len(parts) >= 2:
+                    value_str = parts[0].strip()
+                    if value_str != "<not counted>":
+                        # Try to parse value
+                        try:
+                            numeric_value = float(value_str.replace(".", "").replace(",", "."))
+                        except ValueError:
+                            continue
+
+                        # Re-join the rest as counter name (strip trailing and # comments)
+                        rest = " ".join(parts[1:])
+                        rest = rest.split("#")[0].strip()
+
+                        # Remove percent info in parentheses from the end
+                        rest = re.sub(r"\s*\([0-9,\.% ]+\)$", "", rest)
+
+                        # Only keep if matches a valid counter
+                        # Match only the exact counter name (strip extra tokens)
+                        for key in valid_counters:
+                            # Must match at start, and be followed by end or space
+                            if rest.startswith(key) and (len(rest) == len(key) or rest[len(key)] == " "):
+                                performance_counters[key] = numeric_value
+                                break
+
+        return performance_counters
 
     def string_to_info(
         self,
@@ -86,14 +138,13 @@ class PerformanceCounterHistogramBuilder(RepresentationBuilder):
             'system_time': 0.0,
             'cpu_time': 0.0
         }
-
         counters = {}
 
         events_command = ""
         for event in events:
             events_command += f" -e {event} "
 
-        command = f"perf stat -j -o {exec_filename}.perf.json {events_command} -r {rounds} {exec_filename} {input_data}"
+        command = f"perf stat -o {exec_filename}.perf.json {events_command} -r {rounds} {exec_filename} {input_data}"
         if stdin_filename:
             with open(stdin_filename, 'r') as fin:
                 output = run_command_unix(command, stdin=fin, timeout=timeout)
@@ -106,19 +157,7 @@ class PerformanceCounterHistogramBuilder(RepresentationBuilder):
         try:
             with open(f"{exec_filename}.perf.json", 'r') as f:
                 lines_string = f.readlines()
-            lines = [line.strip() for line in lines_string]  
-            
-            # Process each line and create dictionary 
-            for line in lines:  
-                # Parse JSON string
-                line = self._remove_pcnt_running(line)
-                data = json.loads(line)
-                if len(data.keys()) == 2:
-                    continue
-                if data['counter-value'] == "<not counted>":
-                    continue
-                # Extract event and counter-value, replace comma with period  
-                counters[data['event']] = float(data['counter-value'].replace(',', '.'))
+            counters = self._parse_performance_counters(lines_string)
         except Exception as e:
             counters = None
         finally:
@@ -126,7 +165,6 @@ class PerformanceCounterHistogramBuilder(RepresentationBuilder):
             _ = run_command_unix(command)
 
         self.set_runtime(runtime)
-
         return counters
 
     def info_to_representation(
