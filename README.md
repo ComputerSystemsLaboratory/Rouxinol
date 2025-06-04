@@ -65,16 +65,19 @@ conda activate rouxinol
 To learn how to use Rouxinol, refer to Rouxinol/examples.
 
 <a id="artifact"></a>
-####  **Artefact**
+####  **Artefacts**
 
-To learn how to replicate CC25 results, refer to Rouxinol/artefact/cc25.
+```bash
+|-- CC2025 "International Conference on Compiler Construction"
+|-- SAMOSXXV "International Conference on Embedded Computer Systems: Architectures, Modeling and Simulation"
+```
 
 <a id="structure"></a>
 # **Structure**
 
 The repository has the following organization.
 ```bash
-|-- artifact "Paper artifacts"
+|-- artifacts "Paper artifacts"
 |-- doc "Documentation"
 |-- examples "How to use Rouxinol"
 |-- passes "LLVM passes description"
