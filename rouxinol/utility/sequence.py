@@ -474,16 +474,16 @@ def create_random_sequence(minimum,
 
     return sequence
 
-def create_random_sequences(nof_sequences,
-                            minimum,
-                            maximum,
-                            factor,
-                            ssa,
-                            shuffle,
-                            apply_update,
-                            repetition,
-                            original,
-                            passes):
+def create_random_sequences_v1(nof_sequences,
+                                minimum,
+                                maximum,
+                                factor,
+                                ssa,
+                                shuffle,
+                                apply_update,
+                                repetition,
+                                original,
+                                passes):
     """Create N random sequences.
 
     Parameters
@@ -585,6 +585,107 @@ def create_random_sequences(nof_sequences,
                     counter += 1
                     if counter >= nof_sequences:
                         break
+
+    return sequences
+
+def create_random_sequences_v2(nof_sequences,
+                                minimum,
+                                maximum,
+                                factor,
+                                ssa,
+                                shuffle,
+                                apply_update,
+                                repetition,
+                                original,
+                                passes):
+    """Create N random sequences.
+
+    Parameters
+    ----------
+    nof_sequences : int
+        The number of sequences.
+
+    minimum : int
+        The minimum and maximum length of the sequence.
+
+    maximum : int
+        The maximum length of the sequence.
+
+    factor : int
+        The times to appy to nof_sequences. (nof_sequences *= factor)
+
+    ssa : bool
+        Enable ssa?
+
+    shuffle : bool
+        Enable shuffle?
+
+    apply_update : bool
+        Enable update?
+
+    repetition : bool
+        Enable repetition?
+
+    original : bool
+        Insert the orginal?
+
+    passes : list
+        The available passes to use.
+
+    Return
+    ------
+    sequences : dict
+        A dictionary which contains N random sequences.
+    """
+    if (not repetition) and (maximum > (len(passes)*0.7)):
+        lg.error('adjust MAXIMUM lenght. MAXIMUM should be less than 70% of |PASSES|')
+        sys.exit(1)
+    if not (original or ssa or apply_update or shuffle):
+        lg.error('Error: it is necessary to use at least one argument (-original , -ssa, -update, -shuffle)')
+        sys.exit(1)
+
+    # Load the passes
+    counter = 0
+    sequences = {}
+    nof_sequences *= factor
+
+    while True:
+        # generate a sequence
+        seq = create_random_sequence(minimum,
+                                     maximum,
+                                     repetition,
+                                     passes)
+        seq = sanitize(seq)
+
+        original_seq = seq[:]
+
+        if shuffle:
+            sseq = seq[:]
+            rn.shuffle(sseq)
+            seq = sanitize(sseq)
+
+        if ssa:
+            seq = mem2reg_first(seq)
+        
+        if apply_update:
+            seq = update(seq)
+            seq = sanitize(seq)
+
+        if original:
+            if not exist(original_seq,
+                         sequences):
+                sequences[counter] = original_seq
+                counter += 1
+                if counter >= nof_sequences:
+                    break
+
+        if shuffle or ssa or apply_update:
+            if not exist(seq,
+                         sequences):
+                sequences[counter] = seq
+                counter += 1
+                if counter >= nof_sequences:
+                    break
 
     return sequences
 
