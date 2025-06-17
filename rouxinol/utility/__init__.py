@@ -53,7 +53,8 @@ from .sequence import (
     get_the_smallest,
     exist,
     create_random_sequence,
-    create_random_sequences,
+    create_random_sequences_v1,
+    create_random_sequences_v2,
     split
 )
 
