@@ -24,7 +24,8 @@ from .tools import (
     none_output,
     get_next_filename,
     create_string,
-    metrics_for_predictions
+    regression_metrics,
+    classification_metrics
 )
 
 from .dataset import (

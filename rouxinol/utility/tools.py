@@ -27,6 +27,21 @@ import itertools as it
 
 from datetime import datetime   
 
+from sklearn.metrics import (
+    accuracy_score,
+    precision_score,
+    recall_score,
+    f1_score,
+    confusion_matrix,
+    roc_auc_score,
+    classification_report,
+    r2_score,
+    mean_squared_error,
+    mean_absolute_error
+)
+
+from scipy.stats import shapiro
+
 
 def output_filename(
     filename,
@@ -279,7 +294,7 @@ def create_string(a, b):
 # ---------------------------------------------
 # Helper function: Statistics
 # --------------------------------------------- 
-def metrics_for_predictions(
+def regression_metrics(
     y_test, 
     predictions
 ):  
@@ -347,3 +362,139 @@ def metrics_for_predictions(
 
     return metrics  
 
+
+def classification_metrics(
+    y_test,
+    predictions,
+    average='weighted', # 'binary', 'micro', 'macro', 'weighted', None
+    zero_division='warn', # 'warn', 0, 1, 'ignore'
+    labels=None, # List of labels to include in the report
+    pos_label=1 # For binary classification, the label of the positive class
+):
+    """
+    Calculate and return error metrics for classification model predictions.
+
+    Parameters:
+        y_test (torch.Tensor or numpy.ndarray): Ground truth labels (true classes).
+                                                Should be integer labels (e.g., 0, 1, 2...).
+        predictions (torch.Tensor or numpy.ndarray): Model's predicted labels (predicted classes).
+                                                     Should be integer labels.
+        average (str, optional): This parameter is required for multi-class/multi-label targets.
+                                 If None, the scores for each class are returned. Otherwise, this
+                                 determines the type of averaging performed on the data.
+                                 'binary': Only for binary targets.
+                                 'micro': Calculate metrics globally by counting the total true positives,
+                                          false negatives, and false positives.
+                                 'macro': Calculate metrics for each label, and find their unweighted mean.
+                                 'weighted': Calculate metrics for each label, and find their average
+                                             weighted by support (the number of true instances for each label).
+                                 Defaults to 'weighted'.
+        zero_division (str or int, optional): Sets the value to return when there is a zero division.
+                                              If set to 'warn', this acts as 0, but warnings are also raised.
+                                              Defaults to 'warn'.
+        labels (list, optional): The set of labels to include when average is not None.
+                                 Defaults to None, which uses all labels in y_test and predictions.
+        pos_label (int/str, optional): The label of the positive class in binary classification.
+                                       Used for binary precision, recall, f1-score. Defaults to 1.
+
+    Returns:
+        dict: A dictionary containing various classification metrics.
+    """
+    # Convert y_test to numpy array if it's a PyTorch tensor
+    if hasattr(y_test, 'numpy'):  # Check if y_test is a PyTorch tensor
+        y_test_np = y_test.numpy()
+    else:
+        y_test_np = y_test  # Assume y_test is already a numpy array
+
+    # Convert predictions to numpy array if it's a PyTorch tensor
+    if hasattr(predictions, 'numpy'):  # Check if predictions is a PyTorch tensor
+        predictions_np = predictions.numpy()
+    else:
+        predictions_np = predictions  # Assume predictions is already a numpy array
+
+    # Ensure integer types for classification labels
+    y_test_np = y_test_np.astype(int)
+    predictions_np = predictions_np.astype(int)
+
+    metrics = {}
+
+    # 1. Accuracy Score
+    # Accuracy is the proportion of correctly classified instances.
+    metrics["Accuracy"] = accuracy_score(y_test_np, predictions_np)
+
+    # 2. Precision Score
+    # Precision is the ability of the classifier not to label as positive a sample that is negative.
+    try:
+        metrics["Precision"] = precision_score(y_test_np, predictions_np, average=average, zero_division=zero_division, labels=labels, pos_label=pos_label)
+    except ValueError as e:
+        # Handle cases where 'pos_label' might be an issue for multi-class with 'binary' average
+        if 'pos_label is only controlling the behavior in binary classification' in str(e):
+             metrics["Precision"] = precision_score(y_test_np, predictions_np, average='weighted', zero_division=zero_division, labels=labels)
+        else:
+            raise e
+
+
+    # 3. Recall Score (Sensitivity)
+    # Recall is the ability of the classifier to find all the positive samples.
+    try:
+        metrics["Recall"] = recall_score(y_test_np, predictions_np, average=average, zero_division=zero_division, labels=labels, pos_label=pos_label)
+    except ValueError as e:
+        if 'pos_label is only controlling the behavior in binary classification' in str(e):
+            metrics["Recall"] = recall_score(y_test_np, predictions_np, average='weighted', zero_division=zero_division, labels=labels)
+        else:
+            raise e
+
+    # 4. F1-Score
+    # F1-Score is the harmonic mean of precision and recall.
+    try:
+        metrics["F1-Score"] = f1_score(y_test_np, predictions_np, average=average, zero_division=zero_division, labels=labels, pos_label=pos_label)
+    except ValueError as e:
+        if 'pos_label is only controlling the behavior in binary classification' in str(e):
+            metrics["F1-Score"] = f1_score(y_test_np, predictions_np, average='weighted', zero_division=zero_division, labels=labels)
+        else:
+            raise e
+
+    # 5. Confusion Matrix
+    # A table used to describe the performance of a classification model.
+    # It requires integer labels.
+    metrics["Confusion Matrix"] = confusion_matrix(y_test_np, predictions_np).tolist() # Convert to list for easier serialization/reading
+
+    # 6. Classification Report (provides precision, recall, f1-score, support for each class)
+    # This is a comprehensive text report.
+    metrics["Classification Report"] = classification_report(y_test_np, predictions_np, labels=labels, zero_division=zero_division)
+
+    # 7. ROC AUC Score (primarily for binary classification, but can be extended)
+    # Note: For multi-class AUC, you often need prediction probabilities, not just predicted classes.
+    # This function assumes 'predictions' are predicted *labels*.
+    # If you have probabilities for multi-class, you'd need to adjust this.
+    try:
+        # Check if it's binary classification based on unique labels
+        unique_labels_y_test = np.unique(y_test_np)
+        unique_labels_predictions = np.unique(predictions_np)
+        all_unique_labels = np.unique(np.concatenate((unique_labels_y_test, unique_labels_predictions)))
+
+        if len(all_unique_labels) == 2: # Binary classification
+            metrics["ROC AUC Score"] = roc_auc_score(y_test_np, predictions_np, average=average, labels=labels)
+        elif len(all_unique_labels) > 2 and average in ['macro', 'weighted', 'micro']: # Multi-class, requiring specific averages
+             # For multi-class AUC, roc_auc_score expects probabilities or a one-hot encoded format.
+             # If `predictions` here are hard labels, direct AUC calculation is limited.
+             # If you want proper multi-class AUC, you'd need to pass `predictions_proba` instead of `predictions`.
+             # For now, we'll indicate if probabilities are needed.
+             metrics["ROC AUC Score"] = "Requires prediction probabilities for multi-class."
+             # If you had probabilities (e.g., `predictions_proba` array where rows sum to 1):
+             # from sklearn.preprocessing import LabelBinarizer
+             # lb = LabelBinarizer()
+             # y_test_binarized = lb.fit_transform(y_test_np)
+             # metrics["ROC AUC Score"] = roc_auc_score(y_test_binarized, predictions_proba, multi_class='ovr', average=average)
+        else:
+            metrics["ROC AUC Score"] = None # Not applicable or too complex for hard labels
+    except Exception as e:
+        metrics["ROC AUC Score"] = f"Error calculating ROC AUC: {e}"
+
+
+    # Ensure all metrics are floats for consistent output
+    for key, value in metrics.items():
+        if isinstance(value, np.float32) or isinstance(value, np.float64):
+            metrics[key] = float(value)
+
+    return metrics
