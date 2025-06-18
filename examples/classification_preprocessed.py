@@ -25,9 +25,9 @@ import yaml as yl
 from tqdm import tqdm
 from absl import app, flags
 
-from rouxinol.utility import get_next_filename, split_dataset
+from rouxinol.utility import get_next_filename, split_dataset, classification_metrics
 from rouxinol.utility import split_train_test_data, transform_1d_to_1d_embeddings, transform_2d_to_1d_embeddings
-from rouxinol.utility import transform_train_test_data_with_dict, transform_train_test_data_with_list
+from rouxinol.utility import train_test_data_with_dict_and_label, train_test_data_with_list_and_label
 
 from rouxinol.learning.supervised.classification import RandomForestModel, LSTMModel
 
@@ -91,14 +91,14 @@ def main(argv):
         data = transform_1d_to_1d_embeddings(data, strategy="padding", pad_value=8564)
 
     model_transform = {
-        "llvmHistogram": (RandomForestModel, transform_train_test_data_with_dict),
-        "x86Histogram": (RandomForestModel, transform_train_test_data_with_dict),
-        "cfggrindDynamicHistogram": (RandomForestModel, transform_train_test_data_with_dict),
-        "cfggrindHybridHistogram": (RandomForestModel, transform_train_test_data_with_dict),
-        "performanceCounterHistogram": (RandomForestModel, transform_train_test_data_with_dict),
-        "ir2vec": (RandomForestModel, transform_train_test_data_with_list),
-        "inst2vecPreprocessed": (RandomForestModel, transform_train_test_data_with_list),
-        "inst2vecEmbeddings": (LSTMModel, transform_train_test_data_with_list)
+        "llvmHistogram": (RandomForestModel, train_test_data_with_dict_and_label),
+        "x86Histogram": (RandomForestModel, train_test_data_with_dict_and_label),
+        "cfggrindDynamicHistogram": (RandomForestModel, train_test_data_with_dict_and_label),
+        "cfggrindHybridHistogram": (RandomForestModel, train_test_data_with_dict_and_label),
+        "performanceCounterHistogram": (RandomForestModel, train_test_data_with_dict_and_label),
+        "ir2vec": (RandomForestModel, train_test_data_with_list_and_label),
+        "inst2vecPreprocessed": (RandomForestModel, train_test_data_with_list_and_label),
+        "inst2vecEmbeddings": (LSTMModel, train_test_data_with_list_and_label)
     }
     model_class, transform_data = model_transform[FLAGS.representation]
     
@@ -112,11 +112,21 @@ def main(argv):
 
     # Training and test
     model.train(data_train, data_train)
-    f1, acc, recall, precision, y_test, y_pred = model.predict(data_test)
+    y_test, y_pred = model.predict(data_test)
+
+    metrics = classification_metrics(y_test, y_pred)
 
     os.makedirs(os.path.join(FLAGS.output_directory, "statistics"), exist_ok=True)
 
-    stats = {"f1": f1, "acc": acc, "recall": recall, "precision": precision, "y_test": y_test, "y_pred": y_pred.tolist()}
+    stats = {
+        "f1": metrics["F1-Score"], 
+        "acc": metrics["Accuracy"], 
+        "recall": metrics["Recall"], 
+        "precision": metrics["Precision"], 
+        "y_test": y_test, 
+        "y_pred": y_pred.tolist()
+    }
+
     dataset_name = os.path.basename(FLAGS.dataset_name)
     stats_filename = get_next_filename(
                         os.path.join(FLAGS.output_directory, "statistics", f"stats_{FLAGS.representation}_{FLAGS.train}_{FLAGS.test}"),
