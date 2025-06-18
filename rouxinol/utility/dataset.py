@@ -17,273 +17,47 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 """
 
 import os
-import sys
-import glob
-import time
-import shlex
+import math
 import random
-import resource
-import subprocess
 
 import yaml as yl
 import numpy as np
 import pandas as pd
-import itertools as it
 
-from datetime import datetime  
 from collections import defaultdict  
 
 
-def output_filename(
-    filename,
-    output_directory,
-    new_type
-):
-    """Create the out filename."""
-    basename = os.path.basename(filename)
-    idx = basename.rfind(".")
-    basename, file_type = basename[:idx], basename[idx+1:]
-    out_filename = os.path.join(
-                        output_directory,
-                        f"{basename}{new_type}"
-                    ) if output_directory else filename.replace(f".{file_type}", f"{new_type}")
-    file_type = "cxx" if file_type != "c" else "c"
-    return basename, file_type, out_filename
-
-
-def execute_command_line(
-    cmdline,
-    input_data,
-    enable_stdin,
-    enable_shell,
-    timeout
-):
-    """Validate the program execution.
-
-    :param cmdline: The command line.
-
-    :param input_data: The dataset to run the program.
-
-    :param use_stdin: If True use stdin.
-
-    :param timeout: The timeout in seconds.
-
-    :return: (stdout, stderr) if True otherwise (False, False).
-    """
-
-    """Execute the command."""
-    cmdline = cmdline if enable_stdin else f"{cmdline} {input_data}"
-    start = time.time()
-    proc = subprocess.Popen(
-                        cmdline,
-                        stdin=subprocess.PIPE,
-                        stdout=subprocess.PIPE,
-                        stderr=subprocess.PIPE,
-                        shell=enable_shell
-                    )
-    try:
-        if enable_stdin:
-            outs, errs = proc.communicate(
-                                input=input_data,
-                                timeout=timeout
-                            )
-        else:
-            outs, errs = proc.communicate(
-                                timeout=timeout
-                            )
-        elapsed = time.time() - start
-        return outs, errs, elapsed
-    except subprocess.TimeoutExpired:
-        proc.kill()
-        return None, None, None
-    except Exception:
-        return None, None, None
-
-
-def run_command_unix(command, input_=None, stdin=None, stdout=None, stderr=None, return_output=True, timeout=None):
-    """
-    Executes a system command with runtime statistics, exception handling, and timeout.
-
-    :param command: Command to execute (list or string).
-    :param input_: String data to be passed to the command.
-    :param stdin: String data to be passed to the command's stdin.  
-    :param stdout: Output.  
-    :param return_output: Boolean indicating whether to return stdout and stderr.
-    :param timeout: Timeout in seconds. If None, no timeout is applied.
-    :return: Dictionary with runtime info, outputs (if requested), and return code.
-    """
-    if isinstance(command, str):
-        command = shlex.split(command)
-
-    # Initialize the output dictionary
-    output = {
-        'stdout': '',
-        'stderr': '',
-        'returncode': None,
-        'runtime': {
-            'elapsed_time': None,
-            'user_time': None,
-            'system_time': None,
-            'cpu_time': None
-        },
-        'error': None
-    }
-
-    try:
-        # Start timing
-        start_time = time.perf_counter()
-        start_usage = resource.getrusage(resource.RUSAGE_CHILDREN)
-
-        # Execute the command with timeout
-        result = subprocess.run(
-            command,
-            input=input_,
-            stdin=stdin,
-            stdout=stdout if return_output else subprocess.DEVNULL,
-            stderr=stderr if return_output else subprocess.DEVNULL,
-            capture_output=return_output,
-            text=True,
-            timeout=timeout
-        )
-
-        # End timing
-        end_time = time.perf_counter()
-        end_usage = resource.getrusage(resource.RUSAGE_CHILDREN)
-
-        # Calculate the time differences
-        user_time = end_usage.ru_utime - start_usage.ru_utime
-        system_time = end_usage.ru_stime - start_usage.ru_stime
-        cpu_time = user_time + system_time
-
-        # Update runtime info
-        output['runtime']['elapsed_time'] = end_time - start_time  # Wall-clock time
-        output['runtime']['user_time'] = user_time                # Time in user mode
-        output['runtime']['system_time'] = system_time            # Time in system mode
-        output['runtime']['cpu_time'] = cpu_time                  # Total CPU time
-
-        # Update return code and outputs
-        output['returncode'] = result.returncode
-        if return_output:
-            output['stdout'] = result.stdout
-            output['stderr'] = result.stderr
-
-    except subprocess.TimeoutExpired as e:
-        # Handle the timeout exception
-        output['error'] = f'Command timed out after {timeout} seconds'
-        output['returncode'] = -1  # Custom return code for timeout
-        if return_output:
-            # Partial output may be available
-            output['stdout'] = e.stdout if e.stdout else ''
-            output['stderr'] = e.stderr if e.stderr else ''
-    except subprocess.CalledProcessError as e:
-        # Handle non-zero exit codes if check=True is used
-        output['error'] = f'Command failed with return code {e.returncode}'
-        output['returncode'] = e.returncode
-        if return_output:
-            output['stdout'] = e.stdout if e.stdout else ''
-            output['stderr'] = e.stderr if e.stderr else ''
-    except Exception as e:
-        # Handle other exceptions
-        output['error'] = str(e)
-        output['returncode'] = -1
-
-    return output
-
-
-def none_output():
-    output = {
-        'stdout': '',
-        'stderr': '',
-        'returncode': 0,
-        'runtime': {
-            'elapsed_time': 0.0,
-            'user_time': 0.0,
-            'system_time': 0.0,
-            'cpu_time': 0.0
-        },
-        'error': None
-    }
-    return output
-
-
-def multiple_file_types(
-    dir_path,
-    *patterns
-):
-    """Read the filenames.
-
-    :param dir_path: The directory.
-
-    :param patterns: A list of file extensions.
-
-    :return: A list of files with specific extensions (patterns).
-    """
-    files = it.chain.from_iterable(glob.iglob(os.path.join(dir_path, pattern)) for pattern in patterns)
-    _, filenames = it.tee(files)
-    return list(filenames)
-
-
-def create_timestamped_directory(directory_path):  
-    # Get the current date and time  
-    current_time = datetime.now()  
-    # Format the timestamp  
-    timestamp = current_time.strftime("%d.%m.%Y_%H.%M.%S")  
-    # Create the full path for the new directory  
-    new_directory_path = os.path.join(directory_path, timestamp)  
-    # Create the new directory  
-    os.makedirs(new_directory_path, exist_ok=True)  
-    return new_directory_path  
-
-
-def get_next_filename(base_filename, extension):  
+def transform_data(
+    data, 
+    transformer="original"
+):  
     """  
-    Given a base filename, returns the next available filename with an index.  
-    If no such file exists, it starts with base_filename0.  
+    Apply a transformation.  
 
-    Parameters:  
-        base_filename (str): The base name of the file (without index).  
-        extension (str): The extension of the file. 
-    Returns:  
-        str: The next available filename with an index.  
-    """  
-    index = 0  
-    while True:  
-        # Construct the filename with the current index  
-        candidate = f"{base_filename}_{index}.{extension}"
-        # Check if the file exists  
-        if not os.path.exists(candidate):  
-            return candidate  
-        # Increment the index and try again  
-        index += 1
-
-
-def create_string(a, b):  
-    """  
-    Given two lists a and b, returns a string formatted as "x.y_x.y_x.y",  
-    where x and y are corresponding elements from a and b, converted to strings.  
-
-    Parameters:  
-        a (list): A list of integers.  
-        b (list): A list of integers.  
+    Args:  
+        data (int): The original values.  
+        transform (str): The type of transformation to revert.  
+        Options:  
+        - "original" (no transformation, return as-is)  
+        - "sqrt" (revert square root, squares the values)  
+        - "log" (revert log1p, applies expm1 to undo log1p)  
 
     Returns:  
-        str: A formatted string based on the elements of a and b.  
+        data: The new data
     """  
-    # Create a list to hold the formatted pairs  
-    formatted_pairs = []  
-    
-    # Iterate over the elements of both lists  
-    for x, y in zip(a, b):  
-        # Convert x and y to strings and format them as "x.y"
-        formatted_pairs.append(f"{str(x)}_{str(y)}")  
-    
-    # Join the formatted pairs with an underscore  
-    c = "_".join(formatted_pairs)  
-    
-    return c  
+    if transformer == "original":  
+        return data  # No transformation applied
+    elif transformer == "sqrt":  
+        return math.sqrt(data) if data >= 0 else data # Square root by squaring the values  
+    elif transformer == "log":  
+        return np.expm1(data) if data >= -1 else data  # log1p by applying expm1 (exp(x) - 1)  
+    else:  
+        logging.error(f"Invalid transformation '{transformer}'. Use 'original', 'sqrt', or 'log'.")  
+        exit(1)
 
 
-def transform_data_with_dict(data):  
+# transform_data_with_dict
+def X_y_data_with_dict(data, transformer="original"):  
     """  
     Transforms the input data into two DataFrames: one for X and one for y.  
 
@@ -301,7 +75,7 @@ def transform_data_with_dict(data):
     # Iterate through the data to populate x_data and y_data  
     for entry in data:  
         x_data.append(entry['x'])  
-        y_data.append(entry['y'])  
+        y_data.append(transform_data(entry['y'], transformer))
 
     # Create DataFrame for X, filling missing features with 0  
     X = pd.DataFrame(x_data).fillna(0).astype(int)  
@@ -312,7 +86,8 @@ def transform_data_with_dict(data):
     return X, y  
 
 
-def transform_data_with_list(data):  
+# transform_data_with_list
+def X_y_data_with_list(data, transformer="original"):  
     """  
     Transforms the input data into two DataFrames: one for X and one for y,  
     where each 'x' item is a list.  
@@ -331,7 +106,7 @@ def transform_data_with_list(data):
     # Iterate through the data to populate x_data and y_data  
     for entry in data:  
         x_data.append(entry['x'])  # Append the list directly  
-        y_data.append(entry['y'])   # Append the y value  
+        y_data.append(transform_data(entry['y'], transformer))   # Append the y value  
 
     # Create DataFrame for X directly from x_data  
     X = pd.DataFrame(x_data)  
@@ -342,7 +117,31 @@ def transform_data_with_list(data):
     return X, y
   
 
-def transform_split_data_with_dict(data, test_ratio=0.2, shuffle=False):
+def normalize_data_with_dict(data, transformer="original"):
+    """  
+    Splits the dataset into training and testing sets.  
+
+    Parameters:  
+        data (list): The input dataset, each item is a dictionary with 'x' and 'y'.
+
+    Returns:  
+        tuple: new data
+    """  
+    # Normalize the features in data_train and data_test  
+    all_features = set()  
+    for item in data:  
+        all_features.update(item['x'].keys())  
+
+    # Create a complete feature set with zeros for missing features
+    normalized_data = [] 
+    for item in data:  
+        normalized_x = [item['x'].get(feature, 0) for feature in all_features]  
+        normalized_data.append({"x": normalized_x, "y": transform_data(item['y'], transformer)})  
+    return normalized_data  
+
+
+# transform_split_data_with_dict
+def train_test_data_with_dict(data, test_ratio=0.2, transformer="original", shuffle=False, regression=False):
     """  
     Splits the dataset into training and testing sets.  
 
@@ -354,29 +153,38 @@ def transform_split_data_with_dict(data, test_ratio=0.2, shuffle=False):
     Returns:  
         tuple: (data_train, data_test)  
     """  
-    # Shuffle the data if required  
-    if shuffle:  
-        random.shuffle(data)  
-
-    # Separate data by the target variable 'y'  
-    grouped_data = defaultdict(list)  
-    for item in data:  
-        grouped_data[item['y']].append(item)  
-
     # Prepare lists for training and testing  
     data_train = []  
     data_test = []  
 
-    # Split the data for each class  
-    for y_value, items in grouped_data.items():  
-        # Calculate the number of items for train and test  
-        n = len(items)  
-        n_test = int(n * test_ratio)  
+    if not regression:
+        # Shuffle the data if required
+        if shuffle:  
+            random.shuffle(data)  
+
+        # Separate data by the target variable 'y'  
+        grouped_data = defaultdict(list)  
+        for item in data:  
+            grouped_data[item['y']].append(item)  
+
+        # Split the data for each class  
+        for y_value, items in grouped_data.items():  
+            # Calculate the number of items for train and test  
+            n = len(items) 
+            n_test = int(n * test_ratio)
+            n_train = n - n_test  
+
+            # Split the items into train and test sets  
+            data_test.extend(items[:n_test])  
+            data_train.extend(items[n_test:n_test + n_train])  
+    else:
+        n = len(data) 
+        n_test = int(n * test_ratio)
         n_train = n - n_test  
 
         # Split the items into train and test sets  
-        data_test.extend(items[:n_test])  
-        data_train.extend(items[n_test:n_test + n_train])  
+        data_test.extend(data[:n_test])  
+        data_train.extend(data[n_test:n_test + n_train]) 
 
     # Normalize the features in data_train and data_test  
     all_features = set()  
@@ -384,21 +192,22 @@ def transform_split_data_with_dict(data, test_ratio=0.2, shuffle=False):
         all_features.update(item['x'].keys())  
 
     # Create a complete feature set with zeros for missing features  
-    def normalize_data(data_set):  
+    def normalize_data(data_set, transformer):  
         normalized_data = []  
         for item in data_set:  
             normalized_x = [item['x'].get(feature, 0) for feature in all_features]  
-            normalized_data.append({"x": normalized_x, "y": item['y']})  
+            normalized_data.append({"x": normalized_x, "y": transform_data(item['y'], transformer)})  
         return normalized_data  
 
     # Normalize both datasets  
-    data_train_normalized = normalize_data(data_train)  
-    data_test_normalized = normalize_data(data_test)  
+    data_train_normalized = normalize_data(data_train, transformer)  
+    data_test_normalized = normalize_data(data_test, transformer)  
 
     return data_train_normalized, data_test_normalized  
 
 
-def transform_train_test_data_with_dict(data):
+# transform_train_test_data_with_dict
+def train_test_data_with_dict_and_label(data, transformer="original"):
     """  
     Splits the dataset into training and testing sets.  
 
@@ -418,21 +227,21 @@ def transform_train_test_data_with_dict(data):
         all_features.update(item['x'].keys())
 
     # Create a complete feature set with zeros for missing features  
-    def normalize_data(data_set):
+    def normalize_data(data_set, transformer):
         normalized_data = []  
         for item in data_set:  
             normalized_x = [item['x'].get(feature, 0) for feature in all_features]  
-            normalized_data.append({"x": normalized_x, "y": item['y']})  
+            normalized_data.append({"x": normalized_x, "y": transform_data(item['y'], transformer)})  
         return normalized_data  
 
     # Normalize both datasets  
-    data_train_normalized = normalize_data(data_train)  
-    data_test_normalized = normalize_data(data_test)  
+    data_train_normalized = normalize_data(data_train, transformer)  
+    data_test_normalized = normalize_data(data_test, transformer)  
 
     return data_train_normalized, data_test_normalized  
 
-
-def transform_split_data_with_list(data, test_ratio=0.2, shuffle=False):
+# transform_split_data_with_list
+def train_test_data_with_list(data, test_ratio=0.2, transformer="original", shuffle=False):
     """  
     Splits the data into training and testing sets while maintaining an equal distribution of the target variable y.  
     
@@ -470,10 +279,13 @@ def transform_split_data_with_list(data, test_ratio=0.2, shuffle=False):
         data_train.extend(train_entries)  
         data_test.extend(test_entries)  
 
-    return data_train, data_test  
+    data_train_normalized = [{"x": item["x"], "y": transform_data(item['y'], transformer)} for item in data_train]
+    data_test_normalized = [{"x": item["x"], "y": transform_data(item['y'], transformer)} for item in data_test]
+    return data_train_normalized, data_test_normalized
 
 
-def transform_train_test_data_with_list(data):
+# transform_train_test_data_with_list
+def train_test_data_with_list_and_label(data, transformer="original"):
     """  
     Splits the data into training and testing sets while maintaining an equal distribution of the target variable y.  
     
@@ -490,10 +302,12 @@ def transform_train_test_data_with_list(data):
     data_train = [item for item in data if item["info"] == "train"]  
     data_test = [item for item in data if item["info"] == "test"]
 
-    return data_train, data_test  
+    data_train_normalized = [{"x": item["x"], "y": transform_data(item['y'], transformer)} for item in data_train]
+    data_test_normalized = [{"x": item["x"], "y": transform_data(item['y'], transformer)} for item in data_test]
+    return data_train_normalized, data_test_normalized
 
 
-def split_data(data, test_ratio=0.2, shuffle=True):  
+def split_data(data, test_ratio=0.2, transformer="original", shuffle=True):  
     """  
     Splits the dataset into training and testing sets.  
 
@@ -533,10 +347,12 @@ def split_data(data, test_ratio=0.2, shuffle=True):
     data_train_formatted = [{"x": item['x'], "y": item['y']} for item in data_train]  
     data_test_formatted = [{"x": item['x'], "y": item['y']} for item in data_test]  
 
-    return data_train_formatted, data_test_formatted  
+    data_train_normalized = [{"x": item["x"], "y": transform_data(item['y'], transformer)} for item in data_train_formatted]
+    data_test_normalized = [{"x": item["x"], "y": transform_data(item['y'], transformer)} for item in data_test_formatted]
+    return data_train_normalized, data_test_normalized
 
 
-def split_train_test_data(data):  
+def split_train_test_data(data, transformer="original"):  
     """  
     Splits the dataset into training and testing sets.  
 
@@ -547,8 +363,8 @@ def split_train_test_data(data):
         tuple: (data_train, data_test)  
     """  
     # Format the output to have "x" as an object and "y" as the label  
-    data_train = [{"x": item['x'], "y": item['y']} for item in data if item["info"] == "train"]  
-    data_test = [{"x": item['x'], "y": item['y']} for item in data if item["info"] == "test"]  
+    data_train = [{"x": item['x'], "y": transform_data(item['y'], transformer)} for item in data if item["info"] == "train"]  
+    data_test = [{"x": item['x'], "y": transform_data(item['y'], transformer)} for item in data if item["info"] == "test"]  
 
     return data_train, data_test
 
@@ -624,7 +440,7 @@ def split_dataset(data_filename, num_problems, num_samples, test_ratio=0.2, shuf
     return {'train': train_dict, 'test': test_dict}  
 
 
-def transform_2d_to_1d_embeddings(data, strategy="padding", pad_value=0, max_rows=None):
+def transform_2d_to_1d_embeddings(data, strategy="padding", pad_value=0, max_rows=None, transformer="original"):
     """
     Transforms 2D embedding matrices into 1D vectors based on the chosen strategy.
     Returns a new list of dictionaries, preserving the original data layout, but
@@ -719,7 +535,7 @@ def transform_2d_to_1d_embeddings(data, strategy="padding", pad_value=0, max_row
             # Build the new dictionary with the same structure
             new_data.append({
                 'x': transformed,
-                'y': item['y'],
+                'y': transform_data(item['y'], transformer),
                 'info': item.get('info', '')
             })
 
@@ -739,7 +555,7 @@ def transform_2d_to_1d_embeddings(data, strategy="padding", pad_value=0, max_row
 
             new_data.append({
                 'x': transformed,
-                'y': item['y'],
+                'y': transform_data(item['y'], transformer),
                 'info': item.get('info', '')
             })
 
@@ -766,7 +582,7 @@ def transform_2d_to_1d_embeddings(data, strategy="padding", pad_value=0, max_row
 
             new_data.append({
                 'x': transformed,
-                'y': item['y'],
+                'y': transform_data(item['y'], transformer),
                 'info': item.get('info', '')
             })
 
@@ -776,7 +592,7 @@ def transform_2d_to_1d_embeddings(data, strategy="padding", pad_value=0, max_row
     return new_data
 
 
-def transform_1d_to_1d_embeddings(data, strategy="padding", pad_value=0, max_length=None):  
+def transform_1d_to_1d_embeddings(data, strategy="padding", pad_value=0, max_length=None, transformer="original"):  
     """  
     Transforms 1D embedding vectors into uniform-sized 1D vectors based on the chosen strategy.  
     Returns a new list of dictionaries, preserving the original data layout, but  
@@ -854,7 +670,7 @@ def transform_1d_to_1d_embeddings(data, strategy="padding", pad_value=0, max_len
             # Build the new dictionary with the same structure  
             new_data.append({  
                 'x': padded,  
-                'y': item['y'],  
+                'y': transform_data(item['y'], transformer),  
                 'info': item.get('info', '')  
             })  
 
@@ -872,7 +688,7 @@ def transform_1d_to_1d_embeddings(data, strategy="padding", pad_value=0, max_len
             # Build the new dictionary with the same structure  
             new_data.append({  
                 'x': truncated,  
-                'y': item['y'],  
+                'y': transform_data(item['y'], transformer),  
                 'info': item.get('info', '')  
             })  
 
@@ -880,3 +696,74 @@ def transform_1d_to_1d_embeddings(data, strategy="padding", pad_value=0, max_len
         raise ValueError("Strategy must be 'padding' or 'truncation'.")  
 
     return new_data
+
+# ---------------------------------------------
+# Helper function: Apply transformation
+# --------------------------------------------- 
+def apply_transformer(
+    data, 
+    transformer="original"
+):  
+    """  
+    Apply a transformation.  
+
+    Args:  
+        data (dataFrame): The dataFrame with original values.  
+        transform (str): The type of transformation to revert.  
+        Options:  
+        - "original" (no transformation, return as-is)  
+        - "sqrt" (revert square root, squares the values)  
+        - "log" (revert log1p, applies expm1 to undo log1p)  
+
+    Returns:  
+        dataFrame: A copy of the dataFrame with new data
+    """  
+    # Create a copy of the original data to ensure it is not modified  
+    data_copy = data.copy()  
+
+    # Revert transformations based on the type  
+    if transformer == "original":  
+        return data_copy  # No transformation applied
+    elif transformer == "sqrt":  
+        return data_copy.apply(lambda col: col.apply(lambda x: math.sqrt(x) if x >= 0 else x)) # Square root by squaring the values  
+    elif transformer == "log":  
+        return data_copy.apply(lambda col: col.apply(lambda x: np.expm1(x) if x >= -1 else x))  # log1p by applying expm1 (exp(x) - 1)  
+    else:  
+        logging.error(f"Invalid transformer '{transformer}'. Use 'original', 'sqrt', or 'log'.")  
+        exit(1)
+
+# ---------------------------------------------
+# Helper function: Revert transformation
+# --------------------------------------------- 
+def revert_transformer(
+    data, 
+    transformer="original"
+):  
+    """  
+    Revert a transformation applied to a NumPy array (sqrt or log).  
+
+    Args:  
+        data (np.ndarray): The NumPy array with transformed values.  
+        transform (str): The type of transformation to revert.  
+        Options:  
+        - "original" (no transformation, return as-is)  
+        - "sqrt" (revert square root, squares the values)  
+        - "log" (revert log1p, applies expm1 to undo log1p)  
+
+    Returns:  
+        np.ndarray: A copy of the array with the transformation reverted.  
+    """  
+    # Create a copy of the original array to ensure it is not modified  
+    data_copy = np.copy(data)  
+
+    # Revert transformations based on the type  
+    if transformer == "original":  
+        return data_copy  # No transformation applied, return as-is  
+    elif transformer == "sqrt":  
+        return np.square(data_copy)  # Revert square root by squaring the values  
+    elif transformer == "log":  
+        return np.expm1(data_copy)  # Revert log1p by applying expm1 (exp(x) - 1)  
+    else:  
+        logging.error(f"Invalid transformer '{transformer}'. Use 'original', 'sqrt', or 'log'.")  
+        exit(1)
+        

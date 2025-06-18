@@ -16,7 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 """
 
-from .utils import (
+from .tools import (
     output_filename,
     run_command_unix,
     multiple_file_types,
@@ -24,17 +24,24 @@ from .utils import (
     none_output,
     get_next_filename,
     create_string,
+    metrics_for_predictions
+)
+
+from .dataset import (
     split_data,
     split_dataset,
     split_train_test_data,
-    transform_data_with_dict,
-    transform_data_with_list,
-    transform_split_data_with_dict,
-    transform_split_data_with_list,
-    transform_train_test_data_with_dict,
-    transform_train_test_data_with_list,
+    X_y_data_with_dict,
+    X_y_data_with_list,
+    normalize_data_with_dict,
+    train_test_data_with_dict,
+    train_test_data_with_dict_and_label,
+    train_test_data_with_list,
+    train_test_data_with_list_and_label,
     transform_2d_to_1d_embeddings,
-    transform_1d_to_1d_embeddings
+    transform_1d_to_1d_embeddings,
+    apply_transformer,
+    revert_transformer
 )
 
 from .sequence import (
@@ -58,3 +65,11 @@ from .sequence import (
     split
 )
 
+from .plot import (
+    reduce_dimension_and_plot,
+    reduce_dimension_and_plot_2clusters,
+    plot_silhouette_scores,
+    plot_training_history,
+    plot_predictions_scatter,
+    plot_residuals
+)
