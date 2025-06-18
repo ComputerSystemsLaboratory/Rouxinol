@@ -53,5 +53,5 @@ class Model(object):
         self,
         data
     ):
-        f1, acc, recall, precision, y_test, y_pred = self._predict_with_data(data)
-        return f1, acc, recall, precision, y_test, y_pred
+        y_test, y_pred = self._predict_with_data(data)
+        return y_test, y_pred

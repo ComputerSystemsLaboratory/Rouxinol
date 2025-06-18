@@ -20,7 +20,6 @@ import numpy as np
 import pandas as pd
 
 from sklearn.svm import LinearSVR 
-from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error 
 
 from rouxinol.learning.supervised.model_simple import Model
 
@@ -70,11 +69,7 @@ class SupportVectorMachineModel(Model):
     ):
         data_test_x = [d["x"] for d in data]
         data_test_y = [d["y"] for d in data]
+        
         data_pred_y = self.model.predict(np.array(data_test_x)) 
 
-        mse = mean_squared_error(data_test_y, data_pred_y)
-        rmse = np.sqrt(mse) 
-        r2 = r2_score(data_test_y, data_pred_y)
-        mae = mean_absolute_error(data_test_y, data_pred_y)
-
-        return mse, rmse, r2, mae, data_test_y, data_pred_y
+        return data_test_y, data_pred_y

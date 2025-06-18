@@ -208,16 +208,12 @@ class GGNNModel(Model):
     def _predict_with_data(self, data):
         self._test_init()
         data = self.__process_data(data)
-        valid_accuracy, pred = self._predict_with_batch(data)
+        _, pred = self._predict_with_batch(data)
 
         data_test_y = [data["label"] for data in data]
         pred=pred.tolist()
 
-        f1 = f1_score(data_test_y, pred, average='macro')  
-        recall = recall_score(data_test_y, pred, average='macro')
-        precision = precision_score(data_test_y, pred, average='macro')  
-
-        return f1, valid_accuracy, recall, precision, data_test_y, pred
+        return data_test_y, pred
 
     def _backup_best_weights(self, epoch):
         self.best_epoch_weights = {'epoch': epoch,

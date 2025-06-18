@@ -26,8 +26,6 @@ from torch.optim import Adam
 
 import torch.nn.functional as F  
 
-from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error 
-
 from rouxinol.learning.supervised.model_complex import Model
 
 
@@ -184,18 +182,11 @@ class LSTMModel(Model):
     def _predict_with_data(self, data):
         self._test_init()
         data = self.__process_data(data)
-        valid_loss, pred_array = self._predict_with_batch(data) # pred_array is numpy array
+        _, pred_array = self._predict_with_batch(data) # pred_array is numpy array
 
         data_test_y = np.array([d["label"] for d in data]) # Ensure true labels are numpy array
 
-        # Changed metrics to appropriate regression metrics
-        mse = mean_squared_error(data_test_y, pred_array)
-        rmse = np.sqrt(mse)
-        r2 = r2_score(data_test_y, pred_array)
-        mae = mean_absolute_error(data_test_y, pred_array)
-
-        # Return regression metrics and data
-        return mse, rmse, r2, mae, data_test_y, pred_array.tolist() # Return pred as list
+        return data_test_y, pred_array.tolist() # Return pred as list
 
     def _backup_best_weights(self, epoch):
         self.best_epoch_weights = {'epoch': epoch,

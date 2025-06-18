@@ -20,7 +20,6 @@ import numpy as np
 import pandas as pd
 
 from sklearn.neural_network import MLPClassifier
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
 from rouxinol.learning.supervised.model_simple import Model
 
@@ -96,15 +95,10 @@ class MultiLayerPerceptronModel(Model):
     ):
         data_test_x = [d["x"] for d in data]
         data_test_y = [d["y"] for d in data]
+        
         data_pred_y = self.model.predict_proba(np.array(data_test_x))
         data_pred_y = data_pred_y.argmax(axis=-1)
-        acc = accuracy_score(data_test_y, data_pred_y)
 
-        acc = accuracy_score(data_test_y, data_pred_y)
-        f1 = f1_score(data_test_y, data_pred_y, average='macro', zero_division=0)  
-        recall = recall_score(data_test_y, data_pred_y, average='macro', zero_division=0)
-        precision = precision_score(data_test_y, data_pred_y, average='macro', zero_division=0)  
-
-        return f1, acc, recall, precision, data_test_y, data_pred_y
+        return data_test_y, data_pred_y
 
 

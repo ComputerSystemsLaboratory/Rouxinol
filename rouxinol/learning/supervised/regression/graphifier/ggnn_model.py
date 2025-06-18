@@ -22,8 +22,6 @@ import numpy as np
 from torch import nn
 from torch.optim import Adam
 
-from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error # Changed metrics for regression
-
 from rouxinol.learning.supervised.model_complex import Model
 
 
@@ -199,14 +197,7 @@ class GGNNModel(Model): # Renamed GGNNModel to GGNNRegressionModel
         if pred_array.ndim == 2 and pred_array.shape[1] == 1:
             pred_array = pred_array.flatten()
 
-        # Changed metrics to appropriate regression metrics
-        mse = mean_squared_error(data_test_y, pred_array)
-        rmse = np.sqrt(mse)
-        r2 = r2_score(data_test_y, pred_array)
-        mae = mean_absolute_error(data_test_y, pred_array)
-
-        # Return regression metrics and data
-        return mse, rmse, r2, mae, data_test_y, pred_array.tolist() # Return pred as list
+        return data_test_y, pred_array.tolist() # Return pred as list
 
     def _backup_best_weights(self, epoch):
         self.best_epoch_weights = {'epoch': epoch,
