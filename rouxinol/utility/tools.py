@@ -23,6 +23,8 @@ import shlex
 import resource
 import subprocess
 
+import numpy as np
+
 import itertools as it
 
 from datetime import datetime   

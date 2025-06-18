@@ -31,7 +31,7 @@ from sklearn.metrics import silhouette_score
 from sklearn.manifold import TSNE
 from sklearn.decomposition import PCA
 
-from rouxinol.utility import metrics_for_predictions
+from .tools import regression_metrics
 
 # -------------------------------------------------
 # Helper function: 2D|3D Projections (PCA, t-SNE)
@@ -455,7 +455,7 @@ def plot_predictions_scatter(
         y_test_dim = y_test[:, dim]  
         predictions_dim = predictions[:, dim]  
 
-        metrics = metrics_for_predictions(y_test_dim, predictions_dim)
+        metrics = regression_metrics(y_test_dim, predictions_dim)
 
         # Sort data by y_test for better visualization  
         sorted_indices = np.argsort(y_test_dim)  
