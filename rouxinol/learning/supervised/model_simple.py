@@ -43,7 +43,9 @@ class Model(object):
     def train(
         self,
         data_train,
-        data_valid
+        data_valid,
+        *args,
+        **kwargs
     ):
         data_train_x, data_train_y = self._train_init(data_train)
         self.model.fit(data_train_x, data_train_y)

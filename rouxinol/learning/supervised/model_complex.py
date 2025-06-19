@@ -35,11 +35,17 @@ class Model(object):
     def train(
         self,
         data_train,
-        data_valid
+        data_valid,
+        *args,
+        **kwargs
     ):
+
+        classification = kwargs["classification"] if "classification" in kwargs else True
+
         early_stopping = True if self.config["early_stopping"] else False;
         es_patience = self.config["patience"]
         best_valid_accuracy = -np.inf
+        best_valid_loss = np.inf
 
         train_summary = []
         data_train, data_valid = self._train_init(data_train, data_valid)
@@ -69,35 +75,66 @@ class Model(object):
                 for i in range((len(data_valid) + batch_size - 1) // batch_size)
             ]
 
-            valid_count = 0
-            for batch in batches:
-                batch_accuracy, _ = self._predict_with_batch(batch)
-                valid_count += batch_accuracy * len(batch)
-            valid_accuracy = valid_count / len(data_valid)
+            if classification:
+                valid_count = 0
+                for batch in batches:
+                    batch_accuracy, _ = self._predict_with_batch(batch)
+                    valid_count += batch_accuracy * len(batch)
+                valid_accuracy = valid_count / len(data_valid)
+            else:
+                valid_count = 0
+                for batch in batches:
+                    batch_loss, _ = self._predict_with_batch(batch)
+                    valid_count += batch_loss
+                valid_loss = valid_count / len(data_valid)
 
             # Logging
             instances_per_sec = len(data_train) / (end_time - start_time)
-            print(
-                "epoch: %i, train_loss: %.8f, train_accuracy: %.4f, valid_accuracy:"
-                " %.4f, train instances/sec: %.2f"
-                % (epoch, train_loss, train_accuracy, valid_accuracy, instances_per_sec)
-            )
 
-            train_summary.append({"train_accuracy": train_accuracy})
-            train_summary.append({"valid_accuracy": valid_accuracy})
+            if classification:
+                print(
+                    "epoch: %i, train_loss: %.8f, train_accuracy: %.4f, valid_accuracy:"
+                    " %.4f, train instances/sec: %.2f"
+                    % (epoch, train_loss, train_accuracy, valid_accuracy, instances_per_sec)
+                )
+                
+                train_summary.append({"train_accuracy": train_accuracy})
+                train_summary.append({"valid_accuracy": valid_accuracy})
 
-            # Check if accuracy improved for early stopping
-            if valid_accuracy > best_valid_accuracy:
-                best_valid_accuracy = valid_accuracy
-                es_patience = self.config["patience"]
-                print("\tnew best valid_accuracy %.4f" % valid_accuracy)
-                if self.config["restore_best_weights"]:
-                    self._backup_best_weights(epoch)
+                # Check if accuracy improved for early stopping
+                if valid_accuracy > best_valid_accuracy:
+                    best_valid_accuracy = valid_accuracy
+                    es_patience = self.config["patience"]
+                    print("\tnew best valid_accuracy %.4f" % valid_accuracy)
+                    if self.config["restore_best_weights"]:
+                        self._backup_best_weights(epoch)
+                else:
+                    es_patience -= 1
+                    if early_stopping and es_patience == 0:
+                        print("early stopping (best valid_accuracy: %.4f)" % best_valid_accuracy)
+                        break
             else:
-                es_patience -= 1
-                if early_stopping and es_patience == 0:
-                    print("early stopping (best valid_accuracy: %.4f)" % best_valid_accuracy)
-                    break
+                print(
+                    "epoch: %i, train_loss: %.8f, valid_loss:"
+                    " %.4f, train instances/sec: %.2f"
+                    % (epoch, train_loss, valid_loss, instances_per_sec)
+                ) 
+                
+                train_summary.append({"train_loss": train_loss})
+                train_summary.append({"valid_loss": valid_loss})
+
+                # Check if accuracy improved for early stopping
+                if valid_loss < best_valid_loss:
+                    best_valid_loss = valid_loss
+                    es_patience = self.config["patience"]
+                    print("\tnew best valid_lost %.4f" % valid_loss)
+                    if self.config["restore_best_weights"]:
+                        self._backup_best_weights(epoch)
+                else:
+                    es_patience -= 1
+                    if early_stopping and es_patience == 0:
+                        print("early stopping (best valid_loss: %.4f)" % best_valid_loss)
+                        break
 
         if self.config["restore_best_weights"]:
             self._restore_best_weights()

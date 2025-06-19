@@ -29,59 +29,89 @@ import torch.nn.functional as F
 from rouxinol.learning.supervised.model_complex import Model
 
 
-class Net(nn.Module): # Renamed Net to RegressionNet
-    def __init__(self, config):  
-        # For regression, num_classes is implicitly 1 for single output
-        embedding_dim = config["embedding_dim"]  
-        dense_layer_size = config["dense_layer_size"]  
+class Net(nn.Module):  
+    def __init__(
+        self, 
+        config
+    ):  
+        """  
+        Initialize the enhanced L2PModel model with increased complexity.  
 
+        Parameters:  
+            input_size (int): Number of input features.  
+            hidden_size (int): Number of neurons in each hidden layer.  
+            output_size (int): Number of outputs (e.g., 1 for one regression task).  
+            dropout_rate (float): Dropout rate for regularization.  
+            num_layers (int): Number of hidden layers to include (>=3 for increased depth).  
+        """  
         super(Net, self).__init__()  
-
-        self.lstm1 = nn.LSTM(  
-            input_size=embedding_dim,  
-            hidden_size=embedding_dim,  
-            batch_first=True  
-        )  
-
-        self.lstm2 = nn.LSTM(  
-            input_size=embedding_dim,  
-            hidden_size=embedding_dim,  
-            batch_first=True  
-        )  
-
-        self.batch_norm = nn.BatchNorm1d(embedding_dim)  
-        self.fc1 = nn.Linear(embedding_dim, dense_layer_size)  
-        self.fc2 = nn.Linear(dense_layer_size, 1) 
-        self.loss_fn = nn.MSELoss() 
-
-    def forward(self, x, labels=None):  
-        # x shape: [batch_size, maxlen, embedding_dim]  
-        x, _ = self.lstm1(x)  
-        x, _ = self.lstm2(x)  
-        # Take the last time-step's output  
-        x = x[:, -1, :]  # shape: [batch_size, embedding_dim]  
-
-        x = self.batch_norm(x)  
-        x = F.relu(self.fc1(x))  
-        logits = self.fc2(x)  # Raw logits for regression (continuous output)
         
-        # For regression, the prediction is the raw output from the last layer. No argmax.
-        preds = logits 
+        input_size = config["input_size"] 
+        hidden_size = config["hidden_size"]
+        output_size = config["output_size"]
+        dropout_rate = config["dropout_rate"]
+        num_layers = config["num_layers"]
 
-        if labels is not None:  
-            loss = self.loss_fn(logits.squeeze(), labels) # Squeeze logits to match labels shape for MSELoss
-            return loss, preds  
-        return preds
+        # Input Layer  
+        self.input_layer = nn.Linear(input_size, hidden_size)  
+        self.bn_input = nn.BatchNorm1d(hidden_size)  # Batch Normalization for input layer  
+
+        # Hidden Layers  
+        self.hidden_layers = nn.ModuleList()  
+        for _ in range(num_layers - 1):  # Add n-1 hidden layers  
+            self.hidden_layers.append(nn.Linear(hidden_size, hidden_size))  
+        
+        self.bn_hidden = nn.ModuleList()  
+        for _ in range(num_layers - 1):  # Add batch norm for each hidden layer  
+            self.bn_hidden.append(nn.BatchNorm1d(hidden_size))  
+        
+        # Output Layer  
+        self.output_layer = nn.Linear(hidden_size, output_size)  
+
+        # Dropout  
+        self.dropout = nn.Dropout(dropout_rate)  
+
+    def forward(
+        self, 
+        x
+    ):  
+        """  
+        Define the forward pass of the L2PModel.  
+
+        Parameters:  
+            x (torch.Tensor): Input tensor.  
+
+        Returns:  
+            torch.Tensor: Output tensor of the L2PModel.  
+        """  
+        # Input Layer  
+        x = F.relu(self.bn_input(self.input_layer(x)))  
+        x = self.dropout(x)  
+
+        # Hidden Layers with residual connections  
+        for i, hidden_layer in enumerate(self.hidden_layers):  
+            residual = x  # Store input of the layer  
+            x = F.relu(self.bn_hidden[i](hidden_layer(x)))  
+            x = self.dropout(x)  
+
+            # Add residual connection  
+            x += residual  
+        
+        # Output Layer  
+        return self.output_layer(x)  
 
 
-class LSTMModel(Model): 
-    def __init__(self, config=None, embedding_dim=None, dense_layer_size=None, max_len=None):
+class L2PModel(Model): 
+    def __init__(self, config=None, input_size=None, output_size=None):
         if not config:
             config = {
-                "embedding_dim": embedding_dim,
-                "dense_layer_size": dense_layer_size,
-                "learning_rate": 0.001,
-                "batch_size": 64,
+                "input_size": input_size, 
+                "output_size": output_size,
+                "hidden_size": 64,  
+                "dropout_rate": 0.5, 
+                "num_layers": 12,
+                "learning_rate": 0.0001,
+                "batch_size": 16,
                 "num_epochs": 1000,
                 "early_stopping": 1,
                 "restore_best_weights": 1,
@@ -89,53 +119,40 @@ class LSTMModel(Model):
             }
         super().__init__(config)
 
-        self.max_len = max_len
-        self.unk_index = 8564
-
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
         self.best_epoch_weights = None
 
         self.model = Net(config) 
         self.model = self.model.to(self.device)
-    
-        if 'ROUXINOL_APP_DIR' in os.environ:
-            app_dir = os.environ['ROUXINOL_APP_DIR']
-        else:
-            # Placeholder for user_data_dir as it's not directly available in this environment
-            # In a real application, you'd define or import user_data_dir correctly.
-            # For this example, we'll assume a default path or handle it.
-            app_dir = os.path.join(os.path.expanduser("~"), ".rouxinol_app_data") 
-
-
-        self.vocabulary_dir = os.path.join(app_dir, "vocabulary")
 
     def __process_data(self, data):
         return [
             {
-                "x": data["x"].tolist(),
+                "x": data["x"],
                 "label": data["y"],
             }
             for data in data
         ]
 
     def __build_embeddings_and_labels(self, batch):
-        with open(os.path.join(self.vocabulary_dir, "emb.p"), "rb") as f:
-            inst2vec_embeddings = pk.load(f)
-
         embeddings = []
         labels = []
         for batch_item in batch:
             # X
-            padded_seq = batch_item["x"] + [self.unk_index] * (self.max_len - len(batch_item["x"]))
-            embeddings.append([inst2vec_embeddings[idx].tolist() for idx in padded_seq])  
+            embeddings.append(batch_item["x"])  
 
             # Label (for regression, labels should be float)
             labels.append(batch_item["label"])
 
         embeddings = torch.tensor(embeddings, dtype=torch.float)
-        # Ensure labels are float and have correct shape for MSELoss (e.g., [batch_size])
         labels = torch.tensor(labels, dtype=torch.float) 
+
+        if len(labels.shape) == 1:
+            # Reshape it to be a 2D tensor of shape (num_samples, 1)
+            # This is commonly required for loss functions like MSELoss or BCEWithLogitsLoss
+            # where the input (predictions) often has a shape like [batch_size, 1].
+            labels = labels.view(-1, 1)
 
         embeddings = embeddings.to(self.device)
         labels = labels.to(self.device)
@@ -150,7 +167,7 @@ class LSTMModel(Model):
 
     def _train_with_batch(self, batch):
         embeddings, labels = self.__build_embeddings_and_labels(batch)
-        
+
         self.model.train()
         self.opt.zero_grad()
 
@@ -175,7 +192,8 @@ class LSTMModel(Model):
         embeddings, labels = self.__build_embeddings_and_labels(batch)
 
         with torch.no_grad():
-            loss, pred = self.model(embeddings, labels)
+            #loss, pred = self.model(embeddings, labels)
+            pred = self.model(embeddings)
 
         # For regression, we return the loss and predictions directly
         loss = self.criterion(pred, labels) 

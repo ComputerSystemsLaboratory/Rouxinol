@@ -152,6 +152,8 @@ class GGNNModel(Model): # Renamed GGNNModel to GGNNRegressionModel
 
     def _train_init(self, data_train, data_valid):
         self.opt = Adam(self.model.parameters(), lr=self.config["learning_rate"])
+        self.criterion = nn.MSELoss()
+
         return self.__process_data(data_train), self.__process_data(data_valid)
 
     def _train_with_batch(self, batch):
@@ -160,7 +162,9 @@ class GGNNModel(Model): # Renamed GGNNModel to GGNNRegressionModel
         self.model.train()
         self.opt.zero_grad()
 
-        loss, pred = self.model(graphs, labels) # pred will now be continuous values
+        #loss, pred = self.model(embeddings, labels) # pred will now be continuous values
+        pred = self.model(embeddings)  
+        loss = self.criterion(pred, labels)  
         loss.backward()
         self.opt.step()
 
@@ -182,7 +186,8 @@ class GGNNModel(Model): # Renamed GGNNModel to GGNNRegressionModel
             loss, pred = self.model(graphs, labels)
 
         # For regression, we return the loss and predictions directly
-        valid_loss = loss.item() 
+        loss = self.criterion(pred, labels) 
+        valid_loss = loss.item()
 
         return valid_loss, pred.cpu().data.numpy() # Return predictions as numpy array
 
