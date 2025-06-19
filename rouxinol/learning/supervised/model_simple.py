@@ -16,6 +16,7 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 """
 
+import joblib
 import pprint
 
 import numpy as np
@@ -30,15 +31,6 @@ class Model(object):
         #pp.pprint(config)
 
         self.config = config
-
-    def _train_init(
-        self,
-        data_train
-    ):
-        data_train_x = [data["x"] for data in data_train]
-        data_train_y = [data["y"] for data in data_train]
-        #data_train_x = pd.DataFrame.from_records(data_train_x).fillna(0).to_numpy()
-        return np.array(data_train_x), np.array(data_train_y)
 
     def train(
         self,
@@ -57,3 +49,24 @@ class Model(object):
     ):
         y_test, y_pred = self._predict_with_data(data)
         return y_test, y_pred
+
+    def save_model_to_disk(
+        self,
+        path
+    ):
+        joblib.dump(self.model, path)
+
+    def restore_model_from_disk(
+        self,
+        path
+    ):
+        self.model = joblib.load(path)
+
+    def _train_init(
+        self,
+        data_train
+    ):
+        data_train_x = [data["x"] for data in data_train]
+        data_train_y = [data["y"] for data in data_train]
+        #data_train_x = pd.DataFrame.from_records(data_train_x).fillna(0).to_numpy()
+        return np.array(data_train_x), np.array(data_train_y)
