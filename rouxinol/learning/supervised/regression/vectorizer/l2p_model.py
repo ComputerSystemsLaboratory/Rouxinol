@@ -17,6 +17,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 """
 
 import os
+import time
 import torch
 import numpy as np
 import pickle as pk
@@ -222,13 +223,18 @@ class L2PModel(Model):
 
     def save_weights_to_disk(self, path):
         """Saves model weights to given file."""
-        torch.save(self.best_epoch_weights, path) # Corrected typo: best_epoch_weigths to best_epoch_weights
+        start_time = time.perf_counter()
+        torch.save(self.best_epoch_weights, path)
+        end_time = time.perf_counter()
+        return end_time - start_time
 
     def restore_weights_from_disk(self, path):
         """Saves model weights to given file."""
-        # print("Restoring weights from file %s." % path)
+        start_time = time.perf_counter()
         self.best_epoch_weights = torch.load(path)
         self._restore_best_weights()
+        end_time = time.perf_counter()
+        return end_time - start_time
 
     def freeze_layers(self, freeze_up_to=6):  
         """  
@@ -240,6 +246,8 @@ class L2PModel(Model):
                                 and batch normalization).  
         """  
         # Freeze input layer and its batch norm  
+        start_time = time.perf_counter()        
+        
         for param in self.model.input_layer.parameters():  
             param.requires_grad = False  
         for param in self.model.bn_input.parameters():  
@@ -251,3 +259,6 @@ class L2PModel(Model):
                 param.requires_grad = False  
             for param in self.model.bn_hidden[i].parameters():  
                 param.requires_grad = False  
+        
+        end_time = time.perf_counter()
+        return end_time - start_time

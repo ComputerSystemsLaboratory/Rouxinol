@@ -17,6 +17,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 """
 
 import os
+import time
 import torch
 import numpy as np
 import pickle as pk
@@ -204,10 +205,15 @@ class LSTMModel(Model):
 
     def save_weights_to_disk(self, path):
         """Saves model weights to given file."""
-        torch.save(self.best_epoch_weights, path) # Corrected typo: best_epoch_weigths to best_epoch_weights
+        start_time = time.perf_counter()
+        torch.save(self.best_epoch_weights, path)
+        end_time = time.perf_counter()
+        return end_time - start_time
 
     def restore_weights_from_disk(self, path):
         """Saves model weights to given file."""
-        # print("Restoring weights from file %s." % path)
+        start_time = time.perf_counter()
         self.best_epoch_weights = torch.load(path)
         self._restore_best_weights()
+        end_time = time.perf_counter()
+        return end_time - start_time

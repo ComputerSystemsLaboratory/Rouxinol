@@ -16,11 +16,12 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 """
 
+import time
 import joblib
 import pprint
 
 import numpy as np
-import pandas as pd
+
 
 class Model(object):
     def __init__(
@@ -39,28 +40,38 @@ class Model(object):
         *args,
         **kwargs
     ):
+        start_time = time.perf_counter()
         data_train_x, data_train_y = self._train_init(data_train)
         self.model.fit(data_train_x, data_train_y)
-        return True
+        end_time = time.perf_counter()
+        return [], end_time - start_time
 
     def predict(
         self,
         data
     ):
+        start_time = time.perf_counter()
         y_test, y_pred = self._predict_with_data(data)
-        return y_test, y_pred
+        end_time = time.perf_counter()
+        return y_test, y_pred, end_time - start_time
 
     def save_model_to_disk(
         self,
         path
     ):
+        start_time = time.perf_counter()
         joblib.dump(self.model, path)
+        end_time = time.perf_counter()
+        return end_time - start_time
 
     def restore_model_from_disk(
         self,
         path
     ):
+        start_time = time.perf_counter()
         self.model = joblib.load(path)
+        end_time = time.perf_counter()
+        return end_time - start_time
 
     def _train_init(
         self,
@@ -68,5 +79,4 @@ class Model(object):
     ):
         data_train_x = [data["x"] for data in data_train]
         data_train_y = [data["y"] for data in data_train]
-        #data_train_x = pd.DataFrame.from_records(data_train_x).fillna(0).to_numpy()
         return np.array(data_train_x), np.array(data_train_y)

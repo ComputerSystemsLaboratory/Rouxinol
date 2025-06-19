@@ -16,8 +16,8 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 """
 
-import pprint
 import time
+import pprint
 
 import numpy as np
 
@@ -39,6 +39,7 @@ class Model(object):
         *args,
         **kwargs
     ):
+        start_train = time.perf_counter()
 
         classification = kwargs["classification"] if "classification" in kwargs else True
 
@@ -60,10 +61,10 @@ class Model(object):
             ]
 
             # Train
-            start_time = time.time()
+            start_time = time.perf_counter()
             for batch in batches:
                 train_loss, train_accuracy = self._train_with_batch(batch)
-            end_time = time.time()
+            end_time = time.perf_counter()
 
             # Valid
             self._test_init()
@@ -139,14 +140,18 @@ class Model(object):
         if self.config["restore_best_weights"]:
             self._restore_best_weights()
 
-        return train_summary
+        end_train = time.perf_counter()
+
+        return train_summary, end_train - start_train
 
     def predict(
         self,
         data
     ):
+        start_time = time.perf_counter()
         y_test, y_pred = self._predict_with_data(data)
-        return y_test, y_pred
+        end_time = time.perf_counter()
+        return y_test, y_pred, end_time - start_time
 
     def save_weights_to_disk(
         self,
