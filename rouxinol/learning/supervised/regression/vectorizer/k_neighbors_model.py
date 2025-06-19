@@ -67,4 +67,4 @@ class KNeighborsModel(Model):
         
         data_pred_y = self.model.predict(np.array(data_test_x))
 
-        return mse, rmse, r2, mae, data_test_y, data_pred_y
+        return data_test_y, data_pred_y

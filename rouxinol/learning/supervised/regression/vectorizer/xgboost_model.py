@@ -47,8 +47,7 @@ class XGBoostModel(Model):
                 "reg_alpha": 0,
                 "reg_lambda": 1,
                 "base_score": 0.5, 
-                "random_state": 0,
-                "missing": None
+                "random_state": 0
             }
 
         super().__init__(config)
@@ -70,12 +69,11 @@ class XGBoostModel(Model):
             colsample_bylevel=config["colsample_bylevel"],
             reg_alpha=config["reg_alpha"],
             reg_lambda=config["reg_lambda"],
-            base_score=condig["base_score"],
-            random_state=config["random_state"],
-            missing=config["missing"]
+            base_score=config["base_score"],
+            random_state=config["random_state"]
         )
 
-    def predict_with_data(
+    def _predict_with_data(
         self,
         data
     ):
