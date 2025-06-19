@@ -126,6 +126,9 @@ class L2PModel(Model):
         self.model = Net(config) 
         self.model = self.model.to(self.device)
 
+        self.opt = Adam(self.model.parameters(), lr=config["learning_rate"])
+        self.criterion = nn.MSELoss()
+
     def __process_data(self, data):
         return [
             {
@@ -160,9 +163,6 @@ class L2PModel(Model):
         return embeddings, labels
 
     def _train_init(self, data_train, data_valid):
-        self.opt = Adam(self.model.parameters(), lr=self.config["learning_rate"])
-        self.criterion = nn.MSELoss()
-
         return self.__process_data(data_train), self.__process_data(data_valid)
 
     def _train_with_batch(self, batch):
@@ -229,3 +229,25 @@ class L2PModel(Model):
         # print("Restoring weights from file %s." % path)
         self.best_epoch_weights = torch.load(path)
         self._restore_best_weights()
+
+    def freeze_layers(self, freeze_up_to=6):  
+        """  
+        Freezes the layers of the model up to a specific index (exclusive).  
+
+        Parameters:  
+            model (L2PModel): The model whose layers will be frozen.  
+            freeze_up_to (int): The number of layers to freeze (including the input layer   
+                                and batch normalization).  
+        """  
+        # Freeze input layer and its batch norm  
+        for param in self.model.input_layer.parameters():  
+            param.requires_grad = False  
+        for param in self.model.bn_input.parameters():  
+            param.requires_grad = False  
+
+        # Freeze the first `freeze_up_to` hidden layers  
+        for i in range(freeze_up_to - 1):  # -1 because input_layer is already frozen  
+            for param in self.model.hidden_layers[i].parameters():  
+                param.requires_grad = False  
+            for param in self.model.bn_hidden[i].parameters():  
+                param.requires_grad = False  

@@ -241,7 +241,7 @@ def train_test_data_with_dict_and_label(data, transformer="original"):
     return data_train_normalized, data_test_normalized  
 
 # transform_split_data_with_list
-def train_test_data_with_list(data, test_ratio=0.2, transformer="original", shuffle=False):
+def train_test_data_with_list(data, test_ratio=0.2, transformer="original", shuffle=False, regression=False):
     """  
     Splits the data into training and testing sets while maintaining an equal distribution of the target variable y.  
     
@@ -253,34 +253,48 @@ def train_test_data_with_list(data, test_ratio=0.2, transformer="original", shuf
     Returns:  
         tuple: Two lists, data_train and data_test.  
     """  
-    # Shuffle the data if required  
-    if shuffle:  
-        random.shuffle(data)  
-
-    # Separate the data by the target variable y  
-    data_by_y = defaultdict(list)  
-    for entry in data:  
-        data_by_y[entry['y']].append(entry)  
-
+    
     # Prepare the training and testing sets  
     data_train = []  
     data_test = []  
     
-    # Split each group of y  
-    for y_value, entries in data_by_y.items():  
-        n = len(entries)  
+    if not regression:    
+        # Shuffle the data if required  
+        if shuffle:  
+            random.shuffle(data)  
+
+        # Separate the data by the target variable y  
+        data_by_y = defaultdict(list)  
+        for entry in data:  
+            data_by_y[entry['y']].append(entry)  
+
+        # Split each group of y  
+        for y_value, entries in data_by_y.items():  
+            n = len(entries)  
+            n_test = int(n * test_ratio)  
+            n_train = n - n_test  
+
+            # Split into train and test  
+            train_entries = entries[:n_train]  
+            test_entries = entries[n_train:]  
+
+            data_train.extend(train_entries)  
+            data_test.extend(test_entries)  
+    else:
+        n = len(data)  
         n_test = int(n * test_ratio)  
         n_train = n - n_test  
 
         # Split into train and test  
-        train_entries = entries[:n_train]  
-        test_entries = entries[n_train:]  
+        train_entries = data[:n_train]  
+        test_entries = data[n_train:]  
 
         data_train.extend(train_entries)  
         data_test.extend(test_entries)  
 
     data_train_normalized = [{"x": item["x"], "y": transform_data(item['y'], transformer)} for item in data_train]
     data_test_normalized = [{"x": item["x"], "y": transform_data(item['y'], transformer)} for item in data_test]
+
     return data_train_normalized, data_test_normalized
 
 

@@ -98,6 +98,8 @@ class LSTMModel(Model):
         self.model = Net(config)
         self.model = self.model.to(self.device)
     
+        self.opt = Adam(self.model.parameters(), lr=config["learning_rate"])
+
         if 'ROUXINOL_APP_DIR' in os.environ:
             app_dir = os.environ['ROUXINOL_APP_DIR']
         else:
@@ -137,8 +139,6 @@ class LSTMModel(Model):
         return embeddings, labels
 
     def _train_init(self, data_train, data_valid):
-        self.opt = Adam(self.model.parameters(), lr=self.config["learning_rate"])
-
         return self.__process_data(data_train), self.__process_data(data_valid)
 
     def _train_with_batch(self, batch):

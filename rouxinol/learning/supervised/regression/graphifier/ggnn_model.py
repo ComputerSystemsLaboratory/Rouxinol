@@ -99,6 +99,9 @@ class GGNNModel(Model): # Renamed GGNNModel to GGNNRegressionModel
         self.model = Net(config) # Instantiating the RegressionGGNNNet
         self.model = self.model.to(self.device)
 
+        self.opt = Adam(self.model.parameters(), lr=config["learning_rate"])
+        self.criterion = nn.MSELoss()
+
     def __process_data(self, data):
         # Assuming data structure is {x: graph_data, y: label}
         return [
@@ -151,9 +154,6 @@ class GGNNModel(Model): # Renamed GGNNModel to GGNNRegressionModel
 
 
     def _train_init(self, data_train, data_valid):
-        self.opt = Adam(self.model.parameters(), lr=self.config["learning_rate"])
-        self.criterion = nn.MSELoss()
-
         return self.__process_data(data_train), self.__process_data(data_valid)
 
     def _train_with_batch(self, batch):

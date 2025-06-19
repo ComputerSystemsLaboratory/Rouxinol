@@ -102,6 +102,8 @@ class GGNNModel(Model):
         self.model = Net(config)
         self.model = self.model.to(self.device)
     
+        self.opt = Adam(self.model.parameters(), lr=config["learning_rate"])
+
     def __process_data(self, data):
         return [
             {
@@ -156,8 +158,6 @@ class GGNNModel(Model):
         return dgl_graph, labels
 
     def _train_init(self, data_train, data_valid):
-        self.opt = Adam(self.model.parameters(), lr=self.config["learning_rate"])
-
         return self.__process_data(data_train), self.__process_data(data_valid)
 
     def _train_with_batch(self, batch):
