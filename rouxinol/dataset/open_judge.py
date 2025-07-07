@@ -53,7 +53,6 @@ class OpenJudge(Dataset):
 
         :return: The problems and the samples.
         """
-        force = kwargs["force"] if "force" in kwargs else True
         problems_shuffle = kwargs["shuffle"] if "shuffle" in kwargs else False
         languages = kwargs["languages"] if "languages" in kwargs else ["C", "500"]
         num_problems = kwargs["num_problems"] if "num_problems" in kwargs else 2
@@ -121,6 +120,7 @@ class OpenJudge(Dataset):
         visitor = kwargs["visitor"]
         compiler_config = kwargs["compiler_config"]
 
+        force = kwargs["force"] if "force" in kwargs else True
         timeout = kwargs["timeout"] if "timeout" in kwargs else None
         output_directory = kwargs["output_directory"] if "output_directory" in kwargs else ""
         events = kwargs["events"] if "events" in kwargs else ["cycles", "instructions"]
