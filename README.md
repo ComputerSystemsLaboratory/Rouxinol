@@ -91,3 +91,4 @@ The repository has the following organization.
 
 Anderson Faustino da Silva, Jeronimo Castrillon, Fernando Magno Quintão Pereira, [A Comparative Study on the Accuracy and the Speed of Static and Dynamic Program Classifiers](https://dl.acm.org/doi/abs/10.1145/3708493.3712680), Proceedings of the 34th ACM SIGPLAN International Conference on Compiler Construction (CC 2025), Association for Computing Machinery, New York, NY, USA, Mar 2025.
 
+Anderson Faustino da Silva, Hamid Farzaned, Joao Paulo Cardoso De Lima, Asif Ali Khan, Jeronimo Castrillon, [LearnCNM2Predict: Transfer Learning-based Performance Model for CNM Systems](), Proceedings of the 25st IEEE International Conference on Embedded Computer Systems: Architectures Modeling and Simulation (SAMOS XXV), Springer-Verlag, Berlin, Heidelberg, Jul 2025.
