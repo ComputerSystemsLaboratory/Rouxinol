@@ -18,7 +18,7 @@ corruíra, corruíra, garrincha, cutipuruí, cambaxirra, carriça, garriça, car
 - [Getting Started](#getting-started)
     - [Setup](#setup)
     - [Examples](#examples)
-    - [Artifact](#artifact)
+    - [Artifacts](#artifacts)
 - [Structure](#structure)
 
 <a id="introduction"></a>
@@ -64,10 +64,10 @@ conda activate rouxinol
 
 To learn how to use Rouxinol, refer to Rouxinol/examples.
 
-<a id="artifact"></a>
-####  **Artefact**
+<a id="artifacts"></a>
+####  **Artifacts**
 
-To learn how to replicate CC25 results, refer to Rouxinol/artefact/cc25.
+To learn how to replicate CC 2025 results, refer to Rouxinol/artifacts/CC_2025.
 
 <a id="structure"></a>
 # **Structure**
