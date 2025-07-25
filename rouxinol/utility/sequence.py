@@ -605,7 +605,7 @@ def create_random_sequences_v2(nof_sequences,
                                 apply_update,
                                 repetition,
                                 original,
-                                passes
+                                passes,
                                 sequences=None):
     """Create N random sequences.
 
