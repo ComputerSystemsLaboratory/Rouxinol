@@ -483,7 +483,8 @@ def create_random_sequences_v1(nof_sequences,
                                 apply_update,
                                 repetition,
                                 original,
-                                passes):
+                                passes,
+                                sequences=None):
     """Create N random sequences.
 
     Parameters
@@ -517,6 +518,9 @@ def create_random_sequences_v1(nof_sequences,
 
     passes : list
         The available passes to use.
+
+    sequences : dict
+        The initial sequences.
 
     Return
     ------
@@ -532,9 +536,13 @@ def create_random_sequences_v1(nof_sequences,
         least one argument (-original, -update, -shuffle)')
         sys.exit(1)
 
-    # Load the passes
-    counter = 0
-    sequences = {}
+    if sequences:
+        counter = len(sequences)
+        new_sequences = sequences.copy()
+    else:
+        counter = 0
+        new_sequences = {}
+
     nof_sequences *= factor
 
     while True:
@@ -550,8 +558,8 @@ def create_random_sequences_v1(nof_sequences,
 
         if original:
             if not exist(seq,
-                         sequences):
-                sequences[counter] = seq
+                         new_sequences):
+                new_sequences[counter] = seq
                 counter += 1
                 if counter >= nof_sequences:
                     break
@@ -560,8 +568,8 @@ def create_random_sequences_v1(nof_sequences,
                 rn.shuffle(sseq)
                 sseq = sanitize(sseq)
                 if not exist(sseq,
-                             sequences):
-                    sequences[counter] = sseq
+                             new_sequences):
+                    new_sequences[counter] = sseq
                     counter += 1
                     if counter >= nof_sequences:
                         break
@@ -570,8 +578,8 @@ def create_random_sequences_v1(nof_sequences,
             seq = sanitize(seq)
 
             if not exist(seq,
-                         sequences):
-                sequences[counter] = seq
+                         new_sequences):
+                new_sequences[counter] = seq
                 counter += 1
                 if counter >= nof_sequences:
                     break
@@ -580,13 +588,13 @@ def create_random_sequences_v1(nof_sequences,
                 seq = update(seq)
                 seq = sanitize(seq)
                 if not exist(seq,
-                             sequences):
-                    sequences[counter] = seq
+                             new_sequences):
+                    new_sequences[counter] = seq
                     counter += 1
                     if counter >= nof_sequences:
                         break
 
-    return sequences
+    return new_sequences
 
 def create_random_sequences_v2(nof_sequences,
                                 minimum,
@@ -597,7 +605,8 @@ def create_random_sequences_v2(nof_sequences,
                                 apply_update,
                                 repetition,
                                 original,
-                                passes):
+                                passes
+                                sequences=None):
     """Create N random sequences.
 
     Parameters
@@ -632,6 +641,9 @@ def create_random_sequences_v2(nof_sequences,
     passes : list
         The available passes to use.
 
+    sequences : dict
+        The initial sequences.
+
     Return
     ------
     sequences : dict
@@ -644,9 +656,13 @@ def create_random_sequences_v2(nof_sequences,
         lg.error('Error: it is necessary to use at least one argument (-original , -ssa, -update, -shuffle)')
         sys.exit(1)
 
-    # Load the passes
-    counter = 0
-    sequences = {}
+    if sequences:
+        counter = len(sequences)
+        new_sequences = sequences.copy()
+    else:
+        counter = 0
+        new_sequences = {}
+
     nof_sequences *= factor
 
     while True:
@@ -673,21 +689,21 @@ def create_random_sequences_v2(nof_sequences,
 
         if original:
             if not exist(original_seq,
-                         sequences):
-                sequences[counter] = original_seq
+                         new_sequences):
+                new_sequences[counter] = original_seq
                 counter += 1
                 if counter >= nof_sequences:
                     break
 
         if shuffle or ssa or apply_update:
             if not exist(seq,
-                         sequences):
-                sequences[counter] = seq
+                         new_sequences):
+                new_sequences[counter] = seq
                 counter += 1
                 if counter >= nof_sequences:
                     break
 
-    return sequences
+    return new_sequences
 
 def expand(passes):
     """Expand the sequence.
