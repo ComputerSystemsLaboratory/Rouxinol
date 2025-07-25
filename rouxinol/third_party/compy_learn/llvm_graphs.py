@@ -3,12 +3,12 @@ import time
 import resource
 import networkx as nx
 
-from rouxinol.third_party.compy.extractors import clang_driver_scoped_options
-from rouxinol.third_party.compy.extractors.extractors import Visitor
-from rouxinol.third_party.compy.extractors.extractors import ClangDriver
-from rouxinol.third_party.compy.extractors.extractors import LLVMIRExtractor
-from rouxinol.third_party.compy.extractors.extractors import llvm
-from rouxinol.third_party.compy import common
+from rouxinol.third_party.compy_learn.extractors import clang_driver_scoped_options
+from rouxinol.third_party.compy_learn.extractors.extractors import Visitor
+from rouxinol.third_party.compy_learn.extractors.extractors import ClangDriver
+from rouxinol.third_party.compy_learn.extractors.extractors import LLVMIRExtractor
+from rouxinol.third_party.compy_learn.extractors.extractors import llvm
+from rouxinol.third_party.compy_learn import common
 
 
 def has_edge(G, edge1, edge2, attr):

@@ -36,4 +36,4 @@ if(NOT pybind11_POPULATED)
   add_subdirectory(${pybind11_SOURCE_DIR} ${pybind11_BINARY_DIR})
 endif()
 
-add_subdirectory(rouxinol/third_party/compy/extractors)
+add_subdirectory(rouxinol/third_party/compy_learn/extractors)

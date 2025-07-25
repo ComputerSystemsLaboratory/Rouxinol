@@ -1,11 +1,11 @@
 import os
 
-from rouxinol.third_party.compy.extractors.extractors import Visitor
-from rouxinol.third_party.compy.extractors.extractors import clang
-from rouxinol.third_party.compy.syntax_seq import SyntaxSeqBuilder
-from rouxinol.third_party.compy.syntax_seq import SyntaxSeqVisitor
-from rouxinol.third_party.compy.syntax_seq import SyntaxTokenkindVisitor
-from rouxinol.third_party.compy.syntax_seq import SyntaxTokenkindVariableVisitor
+from rouxinol.third_party.compy_learn.extractors.extractors import Visitor
+from rouxinol.third_party.compy_learn.extractors.extractors import clang
+from rouxinol.third_party.compy_learn.syntax_seq import SyntaxSeqBuilder
+from rouxinol.third_party.compy_learn.syntax_seq import SyntaxSeqVisitor
+from rouxinol.third_party.compy_learn.syntax_seq import SyntaxTokenkindVisitor
+from rouxinol.third_party.compy_learn.syntax_seq import SyntaxTokenkindVariableVisitor
 
 
 program_1fn_2 = """

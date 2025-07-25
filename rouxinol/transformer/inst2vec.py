@@ -29,7 +29,7 @@ from appdirs import user_data_dir
 
 from rouxinol.third_party.ncc import llvm_ir_to_trainable
 
-from rouxinol.third_party.compy import common
+from rouxinol.third_party.compy_learn import common
 
 
 class Inst2VecPreprocessedVisitor():

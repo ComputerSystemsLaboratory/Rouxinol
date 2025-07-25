@@ -19,7 +19,7 @@ import time
 import resource
 import ir2vec as i2v
 
-from rouxinol.third_party.compy import common
+from rouxinol.third_party.compy_learn import common
 
 
 class IR2VecSymbolicRepresentationVisitor():

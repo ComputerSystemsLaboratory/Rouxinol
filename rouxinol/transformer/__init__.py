@@ -1,12 +1,12 @@
-from rouxinol.third_party.compy.common import (
+from rouxinol.third_party.compy_learn.common import (
     RepresentationBuilder,
     Sequence,
     Graph,
 )
 
-from rouxinol.third_party.compy.extractors import *
+from rouxinol.third_party.compy_learn.extractors import *
 
-from rouxinol.third_party.compy.ast_graphs import (
+from rouxinol.third_party.compy_learn.ast_graphs import (
     ASTVisitor,
     ASTDataVisitor,
     ASTDataCFGVisitor,
@@ -14,7 +14,7 @@ from rouxinol.third_party.compy.ast_graphs import (
     ASTGraphBuilder,
 )
 
-from rouxinol.third_party.compy.llvm_graphs import (
+from rouxinol.third_party.compy_learn.llvm_graphs import (
     LLVMCFGVisitor,
     LLVMCFGCompactVisitor,
     LLVMCFGCallVisitor,
@@ -31,14 +31,14 @@ from rouxinol.third_party.compy.llvm_graphs import (
     LLVMGraphBuilder,
 )
 
-from rouxinol.third_party.compy.syntax_seq import (
+from rouxinol.third_party.compy_learn.syntax_seq import (
     SyntaxSeqVisitor,
     SyntaxTokenkindVisitor,
     SyntaxTokenkindVariableVisitor,
     SyntaxSeqBuilder,
 )
 
-from rouxinol.third_party.compy.llvm_seq import (
+from rouxinol.third_party.compy_learn.llvm_seq import (
     LLVMSeqVisitor,
     LLVMSeqBuilder,
 )

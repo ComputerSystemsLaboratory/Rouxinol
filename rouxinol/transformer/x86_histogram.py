@@ -27,7 +27,7 @@ from collections import Counter
 from rouxinol.transformer import ClangDriver
 from rouxinol.transformer import LLVMCFGVisitor
 from rouxinol.transformer import LLVMGraphBuilder
-from rouxinol.third_party.compy import common
+from rouxinol.third_party.compy_learn import common
 
 
 class X86AllSectionsVisitor():

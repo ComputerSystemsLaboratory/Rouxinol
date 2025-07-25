@@ -1,11 +1,11 @@
 import pytest
 
-from rouxinol.third_party.compy.extractors.extractors import Visitor
-from rouxinol.third_party.compy.extractors.extractors import ClangDriver
-from rouxinol.third_party.compy.extractors.extractors import ClangExtractor
-from rouxinol.third_party.compy.extractors.extractors import LLVMIRExtractor
-from rouxinol.third_party.compy.extractors.extractors import clang
-from rouxinol.third_party.compy.extractors.extractors import llvm
+from rouxinol.third_party.compy_learn.extractors.extractors import Visitor
+from rouxinol.third_party.compy_learn.extractors.extractors import ClangDriver
+from rouxinol.third_party.compy_learn.extractors.extractors import ClangExtractor
+from rouxinol.third_party.compy_learn.extractors.extractors import LLVMIRExtractor
+from rouxinol.third_party.compy_learn.extractors.extractors import clang
+from rouxinol.third_party.compy_learn.extractors.extractors import llvm
 
 
 program_1fn_1 = """

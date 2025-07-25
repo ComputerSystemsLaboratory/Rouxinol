@@ -16,6 +16,6 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 """
 
-import rouxinol.third_party.compy
+import rouxinol.third_party.compy_learn
 import rouxinol.third_party.ncc
 

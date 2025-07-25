@@ -3,13 +3,13 @@ import os
 import networkx as nx
 import pytest
 
-from rouxinol.third_party.compy.extractors.extractors import Visitor
-from rouxinol.third_party.compy.extractors.extractors import clang
-from rouxinol.third_party.compy.ast_graphs import ASTGraphBuilder
-from rouxinol.third_party.compy.ast_graphs import ASTVisitor
-from rouxinol.third_party.compy.ast_graphs import ASTDataVisitor
-from rouxinol.third_party.compy.ast_graphs import ASTDataCFGVisitor
-from rouxinol.third_party.compy.ast_graphs import ASTDataCFGTokenVisitor
+from rouxinol.third_party.compy_learn.extractors.extractors import Visitor
+from rouxinol.third_party.compy_learn.extractors.extractors import clang
+from rouxinol.third_party.compy_learn.ast_graphs import ASTGraphBuilder
+from rouxinol.third_party.compy_learn.ast_graphs import ASTVisitor
+from rouxinol.third_party.compy_learn.ast_graphs import ASTDataVisitor
+from rouxinol.third_party.compy_learn.ast_graphs import ASTDataCFGVisitor
+from rouxinol.third_party.compy_learn.ast_graphs import ASTDataCFGTokenVisitor
 
 
 program_1fn_2 = """

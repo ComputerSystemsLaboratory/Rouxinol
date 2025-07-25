@@ -1,6 +1,6 @@
 import networkx as nx
 
-import rouxinol.third_party.compy.common as common
+import rouxinol.third_party.compy_learn.common as common
 
 
 def sample_graph():

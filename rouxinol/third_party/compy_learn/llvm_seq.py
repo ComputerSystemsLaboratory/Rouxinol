@@ -1,54 +1,108 @@
 import os
+import time
+import resource
 
-from rouxinol.third_party.compy.extractors import clang_driver_scoped_options
-from rouxinol.third_party.compy.extractors.extractors import Visitor
-from rouxinol.third_party.compy.extractors.extractors import ClangDriver
-from rouxinol.third_party.compy.extractors.extractors import ClangExtractor
-from rouxinol.third_party.compy.extractors.extractors import clang
-from rouxinol.third_party.compy import common
+from rouxinol.third_party.compy_learn.extractors import clang_driver_scoped_options
+from rouxinol.third_party.compy_learn.extractors.extractors import Visitor
+from rouxinol.third_party.compy_learn.extractors.extractors import ClangDriver
+from rouxinol.third_party.compy_learn.extractors.extractors import LLVMIRExtractor
+from rouxinol.third_party.compy_learn.extractors.extractors import llvm
+from rouxinol.third_party.compy_learn import common
 
 
-class SyntaxSeqVisitor(Visitor):
+def merge_after_element_on_condition(elements, element_conditions):
+    """
+    Ex.: If merged on conditions ['a'], ['a', 'b', 'c', 'a', 'e'] becomes ['ab', 'c', 'ae']
+    """
+    for i in range(len(elements) - 2, -1, -1):
+        if elements[i] in element_conditions:
+            elements[i] = elements[i] + elements.pop(i + 1)
+
+    return elements
+
+
+def filer_elements(elements, element_filter):
+    """
+    Ex.: If filtered on elements [' '], ['a', ' ', 'c'] becomes ['a', 'c']
+    """
+    return [element for element in elements if element not in element_filter]
+
+
+def strip_elements(elements, element_filters):
+    """
+    Ex.: If stripped on elments [' '], ['a', ' b', 'c'] becomes ['a', 'b', 'c']
+    """
+    ret = []
+    for element in elements:
+        for element_filter in element_filters:
+            element = element.strip(element_filter)
+        ret.append(element)
+
+    return ret
+
+
+def strip_function_name(elements):
+    for i in range(len(elements) - 1):
+        if elements[i] == "@":
+            elements[i + 1] = "fn_0"
+
+    return elements
+
+
+def transform_elements(elements):
+    elements = merge_after_element_on_condition(elements, ["%", "i"])
+    elements = strip_elements(elements, ["\n", " "])
+    elements = filer_elements(elements, ["", " ", "local_unnamed_addr"])
+
+    return elements
+
+
+class LLVMSeqVisitor(Visitor):
     def __init__(self):
         Visitor.__init__(self)
         self.S = []
 
     def visit(self, v):
-        if isinstance(v, clang.seq.TokenInfo):
-            self.S.append(v.name)
+        if isinstance(v, llvm.seq.FunctionInfo):
+            self.S += strip_function_name(transform_elements(v.signature))
 
+        if isinstance(v, llvm.seq.BasicBlockInfo):
+            self.S += [v.name + ":"]
 
-class SyntaxTokenkindVisitor(Visitor):
+        if isinstance(v, llvm.seq.InstructionInfo):
+            self.S += transform_elements(v.tokens)
+
+class LLVMHistogramVisitor(Visitor):
     def __init__(self):
         Visitor.__init__(self)
         self.S = []
 
     def visit(self, v):
-        if isinstance(v, clang.seq.TokenInfo):
-            self.S.append(v.kind)
+        if isinstance(v, llvm.seq.FunctionInfo):
+            self.S += strip_function_name(transform_elements(v.signature))
 
+        if isinstance(v, llvm.seq.BasicBlockInfo):
+            self.S += [v.name + ":"]
 
-class SyntaxTokenkindVariableVisitor(Visitor):
+        if isinstance(v, llvm.seq.InstructionInfo):
+            self.S += transform_elements(v.tokens)
+
+class LLVMMilepostVisitor(Visitor):
     def __init__(self):
         Visitor.__init__(self)
         self.S = []
 
     def visit(self, v):
-        if isinstance(v, clang.seq.TokenInfo):
-            if v.kind == "raw_identifier" and "var" in v.name:
-                self.S.append(v.name)
-            elif (
-                v.name in ["for", "while", "do", "if", "else", "return"]
-                or v.name in ["fn_0"]
-                or v.name.startswith("int")
-                or v.name.startswith("float")
-            ):
-                self.S.append(v.name)
-            else:
-                self.S.append(v.kind)
+        if isinstance(v, llvm.seq.FunctionInfo):
+            self.S += strip_function_name(transform_elements(v.signature))
 
+        if isinstance(v, llvm.seq.BasicBlockInfo):
+            self.S += [v.name + ":"]
 
-class SyntaxSeqBuilder(common.RepresentationBuilder):
+        if isinstance(v, llvm.seq.InstructionInfo):
+            self.S += transform_elements(v.tokens)
+
+class LLVMSeqBuilder(common.RepresentationBuilder):
     def __init__(self, clang_driver=None):
         common.RepresentationBuilder.__init__(self)
 
@@ -56,13 +110,13 @@ class SyntaxSeqBuilder(common.RepresentationBuilder):
             self.__clang_driver = clang_driver
         else:
             self.__clang_driver = ClangDriver(
-                ClangDriver.ProgrammingLanguage.C,
+                ClangDriver.ProgrammingLanguage.LLVM,
                 ClangDriver.OptimizationLevel.O0,
                 [],
                 ["-Wall"],
             )
-        self.__extractor = ClangExtractor(self.__clang_driver)
-        self.__src_type = "SRC"
+        self.__extractor = LLVMIRExtractor(self.__clang_driver)
+        self.__src_type = "IR"
     
     def get_src_type(
         self
@@ -71,8 +125,8 @@ class SyntaxSeqBuilder(common.RepresentationBuilder):
 
     def string_to_info(self, src, *args, **kwargs):
         additional_include_dir =  kwargs["additional_include_dir"] if "additional_include_dir" in kwargs else None
-        filename = kwargs["filename"] if "filename" in kwargs else None      
-
+        filename = kwargs["filename"] if "filename" in kwargs else None    
+        
         # Start timing
         runtime = {
             'elapsed_time': 0.0,
@@ -113,7 +167,7 @@ class SyntaxSeqBuilder(common.RepresentationBuilder):
 
         return info
 
-    def info_to_representation(self, info, visitor=SyntaxTokenkindVariableVisitor):
+    def info_to_representation(self, info, visitor=LLVMSeqVisitor):
         # Start timing
         runtime = {
             'elapsed_time': 0.0,
@@ -135,7 +189,7 @@ class SyntaxSeqBuilder(common.RepresentationBuilder):
             self._tokens[token] += 1
 
         rep = common.Sequence(vis.S, self.get_tokens())
-        
+
         # End timing
         end_time = time.perf_counter()
         end_usage = resource.getrusage(resource.RUSAGE_CHILDREN)
@@ -154,3 +208,4 @@ class SyntaxSeqBuilder(common.RepresentationBuilder):
         self.update_runtime(runtime)
         
         return rep
+

@@ -1,9 +1,9 @@
 import os
 
-from rouxinol.third_party.compy.extractors.extractors import Visitor
-from rouxinol.third_party.compy.extractors.extractors import llvm
-from rouxinol.third_party.compy.llvm_seq import LLVMSeqBuilder
-from rouxinol.third_party.compy.llvm_seq import LLVMSeqVisitor
+from rouxinol.third_party.compy_learn.extractors.extractors import Visitor
+from rouxinol.third_party.compy_learn.extractors.extractors import llvm
+from rouxinol.third_party.compy_learn.llvm_seq import LLVMSeqBuilder
+from rouxinol.third_party.compy_learn.llvm_seq import LLVMSeqVisitor
 
 
 program_1fn_2 = """

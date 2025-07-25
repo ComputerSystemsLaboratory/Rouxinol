@@ -3,12 +3,12 @@ import time
 import resource
 import networkx as nx
 
-from rouxinol.third_party.compy.extractors import clang_driver_scoped_options
-from rouxinol.third_party.compy.extractors.extractors import Visitor
-from rouxinol.third_party.compy.extractors.extractors import ClangDriver
-from rouxinol.third_party.compy.extractors.extractors import ClangExtractor
-from rouxinol.third_party.compy.extractors.extractors import clang
-from rouxinol.third_party.compy import common
+from rouxinol.third_party.compy_learn.extractors import clang_driver_scoped_options
+from rouxinol.third_party.compy_learn.extractors.extractors import Visitor
+from rouxinol.third_party.compy_learn.extractors.extractors import ClangDriver
+from rouxinol.third_party.compy_learn.extractors.extractors import ClangExtractor
+from rouxinol.third_party.compy_learn.extractors.extractors import clang
+from rouxinol.third_party.compy_learn import common
 
 
 def filter_type(type):

@@ -3,13 +3,13 @@ import pytest
 
 import networkx as nx
 
-from rouxinol.third_party.compy.extractors.extractors import Visitor
-from rouxinol.third_party.compy.extractors.extractors import llvm
-from rouxinol.third_party.compy.llvm_graphs import LLVMGraphBuilder
-from rouxinol.third_party.compy.llvm_graphs import LLVMCDFGVisitor
-from rouxinol.third_party.compy.llvm_graphs import LLVMCDFGCallVisitor
-from rouxinol.third_party.compy.llvm_graphs import LLVMCDFGPlusVisitor
-from rouxinol.third_party.compy.llvm_graphs import LLVMProGraMLVisitor
+from rouxinol.third_party.compy_learn.extractors.extractors import Visitor
+from rouxinol.third_party.compy_learn.extractors.extractors import llvm
+from rouxinol.third_party.compy_learn.llvm_graphs import LLVMGraphBuilder
+from rouxinol.third_party.compy_learn.llvm_graphs import LLVMCDFGVisitor
+from rouxinol.third_party.compy_learn.llvm_graphs import LLVMCDFGCallVisitor
+from rouxinol.third_party.compy_learn.llvm_graphs import LLVMCDFGPlusVisitor
+from rouxinol.third_party.compy_learn.llvm_graphs import LLVMProGraMLVisitor
 
 
 program_1fn_2 = """
