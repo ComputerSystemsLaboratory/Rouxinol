@@ -214,7 +214,7 @@ def main(argv):
                         os.path.join(FLAGS.statistics_directory, f"stats_{FLAGS.representation}_{FLAGS.train}_{FLAGS.test}"),
                         "yml"
                 )
-    with open(os.path.join(FLAGS.output_directory, stats_filename), "w") as fout:
+    with open(stats_filename, "w") as fout:
         yl.dump(stats, fout)
 
 
