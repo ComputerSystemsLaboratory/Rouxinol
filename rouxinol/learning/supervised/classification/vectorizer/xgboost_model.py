@@ -77,7 +77,7 @@ class XGBoostModel(Model):
             missing=config["missing"]
         )
 
-    def predict_with_data(
+    def _predict_with_data(
         self,
         data
     ):
