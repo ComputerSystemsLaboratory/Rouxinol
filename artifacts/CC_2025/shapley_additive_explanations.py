@@ -22,6 +22,7 @@ import time
 import shap
 import yaml as yl
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 
 from tqdm import tqdm
@@ -48,28 +49,28 @@ flags.DEFINE_string(
     'dataset_name', 
     default=None, 
     help='Dataset filename',
-    short_name='d'
+    short_name='n'
 )
 
 flags.DEFINE_string(
     'train', 
     default='O0',
     help='Train data',
-    short_name='t'
+    short_name='T'
 )
 
 flags.DEFINE_string(
     'test', 
     default='O0',
     help='Test data',
-    short_name='T'
+    short_name='t'
 )
 
 flags.DEFINE_integer(
     'problems', 
     default=32, 
     help='Number of classes',
-    short_name='p'
+    short_name='P'
 )
 
 flags.DEFINE_integer(
@@ -113,9 +114,15 @@ flags.DEFINE_enum(
                 'XGBoost'
     ],
     help='Model',
-    short_name='m'
+    short_name='M'
 )
 
+flags.DEFINE_string(
+    'data_directory', 
+    default=None, 
+    help='Data directory (ir, representation, exec, ...)',
+    short_name='d'
+)
 
 flags.DEFINE_string(
     'output_directory',
@@ -135,25 +142,26 @@ flags.DEFINE_integer(
     'max_display',
     default=None,
     help='Display the top K most important features',
-    short_name='M'
-)
-
-flags.DEFINE_string(
-    'plot_name', 
-    default='shap.pdf', 
-    help='Name of the SHAP summary plot',
-    short_name='n'
+    short_name='m'
 )
 
 flags.DEFINE_string(
     'plot_type', 
     default='pdf', 
     help='Type of the SHAP summary plot',
-    short_name='P'
+    short_name='p'
+)
+
+flags.DEFINE_list(
+    'keys', 
+    default=None,
+    help='Keys for constructing the histogram',
+    short_name='k'
 )
 
 # Mark required flags  
-flags.mark_flag_as_required('dataset_name')  
+flags.mark_flag_as_required('data_directory')
+flags.mark_flag_as_required('dataset_name')
 
 
 def get_shap_explainer(
@@ -238,7 +246,7 @@ def main(
         dataset_items = list(dataset[key].items())  # Convert to list for tqdm compatibility  
         for idx, (problem, samples) in tqdm(enumerate(dataset_items), desc=f"Processing {key} problems", leave=False):  
             for sample in tqdm(samples, desc=f"Processing samples for {problem}", leave=False): 
-                embeddings_filename = os.path.join(FLAGS.output_directory, label_dir, problem, FLAGS.representation, f"{sample}.yml")
+                embeddings_filename = os.path.join(FLAGS.data_directory, label_dir, problem, FLAGS.representation, f"{sample}.yml")
                 if os.path.isfile(embeddings_filename):
                     with open(embeddings_filename, "r") as fin:
                         embeddings = yl.load(fin, Loader=yl.FullLoader)
@@ -247,7 +255,7 @@ def main(
 
     # Split the data
     data_train, data_test, sorted_keys = train_test_data_with_dict_and_label(
-                                            data
+                                            data, use_only_keys=FLAGS.keys
                                         )
     
     data_prediction, data_background_samples = train_test_data_with_list(
@@ -301,12 +309,27 @@ def main(
             shap_values_for_output = raw_shap_values
 
         # Construct a specific filename for each output
-        base_name, ext = os.path.splitext(FLAGS.plot_name)
         output_filename = os.path.join(
             FLAGS.output_directory,
-            f"{base_name}_output_{i+1}{ext}"
+            f"shap_{FLAGS.representation}_{FLAGS.train}_{FLAGS.test}_{i+1}"
         )
 
+        # Save SHAP data
+        np.savez_compressed(f"{output_filename}.npz", shap_values=shap_values_for_output, data_prediction=data_prediction_X)
+
+        # The overall "importance" of each feature
+        feature_importances = np.abs(shap_values_for_output).mean(axis=0)
+
+        feature_names = data_prediction_X.columns
+        feature_importance_df = pd.DataFrame({
+            'Feature': feature_names,
+            'Importance': feature_importances
+        })
+
+        with open(f"{output_filename}.yml", "w") as fout:
+            yl.dump(feature_importance_df.to_dict(), fout)
+
+        # Plot
         plt.style.use('seaborn-v0_8-darkgrid')
         plt.figure(figsize=(10, 7))
 
@@ -326,7 +349,7 @@ def main(
         ax = plt.gca() # Get the current axes
         ax.set_xlabel('') # Set the x-label to an empty string
         
-        plt.savefig(output_filename, format=FLAGS.plot_type, bbox_inches="tight")
+        plt.savefig(f"{output_filename}.{FLAGS.plot_type}", format=FLAGS.plot_type, bbox_inches="tight")
         plt.close()
         logging.info(f"Summary Plot for Output {i+1} saved to '{output_filename}'.")
 
