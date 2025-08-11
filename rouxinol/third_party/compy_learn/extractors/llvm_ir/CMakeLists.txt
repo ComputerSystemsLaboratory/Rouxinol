@@ -5,6 +5,7 @@ add_library(llvm_extractor
         llvm_graph_funcinfo.cc
         llvm_seq_pass.cc
 	llvm_hist_pass.cc
+        llvm_insts_pass.cc
         )
 
 target_link_libraries(llvm_extractor

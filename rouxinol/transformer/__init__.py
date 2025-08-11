@@ -48,6 +48,11 @@ from rouxinol.third_party.compy_learn.llvm_hist import (
     LLVMHistogramBuilder,
 )
 
+from rouxinol.third_party.compy_learn.llvm_insts import (
+    LLVMInstsCounterVisitor,
+    LLVMInstsCounterBuilder,
+)
+
 from .cfggrind import (
     CFGgrindDynamicVisitor,
     CFGgrindHybridVisitor,

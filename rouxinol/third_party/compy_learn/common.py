@@ -50,11 +50,14 @@ class Dictionary(object):
 
         self.summary = {}
         for _, insts in self.D.items():
-            for key, value in insts.items():
-                if not key in self.summary:
-                    self.summary[key] = value 
-                else:
-                    self.summary[key] += value
+            if isinstance(insts, dict):
+                for key, value in insts.items():
+                    if not key in self.summary:
+                        self.summary[key] = value 
+                    else:
+                        self.summary[key] += value
+            else:
+                self.summary = self.D.copy()
 
         self.short_summary = {key:val for key, val in self.summary.items() if val > 0}
 
@@ -91,38 +94,39 @@ class Dictionary(object):
             box_node_id = f"box_{main_key}"
             graphviz_graph.add_node(
                 box_node_id,
-                label=str(main_key),
+                label=str(main_key) if isinstance(sub_dict, dict) else f"{main_key}: {sub_dict}",
                 shape="box",
                 style="filled",
                 fillcolor="#f0f0f0", 
                 fontname="Helvetica",
             )
 
-            previous_node = None
-            first_circle_node = None
-            for sub_key, sub_value in sub_dict.items():
-                if sub_value > 0:
-                    node_id = f"{main_key}_{sub_key}"
+            if isinstance(sub_dict, dict):
+                previous_node = None
+                first_circle_node = None
+                for sub_key, sub_value in sub_dict.items():
+                    if sub_value > 0:
+                        node_id = f"{main_key}_{sub_key}"
 
-                    graphviz_graph.add_node(
-                        node_id,
-                        label=f"{sub_key}: {sub_value}",
-                        shape="circle",
-                        style="filled",
-                        fillcolor="#e6f2ff", 
-                        fontname="Helvetica",
-                    )
+                        graphviz_graph.add_node(
+                            node_id,
+                            label=f"{sub_key}: {sub_value}",
+                            shape="circle",
+                            style="filled",
+                            fillcolor="#e6f2ff", 
+                            fontname="Helvetica",
+                        )
 
-                    if first_circle_node is None:
-                        first_circle_node = node_id
+                        if first_circle_node is None:
+                            first_circle_node = node_id
 
-                    if previous_node:
-                        graphviz_graph.add_edge(previous_node, node_id)
+                        if previous_node:
+                            graphviz_graph.add_edge(previous_node, node_id)
 
-                    previous_node = node_id
+                        previous_node = node_id
 
-            if first_circle_node:
-                graphviz_graph.add_edge(box_node_id, first_circle_node)
+                if first_circle_node:
+                    graphviz_graph.add_edge(box_node_id, first_circle_node)
 
         graphviz_graph.layout("dot")
 

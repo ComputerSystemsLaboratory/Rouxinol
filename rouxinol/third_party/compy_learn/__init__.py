@@ -41,3 +41,8 @@ from .llvm_hist import (
     LLVMHistogramVisitor,
     LLVMHistogramBuilder,
 )
+
+from .llvm_insts import (
+    LLVMInstsCounterVisitor,
+    LLVMInstsCounterBuilder,
+)
