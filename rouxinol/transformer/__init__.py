@@ -53,6 +53,11 @@ from rouxinol.third_party.compy_learn.llvm_insts import (
     LLVMInstsCounterBuilder,
 )
 
+from rouxinol.third_party.compy_learn.llvm_milepost import (
+    LLVMMilepostVisitor,
+    LLVMMilepostBuilder,
+)
+
 from .cfggrind import (
     CFGgrindDynamicVisitor,
     CFGgrindHybridVisitor,

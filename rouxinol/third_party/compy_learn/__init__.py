@@ -46,3 +46,9 @@ from .llvm_insts import (
     LLVMInstsCounterVisitor,
     LLVMInstsCounterBuilder,
 )
+
+
+from .llvm_milepost import (
+    LLVMMilepostVisitor,
+    LLVMMilepostBuilder,
+)

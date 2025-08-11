@@ -216,6 +216,31 @@ struct ExtractionInfo : IVisitee {
 };
 }  // namespace insts
 
+namespace msf {
+struct FunctionInfo;
+using FunctionInfoPtr = std::shared_ptr<FunctionInfo>;
+
+struct ExtractionInfo;
+using ExtractionInfoPtr = std::shared_ptr<ExtractionInfo>;
+
+struct FunctionInfo : IVisitee {
+  std::string name;
+  std::vector<std::string> signature;
+  std::map<std::string, float> features;
+
+  void accept(IVisitor* v) override { v->visit(this); }
+};
+
+struct ExtractionInfo : IVisitee {
+  std::vector<FunctionInfoPtr> functionInfos;
+  void accept(IVisitor* v) override {
+    v->visit(this);
+    for (const auto &it : functionInfos) it->accept(v);
+  }
+};
+}  // namespace msf
+
+
 class LLVMIRExtractor {
  public:
   LLVMIRExtractor(ClangDriverPtr clangDriver);
@@ -224,6 +249,7 @@ class LLVMIRExtractor {
   seq::ExtractionInfoPtr SeqFromString(std::string src);
   hist::ExtractionInfoPtr HistFromString(std::string src);
   insts::ExtractionInfoPtr InstsFromString(std::string src);
+  msf::ExtractionInfoPtr MilepostFromString(std::string src);
 
  private:
   ClangDriverPtr clangDriver_;

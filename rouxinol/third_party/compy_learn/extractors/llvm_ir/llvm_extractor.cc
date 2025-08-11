@@ -12,6 +12,7 @@
 #include "llvm_seq_pass.h"
 #include "llvm_hist_pass.h"
 #include "llvm_insts_pass.h"
+#include "llvm_milepost_pass.h"
 
 using namespace ::clang;
 using namespace ::llvm;
@@ -67,6 +68,19 @@ insts::ExtractionInfoPtr LLVMIRExtractor::InstsFromString(std::string src) {
 
   passes.push_back(createStripSymbolsPass());
   insts::ExtractorPass *pass = new insts::ExtractorPass();
+  passes.push_back(pass);
+
+  clangDriver_->Invoke(src, frontendActions, passes);
+
+  return pass->extractionInfo;
+}
+
+msf::ExtractionInfoPtr LLVMIRExtractor::MilepostFromString(std::string src) {
+  std::vector<::clang::FrontendAction *> frontendActions;
+  std::vector<::llvm::Pass *> passes;
+
+  passes.push_back(createStripSymbolsPass());
+  msf::ExtractorPass *pass = new msf::ExtractorPass();
   passes.push_back(pass);
 
   clangDriver_->Invoke(src, frontendActions, passes);

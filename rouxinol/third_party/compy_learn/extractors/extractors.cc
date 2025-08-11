@@ -15,6 +15,7 @@ namespace lg = compy::llvm::graph;
 namespace ls = compy::llvm::seq;
 namespace lh = compy::llvm::hist;
 namespace li = compy::llvm::insts;
+namespace lm = compy::llvm::msf;
 
 using CD = compy::ClangDriver;
 using CE = compy::clang::ClangExtractor;
@@ -191,6 +192,7 @@ void registerLLVMExtractor(py::module m_parent) {
   llvmExtractor.def("SeqFromString", &LE::SeqFromString);
   llvmExtractor.def("HistFromString", &LE::HistFromString);
   llvmExtractor.def("InstsFromString", &LE::InstsFromString);
+  llvmExtractor.def("MilepostFromString", &LE::MilepostFromString);
 
   // Subtypes
   py::module m = m_parent.def_submodule("llvm");
@@ -305,6 +307,21 @@ void registerLLVMExtractor(py::module m_parent) {
       .def_readonly("name", &li::FunctionInfo::name)
       .def_readonly("signature", &li::FunctionInfo::signature)
       .def_readonly("instructions", &li::FunctionInfo::instructions);
+
+  // Milepost Static Features extractor
+  py::module m_msf = m.def_submodule("msf");
+
+  py::class_<lm::ExtractionInfo, std::shared_ptr<lm::ExtractionInfo>>(
+      m_msf, "ExtractionInfo")
+      .def("accept", &lm::ExtractionInfo::accept)
+      .def_readonly("functionInfos", &lm::ExtractionInfo::functionInfos);
+
+  py::class_<lm::FunctionInfo, std::shared_ptr<lm::FunctionInfo>>(
+      m_msf, "FunctionInfo")
+      .def("accept", &lm::FunctionInfo::accept)
+      .def_readonly("name", &lm::FunctionInfo::name)
+      .def_readonly("signature", &lm::FunctionInfo::signature)
+      .def_readonly("features", &lm::FunctionInfo::features);
 
 }
 
