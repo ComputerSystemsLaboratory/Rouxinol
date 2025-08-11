@@ -35,8 +35,7 @@ bool ExtractorPass::runOnModule(::llvm::Module &module) {
 
     unsigned instructions = 0;
     for (const auto &bb : F.getBasicBlockList())
-      for (const auto &inst : bb)
-        instructions++;
+      instructions += bb.size();
 
     FunctionInfoPtr functionInfo(new FunctionInfo);
     functionInfo->name = F.getName().str();
