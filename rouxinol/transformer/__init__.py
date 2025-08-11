@@ -78,9 +78,9 @@ from .ir2vec import (
     IR2VecBuilder,
 )
 
-from .llvm_graph2hist import (
-    LLVMGraph2HistogramVisitor,
-    LLVMGraph2HistogramBuilder,
+from .llvm_cfg2hist import (
+    LLVMCFG2HistogramVisitor,
+    LLVMCFG2HistogramBuilder,
 )
 
 from .x86_histogram import (

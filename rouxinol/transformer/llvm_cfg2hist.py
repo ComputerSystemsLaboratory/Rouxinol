@@ -26,14 +26,14 @@ from rouxinol.transformer import LLVMGraphBuilder
 from rouxinol.third_party.compy_learn import common
 
 
-class LLVMGraph2HistogramVisitor():
+class LLVMCFG2HistogramVisitor():
     def __init__(
         self
     ):
         pass
 
 
-class LLVMGraph2HistogramBuilder(common.RepresentationBuilder):
+class LLVMCFG2HistogramBuilder(common.RepresentationBuilder):
     """Extract histogram.
     """
 
