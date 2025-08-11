@@ -168,12 +168,38 @@ struct ExtractionInfo : IVisitee {
 };
 }  // namespace graph
 
+namespace hist {
+struct FunctionInfo;
+using FunctionInfoPtr = std::shared_ptr<FunctionInfo>;
+
+struct ExtractionInfo;
+using ExtractionInfoPtr = std::shared_ptr<ExtractionInfo>;
+
+struct FunctionInfo : IVisitee {
+  std::string name;
+  std::vector<std::string> signature;
+  std::map<std::string, int> instructions;
+
+  void accept(IVisitor* v) override { v->visit(this); }
+};
+
+struct ExtractionInfo : IVisitee {
+  std::vector<FunctionInfoPtr> functionInfos;
+  void accept(IVisitor* v) override {
+    v->visit(this);
+    for (const auto &it : functionInfos) it->accept(v);
+  }
+};
+
+}  // namespace histogram
+
 class LLVMIRExtractor {
  public:
   LLVMIRExtractor(ClangDriverPtr clangDriver);
 
   graph::ExtractionInfoPtr GraphFromString(std::string src);
   seq::ExtractionInfoPtr SeqFromString(std::string src);
+  hist::ExtractionInfoPtr HistFromString(std::string src);
 
  private:
   ClangDriverPtr clangDriver_;

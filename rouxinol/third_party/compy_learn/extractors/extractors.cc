@@ -13,6 +13,7 @@ namespace cg = compy::clang::graph;
 namespace cs = compy::clang::seq;
 namespace lg = compy::llvm::graph;
 namespace ls = compy::llvm::seq;
+namespace lh = compy::llvm::hist;
 
 using CD = compy::ClangDriver;
 using CE = compy::clang::ClangExtractor;
@@ -187,6 +188,7 @@ void registerLLVMExtractor(py::module m_parent) {
   llvmExtractor.def(py::init<ClangDriverPtr>());
   llvmExtractor.def("GraphFromString", &LE::GraphFromString);
   llvmExtractor.def("SeqFromString", &LE::SeqFromString);
+  llvmExtractor.def("HistFromString", &LE::HistFromString);
 
   // Subtypes
   py::module m = m_parent.def_submodule("llvm");
@@ -271,6 +273,22 @@ void registerLLVMExtractor(py::module m_parent) {
   py::class_<ls::InstructionInfo, std::shared_ptr<ls::InstructionInfo>>(
       m_seq, "InstructionInfo")
       .def_readonly("tokens", &ls::InstructionInfo::tokens);
+
+  // LLVM Type of Instructions extractor (Histogram)
+  py::module m_histogram = m.def_submodule("hist");
+
+  py::class_<lh::ExtractionInfo, std::shared_ptr<lh::ExtractionInfo>>(
+      m_histogram, "ExtractionInfo")
+      .def("accept", &lh::ExtractionInfo::accept)
+      .def_readonly("functionInfos", &lh::ExtractionInfo::functionInfos);
+
+  py::class_<lh::FunctionInfo, std::shared_ptr<lh::FunctionInfo>>(
+      m_histogram, "FunctionInfo")
+      .def("accept", &lh::FunctionInfo::accept)
+      .def_readonly("name", &lh::FunctionInfo::name)
+      .def_readonly("signature", &lh::FunctionInfo::signature)
+      .def_readonly("instructions", &lh::FunctionInfo::instructions);
+
 }
 
 PYBIND11_MODULE(extractors, m) {

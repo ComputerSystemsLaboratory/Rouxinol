@@ -36,3 +36,8 @@ from .llvm_seq import (
     LLVMSeqVisitor,
     LLVMSeqBuilder,
 )
+
+from .llvm_hist import (
+    LLVMHistogramVisitor,
+    LLVMHistogramBuilder,
+)

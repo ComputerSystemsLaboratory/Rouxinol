@@ -43,6 +43,11 @@ from rouxinol.third_party.compy_learn.llvm_seq import (
     LLVMSeqBuilder,
 )
 
+from rouxinol.third_party.compy_learn.llvm_hist import (
+    LLVMHistogramVisitor,
+    LLVMHistogramBuilder,
+)
+
 from .cfggrind import (
     CFGgrindDynamicVisitor,
     CFGgrindHybridVisitor,
@@ -63,9 +68,9 @@ from .ir2vec import (
     IR2VecBuilder,
 )
 
-from .llvm_histogram import (
-    LLVMVisitor,
-    LLVMHistogramBuilder,
+from .llvm_graph2hist import (
+    LLVMGraph2HistogramVisitor,
+    LLVMGraph2HistogramBuilder,
 )
 
 from .x86_histogram import (

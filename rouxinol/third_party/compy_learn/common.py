@@ -42,6 +42,93 @@ class RepresentationBuilder(object):
     def get_elapsed_time(self):
         return self.runtime["elapsed_time"]
 
+
+class Dictionary(object):
+    def __init__(self, D, token_types):
+        self.D = D
+        self.__token_types = token_types
+
+        self.summary = {}
+        for _, insts in self.D.items():
+            for key, value in insts.items():
+                if not key in self.summary:
+                    self.summary[key] = value 
+                else:
+                    self.summary[key] += value
+
+        self.short_summary = {key:val for key, val in self.summary.items() if val > 0}
+
+    def get_token_list(self):
+        node_ints = [self.__token_types.index(token_str) for token_str in self.summary]
+
+        return node_ints
+
+    def get_dict(self):
+        return self.D 
+
+    def get_summary(self):
+        return self.summary
+
+    def get_short_summary(self):
+        return self.short_summary
+
+    def size(self):
+        return len(self.D)
+
+    def draw(self, width=8, limit=30, path=None):
+        # Create dot graph.
+        graphviz_graph = pgv.AGraph(
+            directed=True,
+            splines=True,
+            rankdir="LR",
+            nodesep=0.5,
+            ranksep=0.8,
+            outputorder="edgesfirst",
+            fillcolor="white",
+        )
+
+        for main_key, sub_dict in self.D.items():
+            box_node_id = f"box_{main_key}"
+            graphviz_graph.add_node(
+                box_node_id,
+                label=str(main_key),
+                shape="box",
+                style="filled",
+                fillcolor="#f0f0f0", 
+                fontname="Helvetica",
+            )
+
+            previous_node = None
+            first_circle_node = None
+            for sub_key, sub_value in sub_dict.items():
+                if sub_value > 0:
+                    node_id = f"{main_key}_{sub_key}"
+
+                    graphviz_graph.add_node(
+                        node_id,
+                        label=f"{sub_key}: {sub_value}",
+                        shape="circle",
+                        style="filled",
+                        fillcolor="#e6f2ff", 
+                        fontname="Helvetica",
+                    )
+
+                    if first_circle_node is None:
+                        first_circle_node = node_id
+
+                    if previous_node:
+                        graphviz_graph.add_edge(previous_node, node_id)
+
+                    previous_node = node_id
+
+            if first_circle_node:
+                graphviz_graph.add_edge(box_node_id, first_circle_node)
+
+        graphviz_graph.layout("dot")
+
+        return graphviz_graph.draw(path)
+
+
 class Sequence(object):
     def __init__(self, S, token_types):
         self.S = S

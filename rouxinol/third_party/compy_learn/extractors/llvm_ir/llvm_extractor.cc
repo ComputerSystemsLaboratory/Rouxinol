@@ -10,6 +10,7 @@
 
 #include "llvm_graph_pass.h"
 #include "llvm_seq_pass.h"
+#include "llvm_hist_pass.h"
 
 using namespace ::clang;
 using namespace ::llvm;
@@ -25,7 +26,6 @@ graph::ExtractionInfoPtr LLVMIRExtractor::GraphFromString(std::string src) {
   std::vector<::llvm::Pass *> passes;
 
   passes.push_back(createStripSymbolsPass());
-
   graph::ExtractorPass *extractorPass = new graph::ExtractorPass();
   passes.push_back(extractorPass);
 
@@ -40,6 +40,19 @@ seq::ExtractionInfoPtr LLVMIRExtractor::SeqFromString(std::string src) {
 
   passes.push_back(createStripSymbolsPass());
   seq::ExtractorPass *pass = new seq::ExtractorPass();
+  passes.push_back(pass);
+
+  clangDriver_->Invoke(src, frontendActions, passes);
+
+  return pass->extractionInfo;
+}
+
+hist::ExtractionInfoPtr LLVMIRExtractor::HistFromString(std::string src) {
+  std::vector<::clang::FrontendAction *> frontendActions;
+  std::vector<::llvm::Pass *> passes;
+
+  passes.push_back(createStripSymbolsPass());
+  hist::ExtractorPass *pass = new hist::ExtractorPass();
   passes.push_back(pass);
 
   clangDriver_->Invoke(src, frontendActions, passes);

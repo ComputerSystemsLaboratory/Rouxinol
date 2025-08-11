@@ -26,14 +26,14 @@ from rouxinol.transformer import LLVMGraphBuilder
 from rouxinol.third_party.compy_learn import common
 
 
-class LLVMVisitor():
+class LLVMGraph2HistogramVisitor():
     def __init__(
         self
     ):
         pass
 
 
-class LLVMHistogramBuilder(common.RepresentationBuilder):
+class LLVMGraph2HistogramBuilder(common.RepresentationBuilder):
     """Extract histogram.
     """
 
@@ -102,7 +102,7 @@ class LLVMHistogramBuilder(common.RepresentationBuilder):
     def info_to_representation(
         self,
         extractionInfo,
-        visitor=LLVMVisitor
+        visitor=LLVMGraph2HistogramVisitor
     ):
         # Start timing
         runtime = {
