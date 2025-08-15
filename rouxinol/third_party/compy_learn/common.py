@@ -6,7 +6,10 @@ import pygraphviz as pgv
 
 class RepresentationBuilder(object):
     def __init__(self):
-        self._tokens = collections.OrderedDict()
+        self._attrs = collections.OrderedDict()
+        self._types = collections.OrderedDict()
+        self._codes = collections.OrderedDict()
+        self._labels = collections.OrderedDict()        
         self.runtime = {
             'elapsed_time': 0.0,
             'user_time': 0.0,
@@ -14,19 +17,67 @@ class RepresentationBuilder(object):
             'cpu_time': 0.0
         }
 
-    def num_tokens(self):
-        return len(self._tokens)
+    def num_attrs(self):
+        return len(self._attrs)
 
-    def get_tokens(self):
-        return list(self._tokens.keys())
+    def get_attrs(self):
+        return list(self._attrs.keys())
+    
+    def num_types(self):
+        return len(self._types)
 
-    def print_tokens(self):
+    def get_types(self):
+        return list(self._types.keys())
+    
+    def num_codes(self):
+        return len(self._codes)
+
+    def get_codes(self):
+        return list(self._codes.keys())
+
+    def num_labels(self):
+        return len(self._labels)
+
+    def get_labels(self):
+        return list(self._labels.keys())
+
+    def print_attrs(self):
         print("-" * 50)
         print("{:<8} {:<25} {:<10}".format("NodeID", "Label", "Number"))
-        t_view = [(v, k) for k, v in self._tokens.items()]
+        t_view = [(v, k) for k, v in self._attrs.items()]
         t_view = sorted(t_view, key=lambda x: x[0], reverse=True)
         for v, k in t_view:
-            idx = list(self._tokens.keys()).index(k)
+            idx = list(self._attrs.keys()).index(k)
+            print("{:<8} {:<25} {:<10}".format(str(idx), str(k), str(v)))
+        print("-" * 50)
+
+    def print_types(self):
+        print("-" * 50)
+        print("{:<8} {:<25} {:<10}".format("NodeID", "Label", "Number"))
+        t_view = [(v, k) for k, v in self._types.items()]
+        t_view = sorted(t_view, key=lambda x: x[0], reverse=True)
+        for v, k in t_view:
+            idx = list(self._types.keys()).index(k)
+            print("{:<8} {:<25} {:<10}".format(str(idx), str(k), str(v)))
+        print("-" * 50)
+
+    def print_codes(self):
+        print("-" * 80)
+        print("{:<8} {:<55} {:<10}".format("NodeID", "Label", "Number"))
+        t_view = [(v, k) for k, v in self._codes.items()]
+        t_view = sorted(t_view, key=lambda x: x[0], reverse=True)
+        for v, k in t_view:
+            idx = list(self._codes.keys()).index(k)
+            print("{:<8} {:<55} {:<10}".format(str(idx), str(k), str(v)))
+        print("-" * 80)
+
+    def print_labels(self):
+        print("-" * 50)
+        print("{:<8} {:<25} {:<10}".format("NodeID", "Label", "Number"))
+        t_view = [(v, k) for k, v in self._labels.items()]
+        t_view = sorted(t_view, key=lambda x: x[0], reverse=True)
+        for v, k in t_view:
+            idx = list(self._labels.keys()).index(k)
             print("{:<8} {:<25} {:<10}".format(str(idx), str(k), str(v)))
         print("-" * 50)
 
@@ -194,29 +245,82 @@ class Sequence(object):
 
 
 class Graph(object):
-    def __init__(self, graph, node_types, edge_types):
+    def __init__(self, graph, node_attr, edge_attr, node_label=None, node_type=None, node_code=None):
         self.G = graph
-        self.__node_types = node_types
-        self.__node_types_dict = {n: i for i, n in enumerate(node_types)}
-        self.__edge_types = edge_types
+        self.__node_attr = node_attr
+        self.__node_attr_dict = {n: i for i, n in enumerate(node_attr)}
+        self.__edge_attr = edge_attr
+
+        if node_type:
+            self.__node_type = node_type
+            self.__node_type_dict = {n: i for i, n in enumerate(node_type)}
+
+        if node_code:
+            self.__node_code = node_code
+            self.__node_code_dict = {n: i for i, n in enumerate(node_code)}
+
+        if node_label:
+            self.__node_label = node_label
+            self.__node_label_dict = {n: i for i, n in enumerate(node_label)}
 
     def _get_node_attr_dict(self):
         return collections.OrderedDict(self.G.nodes(data="attr", default="N/A"))
 
-    def get_node_types(self):
-        return self.__node_types
+    def get_node_attr(self):
+        return self.__node_attr
 
-    def get_edge_types(self):
-        return self.__edge_types
-
-    def get_node_str_list(self):
+    def get_node_attr_str_list(self):
         node_strs = list(self._get_node_attr_dict().values())
         return node_strs
 
-    def get_node_list(self):
+    def get_node_attr_list(self):
         node_strs = list(self._get_node_attr_dict().values())
-        node_ints = [self.__node_types_dict[node_str] for node_str in node_strs if node_str != "N/A"]
+        node_ints = [self.__node_attr_dict[node_str] for node_str in node_strs if node_str != "N/A"]
         return node_ints
+
+    def _get_node_type_dict(self):
+        return collections.OrderedDict(self.G.nodes(data="type", default="N/A"))
+
+    def get_node_type(self):
+        return self.__node_type
+
+    def get_node_type_str_list(self):
+        node_strs = list(self._get_node_type_dict().values())
+        return node_strs
+
+    def get_node_type_list(self):
+        node_strs = list(self._get_node_type_dict().values())
+        node_ints = [self.__node_type_dict[node_str] for node_str in node_strs if node_str != "N/A"]
+        return node_ints
+
+    def _get_node_code_dict(self):
+        return collections.OrderedDict(self.G.nodes(data="code", default="N/A"))
+
+    def get_node_code(self):
+        return self.__node_code
+
+    def get_node_code_str_list(self):
+        node_strs = list(self._get_node_code_dict().values())
+        return node_strs
+
+    def get_node_code_list(self):
+        node_strs = list(self._get_node_code_dict().values())
+        node_ints = [self.__node_code_dict[node_str] for node_str in node_strs if node_str != "N/A"]
+        return node_ints
+
+    def get_node_label(self):
+        return self.__node_label
+
+    def get_node_label_str_list(self):
+        node_strs = list(self._get_node_label_dict().values())
+        return node_strs
+
+    def get_node_label_list(self):
+        node_strs = list(self._get_node_label_dict().values())
+        node_ints = [self.__node_label_dict[node_str] for node_str in node_strs if node_str != "N/A"]        
+
+    def get_edge_attr(self):
+        return self.__edge_attr
 
     def get_edge_list(self):
         nodes_keys = {n: i for i, n in enumerate(self._get_node_attr_dict().keys())}
@@ -226,7 +330,7 @@ class Graph(object):
             edges.append(
                 (
                     nodes_keys[node1],
-                    self.__edge_types.index(data["attr"]),
+                    self.__edge_attr.index(data["attr"]),
                     nodes_keys[node2],
                 )
             )
@@ -305,7 +409,7 @@ class Graph(object):
 
             result.add_edge(source, target, **data)
 
-        return Graph(result, list(self.__node_types), list(self.__edge_types))
+        return Graph(result, list(self.__node_attr), list(self.__edge_attr))
 
     def size(self):
         return len(self.G)
@@ -313,6 +417,24 @@ class Graph(object):
     def draw(self, path=None, with_legend=False, align_tokens=True):
         # Copy graph object because attr modifications for a cleaner view are needed.
         G = self.G
+    
+        # Define a mapping of node types to Graphviz shapes
+        node_shape_by_label = {
+            "inst": "rectangle",
+            "data": "ellipse",
+            "var": "ellipse",
+            "const": "circle",
+            "bb": "egg"
+        }
+
+        # Define a mapping of node types to line and fill colors
+        node_colors_by_label = {
+            "inst": {"color": "black", "fillcolor": "lightgray"},
+            "data": {"color": "black", "fillcolor": "antiquewhite"},
+            "var": {"color": "black", "fillcolor": "antiquewhite"},
+            "const": {"color": "black", "fillcolor": "khaki"},
+            "bb": {"color": "black", "fillcolor": "lavender"},
+        }
 
         # Add node labels.
         for (n, data) in G.nodes(data=True):
@@ -322,18 +444,28 @@ class Graph(object):
                 else:
                     label = data["attr"]
 
+                node_type = data.get("label", "other")  # Default to 'inst' if no type is found
                 G.nodes[n]["label"] = label
+
+                # Add the shape based on the node's type
+                G.nodes[n]["shape"] = node_shape_by_label.get(node_type, "doublecircle")
+
+                # Apply line and fill colors based on type
+                colors = node_colors_by_label.get(node_type, {"color": "black", "fillcolor": "peru"})
+                G.nodes[n]["color"] = colors["color"]
+                G.nodes[n]["fillcolor"] = colors["fillcolor"]
+                G.nodes[n]["style"] = "filled" # This is important to make fillcolor work!
 
         # Add edge colors.
         edge_colors_by_types = {
             "ast": "black",
-            "cfg": "green",
+            "control": "green",
             "data": "blue",
             "mem": "pink",
             "call": "yellow",
         }
         edge_colors_available = ["orange", "pink", "cyan", "crimson", "darkgreen", "darkblue", "darkcyan"]
-        for etype in self.__edge_types:
+        for etype in self.__edge_attr:
             if etype in edge_colors_by_types: continue
             edge_colors_by_types[etype] = edge_colors_available.pop(0)
 
@@ -344,21 +476,21 @@ class Graph(object):
 
             G[u][v][key]["color"] = edge_colors_by_types[edge_type]
 
-            # G[u][v][key]['weight'] = 10 if edge_type == 'cfg' else 0
+            # G[u][v][key]['weight'] = 10 if edge_type == 'control' else 0
 
         # Create dot graph.
         graphviz_graph = nx.drawing.nx_agraph.to_agraph(G)
 
         # Add Legend.
         if with_legend:
-            edge_types_used = set()
+            edge_attr_used = set()
             for (u, v, key, data) in G.edges(keys=True, data=True):
                 edge_type = data["attr"]
-                edge_types_used.add(edge_type)
+                edge_attr_used.add(edge_type)
 
             subgraph = graphviz_graph.subgraph(name="cluster", label="Edges")
             for edge_type, color in edge_colors_by_types.items():
-                if edge_type in edge_types_used:
+                if edge_type in edge_attr_used:
                     subgraph.add_node(edge_type, color="invis", fontcolor=color)
 
         # Put all tokens on single level ("rank") and enforce order

@@ -102,7 +102,7 @@ class LLVMCFG2HistogramBuilder(common.RepresentationBuilder):
     def info_to_representation(
         self,
         extractionInfo,
-        visitor=LLVMGraph2HistogramVisitor
+        visitor=LLVMCFG2HistogramVisitor
     ):
         # Start timing
         runtime = {

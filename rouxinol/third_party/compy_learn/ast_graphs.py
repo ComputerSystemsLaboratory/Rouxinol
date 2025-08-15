@@ -202,11 +202,11 @@ class ASTGraphBuilder(common.RepresentationBuilder):
 
         for (n, data) in vis.G.nodes(data=True):
             attr = data["attr"]
-            if attr not in self._tokens:
-                self._tokens[attr] = 0
-            self._tokens[attr] += 1
+            if attr not in self._attrs:
+                self._attrs[attr] = 0
+            self._attrs[attr] += 1
 
-        rep = common.Graph(vis.G, self.get_tokens(), vis.edge_types)
+        rep = common.Graph(vis.G, self.get_attrs(), vis.edge_types)
         
         # End timing
         end_time = time.perf_counter()

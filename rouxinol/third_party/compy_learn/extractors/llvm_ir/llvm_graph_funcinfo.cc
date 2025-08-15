@@ -71,6 +71,12 @@ ConstantInfoPtr FunctionInfoPass::getInfo(const ::llvm::Constant &con) {
 
   // collect the type
   info->type = llvmTypeToString(con.getType());
+  
+  // collect the constant value
+  std::string value;
+  raw_string_ostream os(value);
+  con.print(os);
+  info->value = os.str();
 
   return info;
 }
@@ -100,6 +106,15 @@ InstructionInfoPtr FunctionInfoPass::getInfo(const Instruction &inst) {
   raw_string_ostream cs(code);
   inst.print(cs);
   info->code = cs.str();
+
+  // Remove leading whitespace
+  size_t firstChar = info->code.find_first_not_of(" \t\n\r");
+  if (std::string::npos != firstChar) {
+      info->code = info->code.substr(firstChar);
+  } else {
+      // The string is all whitespace, so make it empty
+      info->code.clear();
+  }
 
   // collect data dependencies
   for (auto &use : inst.operands()) {

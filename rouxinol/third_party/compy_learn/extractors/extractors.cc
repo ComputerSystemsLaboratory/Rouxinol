@@ -251,7 +251,8 @@ void registerLLVMExtractor(py::module m_parent) {
 
   py::class_<lg::ConstantInfo, std::shared_ptr<lg::ConstantInfo>>(
       m_graph, "ConstantInfo")
-      .def_readonly("type", &lg::ConstantInfo::type);
+      .def_readonly("type", &lg::ConstantInfo::type)
+      .def_readonly("value", &lg::ConstantInfo::type);
 
   // Sequence extractor
   py::module m_seq = m.def_submodule("seq");
