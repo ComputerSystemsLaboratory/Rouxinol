@@ -18,6 +18,216 @@ std::string llvmTypeToString(Type *type) {
   return rso.str();
 }
 
+std::string llvmConstToString(const Constant *con) {
+  std::string value;
+  if (auto *CI = dyn_cast<ConstantInt>(con)) {
+      uint64_t val = CI->getZExtValue();
+      value = std::to_string(val);
+  } else if (auto *CFP = dyn_cast<ConstantFP>(con)) {
+      double val = CFP->getValueAPF().convertToDouble();
+      value = std::to_string(val);
+  } else {
+      // Handle other constant types or print a generic message
+      value = std::to_string(std::nan(""));
+  }
+  return value;
+}
+
+// --- helper functions to extract exact constant value as string ---
+std::string getAPIntAsString(const APInt &v) {
+  // Decimal representation (unsigned). For signed values, adjust as needed.
+  return v.toString(10, /*isSigned=*/false);
+}
+
+std::string getAPFloatAsString(const APFloat &apf) {
+  // Use APFloat::print via raw_string_ostream for an exact decimal representation.
+  std::string s;
+  raw_string_ostream rso(s);
+  apf.print(rso);
+  rso.flush();
+  return s;
+}
+
+std::string formatConstantArrayOrStruct(const Constant &con); // forward
+
+std::string getConstantExactValue(const Constant &con) {
+  // Integer constants
+  if (auto *CI = dyn_cast<ConstantInt>(&con)) {
+    return getAPIntAsString(CI->getValue());
+  }
+
+  // Floating point constants
+  if (auto *CF = dyn_cast<ConstantFP>(&con)) {
+    return getAPFloatAsString(CF->getValueAPF());
+  }
+
+  // Null pointer constant
+  if (isa<ConstantPointerNull>(con)) {
+    return "null";
+  }
+
+  // Aggregate zero
+  if (isa<ConstantAggregateZero>(con)) {
+    return "zeroinitializer";
+  }
+
+  // Undef
+  if (isa<UndefValue>(con)) {
+    return "undef";
+  }
+
+  // Global variable with initializer (often string literal)
+  if (auto *GV = dyn_cast<GlobalVariable>(&con)) {
+    if (GV->hasInitializer()) {
+      if (auto *Init = dyn_cast<Constant>(GV->getInitializer()))
+        return getConstantExactValue(*Init);
+    }
+    return GV->getName().str();
+  }
+
+  // ConstantDataArray / ConstantDataSequential containing strings
+  if (auto *CDA = dyn_cast<ConstantDataArray>(&con)) {
+    if (CDA->isString()) {
+      StringRef s = CDA->getAsString();
+      return std::string("\"") + std::string(s.begin(), s.end()) + "\"";
+    }
+  }
+  if (auto *CDS = dyn_cast<ConstantDataSequential>(&con)) {
+    if (CDS->isString()) {
+      StringRef s = CDS->getAsString();
+      return std::string("\"") + std::string(s.begin(), s.end()) + "\"";
+    }
+  }
+
+  // Arrays / Structs / Data arrays
+  if (isa<ConstantArray>(con) || isa<ConstantStruct>(con) ||
+      isa<ConstantDataArray>(con) || isa<ConstantDataSequential>(con)) {
+    return formatConstantArrayOrStruct(con);
+  }
+
+  // ConstantExpr: try to simplify common casts by returning operand's value
+  if (auto *CE = dyn_cast<ConstantExpr>(&con)) {
+    switch (CE->getOpcode()) {
+      case Instruction::Trunc:
+      case Instruction::ZExt:
+      case Instruction::SExt:
+      case Instruction::FPToUI:
+      case Instruction::FPToSI:
+      case Instruction::UIToFP:
+      case Instruction::SIToFP:
+      case Instruction::PtrToInt:
+      case Instruction::BitCast:
+      case Instruction::IntToPtr:
+      case Instruction::AddrSpaceCast:
+        if (auto *op = dyn_cast<Constant>(CE->getOperand(0)))
+          return getConstantExactValue(*op);
+        break;
+      default:
+        break;
+    }
+    // fallback: print the expr (should be rare)
+    std::string s;
+    raw_string_ostream rso(s);
+    CE->print(rso);
+    rso.flush();
+    return rso.str();
+  }
+
+  // Last resort: print representation
+  {
+    std::string s;
+    raw_string_ostream rso(s);
+    con.print(rso);
+    rso.flush();
+    return rso.str();
+  }
+}
+
+std::string formatConstantArrayOrStruct(const Constant &con) {
+  using namespace llvm;
+  std::string out;
+  out.push_back('{');
+  bool first = true;
+
+  // ConstantArray / ConstantStruct: iterate operands
+  if (auto *CA = dyn_cast<ConstantArray>(&con)) {
+    for (unsigned i = 0, e = CA->getNumOperands(); i != e; ++i) {
+      if (!first) out += ", ";
+      out += getConstantExactValue(*cast<Constant>(CA->getOperand(i)));
+      first = false;
+    }
+  } else if (auto *CS = dyn_cast<ConstantStruct>(&con)) {
+    for (unsigned i = 0, e = CS->getNumOperands(); i != e; ++i) {
+      if (!first) out += ", ";
+      out += getConstantExactValue(*cast<Constant>(CS->getOperand(i)));
+      first = false;
+    }
+  } else if (auto *CDA = dyn_cast<ConstantDataArray>(&con)) {
+    if (CDA->isString()) {
+      StringRef s = CDA->getAsString();
+      out = "\"" + std::string(s.begin(), s.end()) + "\"";
+      return out;
+    }
+    for (unsigned i = 0, e = CDA->getNumElements(); i != e; ++i) {
+      if (!first) out += ", ";
+      // For integer element types
+      if (CDA->getElementType()->isIntegerTy()) {
+        out += std::to_string(CDA->getElementAsInteger(i));
+      } else {
+        // fallback generic print
+        std::string tmp;
+        raw_string_ostream rso(tmp);
+        CDA->getElementAsConstant(i)->print(rso);
+        rso.flush();
+        out += tmp;
+      }
+      first = false;
+    }
+  } else if (auto *CDS = dyn_cast<ConstantDataSequential>(&con)) {
+    if (CDS->isString()) {
+      StringRef s = CDS->getAsString();
+      out = "\"" + std::string(s.begin(), s.end()) + "\"";
+      return out;
+    }
+    for (unsigned i = 0, e = CDS->getNumElements(); i != e; ++i) {
+      if (!first) out += ", ";
+      if (CDS->getElementType()->isIntegerTy()) {
+        out += std::to_string(CDS->getElementAsInteger(i));
+      } else {
+        // fallback
+        std::string tmp;
+        raw_string_ostream rso(tmp);
+        // there is no direct getElementAsConstant for all CDS; try printing element via index
+        // fallback to printing whole CDS (not ideal)
+        CDS->print(rso);
+        rso.flush();
+        out += tmp;
+      }
+      first = false;
+    }
+  } else {
+    // generic fallback: iterate operands if any
+    for (unsigned i = 0, e = con.getNumOperands(); i != e; ++i) {
+      if (!first) out += ", ";
+      if (auto *op = dyn_cast<Constant>(con.getOperand(i)))
+        out += getConstantExactValue(*op);
+      else {
+        std::string tmp;
+        raw_string_ostream rso(tmp);
+        con.getOperand(i)->print(rso);
+        rso.flush();
+        out += tmp;
+      }
+      first = false;
+    }
+  }
+
+  out.push_back('}');
+  return out;
+}
+// --- END --- helper functions to extract exact constant value as string ---
+
+
 /**
  * Get a unique Name for an LLVM value.
  *
@@ -73,11 +283,10 @@ ConstantInfoPtr FunctionInfoPass::getInfo(const ::llvm::Constant &con) {
   info->type = llvmTypeToString(con.getType());
   
   // collect the constant value
-  std::string value;
-  raw_string_ostream os(value);
-  con.print(os);
-  info->value = os.str();
-
+  info->value = getConstantExactValue(con); //llvmConstToString(&con); 
+  std::string subString = "; Function Attrs:";
+  if (info->value.compare(0, subString.length(), subString) == 0)
+    info->value = info->type;
   return info;
 }
 

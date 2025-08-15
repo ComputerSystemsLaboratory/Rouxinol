@@ -720,8 +720,8 @@ class LLVMProGraMLVisitor(Visitor):
             # Operands.
             for operand in v.operands:
                 if isinstance(operand, llvm.graph.ArgInfo) or isinstance(operand, llvm.graph.ConstantInfo):
-                    if isinstance(operand, llvm.graph.ConstantInfo): # and operand.value:
-                        self.G.add_node(operand, attr=(operand.type), value=(operand.value), label="const")
+                    if isinstance(operand, llvm.graph.ConstantInfo) and operand.value:
+                        self.G.add_node(operand, attr=(operand.value), type=(operand.type), label="const")
                     else:
                         self.G.add_node(operand, attr=(operand.type), label="var")
                     self.G.add_edge(operand, v, attr="data")
