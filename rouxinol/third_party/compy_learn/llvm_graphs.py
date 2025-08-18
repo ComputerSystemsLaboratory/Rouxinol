@@ -131,7 +131,7 @@ class LLVMCFGCallVisitor(Visitor):
             self.functions[v.name] = v
 
             # Function root node.
-            self.G.add_node(v, attr="function")
+            self.G.add_node(v, attr=f"func.{v.name}")
             self.G.add_edge(v, v.entryInstruction, attr="call")
 
         if isinstance(v, llvm.graph.BasicBlockInfo):
@@ -179,7 +179,7 @@ class LLVMCFGCallCompactVisitor(Visitor):
             self.functions[v.name] = v
 
             # Function root node.
-            self.G.add_node(v, attr="function")
+            self.G.add_node(v, attr=f"func.{v.name}")
             self.G.add_edge(v, v.entryInstruction.basicBlock, attr="call")
 
         if isinstance(v, llvm.graph.BasicBlockInfo):
@@ -225,7 +225,7 @@ class LLVMCFGCallCompactSingleVisitor(Visitor):
             self.functions[v.name] = v
 
             # Function root node.
-            self.G.add_node(v, attr="function")
+            self.G.add_node(v, attr=f"func.{v.name}")
             self.G.add_edge(v, v.entryInstruction.basicBlock, attr="call")
 
         if isinstance(v, llvm.graph.BasicBlockInfo):
@@ -395,7 +395,7 @@ class LLVMCDFGCallVisitor(Visitor):
             self.functions[v.name] = v
 
             # Function root node.
-            self.G.add_node(v, attr="function")
+            self.G.add_node(v, attr=f"func.{v.name}")
             self.G.add_edge(v, v.entryInstruction, attr="call")
 
             # Function arg nodes.
@@ -461,7 +461,7 @@ class LLVMCDFGCallCompactVisitor(Visitor):
             self.functions[v.name] = v
 
             # Function root node.
-            self.G.add_node(v, attr="function")
+            self.G.add_node(v, attr=f"func.{v.name}")
             self.G.add_edge(v, v.entryInstruction.basicBlock, attr="call")
 
             # Function arg nodes.
@@ -525,7 +525,7 @@ class LLVMCDFGCallCompactSingleVisitor(Visitor):
             self.functions[v.name] = v
 
             # Function root node.
-            self.G.add_node(v, attr="function")
+            self.G.add_node(v, attr=f"func.{v.name}")
             self.G.add_edge(v, v.entryInstruction.basicBlock, attr="call")
 
             # Function arg nodes.
@@ -593,7 +593,7 @@ class LLVMCDFGPlusVisitor(Visitor):
             self.functions[v.name] = v
 
             # Function root node.
-            self.G.add_node(v, attr="function")
+            self.G.add_node(v, attr=f"func.{v.name}")
             self.G.add_edge(v, v.entryInstruction, attr="control")
 
             # Function arg nodes.
@@ -668,7 +668,7 @@ class LLVMProGraMLVisitor(Visitor):
             self.functions[v.name] = v
 
             # Function node.
-            self.G.add_node(v, attr="function")
+            self.G.add_node(v, attr=f"func.{v.name}")
             self.G.add_edge(v, v.entryInstruction, attr="call")
 
             # Function arg nodes.
@@ -721,7 +721,7 @@ class LLVMProGraMLVisitor(Visitor):
             for operand in v.operands:
                 if isinstance(operand, llvm.graph.ArgInfo) or isinstance(operand, llvm.graph.ConstantInfo):
                     if isinstance(operand, llvm.graph.ConstantInfo) and operand.value:
-                        self.G.add_node(operand, attr=(operand.value), type=(operand.type), label="const")
+                        self.G.add_node(operand, attr=(operand.type), type=(operand.value), label="const")
                     else:
                         self.G.add_node(operand, attr=(operand.type), label="var")
                     self.G.add_edge(operand, v, attr="data")
