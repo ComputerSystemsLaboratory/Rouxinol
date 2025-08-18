@@ -2,6 +2,8 @@
 
 #include <iostream>
 #include <sstream>
+#include <string>
+#include <cctype>
 
 #include "llvm/IR/Instructions.h"
 
@@ -10,6 +12,16 @@ using namespace ::llvm;
 namespace compy {
 namespace llvm {
 namespace graph {
+
+void trim(std::string& s) {
+    // Remove leading whitespace
+    s.erase(s.begin(), std::find_if(s.begin(), s.end(),
+        [](unsigned char ch) { return !std::isspace(ch); }));
+
+    // Remove trailing whitespace
+    s.erase(std::find_if(s.rbegin(), s.rend(),
+        [](unsigned char ch) { return !std::isspace(ch); }).base(), s.end());
+}
 
 std::string llvmTypeToString(Type *type) {
   std::string typeName;
@@ -284,9 +296,11 @@ ConstantInfoPtr FunctionInfoPass::getInfo(const ::llvm::Constant &con) {
   
   // collect the constant value
   info->value = getConstantExactValue(con); //llvmConstToString(&con); 
-  std::string subString = "; Function Attrs:";
-  if (info->value.compare(0, subString.length(), subString) == 0)
-    info->value = info->type;
+  trim(info->value);
+  //std::string subString = "; Function Attrs:";
+  //if (info->value.compare(0, subString.length(), subString) == 0)
+  //  info->value = info->type;
+
   return info;
 }
 
