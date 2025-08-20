@@ -328,11 +328,11 @@ class Graph(object):
         edges = []
         for node1, node2, data in self.G.edges(data=True):
             edges.append(
-                (
+                [
                     nodes_keys[node1],
                     self.__edge_attr.index(data["attr"]),
                     nodes_keys[node2],
-                )
+                ]
             )
 
         return edges

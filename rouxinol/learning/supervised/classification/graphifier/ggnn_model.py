@@ -184,7 +184,7 @@ class GGNNModel(Model):
         return train_loss, train_accuracy
 
     def _train_with_data(self, data):
-        self._train_with_batch(self, data)
+        self._train_with_batch(data)
 
     def _test_init(self):
         self.model.eval()

@@ -130,11 +130,11 @@ class SyntaxSeqBuilder(common.RepresentationBuilder):
         info.accept(vis)
 
         for token in vis.S:
-            if token not in self._tokens:
-                self._tokens[token] = 0
-            self._tokens[token] += 1
+            if token not in self._attrs:
+                self._attrs[token] = 0
+            self._attrs[token] += 1
 
-        rep = common.Sequence(vis.S, self.get_tokens())
+        rep = common.Sequence(vis.S, self.get_attrs())
         
         # End timing
         end_time = time.perf_counter()
