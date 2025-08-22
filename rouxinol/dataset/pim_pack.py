@@ -19,12 +19,12 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 from rouxinol.dataset import CNM
 
 
-class PIM(CNM):
+class PIMPack(CNM):
     def __init__(
         self,
     ):
         super().__init__()
 
         self.download_http_and_extract(
-            "http://www.csl.uem.br/repository/code4ml/pim-ml.tar.xz"
+            "http://www.csl.uem.br/repository/code4ml/pim-pack.tar.xz"
         )

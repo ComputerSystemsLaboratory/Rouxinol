@@ -111,7 +111,7 @@ def execute_command_line(
         return None, None, None
 
 
-def run_command_unix(command, input_=None, stdin=None, stdout=None, stderr=None, return_output=True, timeout=None):
+def run_command_unix(command, input_=None, stdin=None, stdout=None, stderr=None, return_output=True, timeout=None, cwd=None):
     """
     Executes a system command with runtime statistics, exception handling, and timeout.
 
@@ -154,7 +154,8 @@ def run_command_unix(command, input_=None, stdin=None, stdout=None, stderr=None,
             stderr=stderr if return_output else subprocess.DEVNULL,
             capture_output=return_output,
             text=True,
-            timeout=timeout
+            timeout=timeout,
+            cwd=cwd
         )
 
         # End timing

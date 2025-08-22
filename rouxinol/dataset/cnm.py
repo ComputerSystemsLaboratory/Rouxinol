@@ -20,8 +20,10 @@ import os
 import time
 
 from tqdm import tqdm
+from absl import logging
 
 from rouxinol.dataset import Dataset
+from rouxinol.utility import run_command_unix
 
 
 class CNM(Dataset):
@@ -43,6 +45,8 @@ class CNM(Dataset):
 
         tasklets = kwargs["tasklets"]
         dpus = kwargs["dpus"]
+
+        timeout = kwargs["timeout"] if "timeout" in kwargs else 300
 
         # Representations
         data = []
@@ -74,11 +78,21 @@ class CNM(Dataset):
                             sys.exit(1)
 
                         cos_list = " ".join(cos)                            
-                        command = f"ddir=$PWD ; cd {bench_path} ; make clean ; make NR_TASKLETS={tasklet} NR_DPUS={dpu} PASSES=\"{cos_list}\" ; cd $ddir"
+                        
+                        #command = f"ddir=$PWD ; cd {bench_path} ; make clean ; make NR_TASKLETS={tasklet} NR_DPUS={dpu} PASSES=\"{cos_list}\" ; cd $ddir"
+                        #start_time_comp = time.perf_counter()
+                        #os.system(command)
+                        #end_time_comp = time.perf_counter()
 
-                        start_time_comp = time.perf_counter()
-                        os.system(command)
-                        end_time_comp = time.perf_counter()
+                        command = "make clean"
+                        ret = run_command_unix(command, timeout=timeout, cwd=bench_path)
+                        if ret["returncode"] != 0:
+                            continue
+
+                        command = f"make NR_TASKLETS={tasklet} NR_DPUS={dpu} PASSES=\"{cos_list}\""
+                        make_ret = run_command_unix(command, timeout=timeout, cwd=bench_path)
+                        if make_ret["returncode"] != 0:
+                            continue
 
                         if not os.path.isfile(os.path.join(bench_path, "bin", "dpu_code")):
                             continue
@@ -103,13 +117,16 @@ class CNM(Dataset):
 
                         end_time_repr = time.perf_counter()
 
-                        command = f"ddir=$PWD ; cd {bench_path} ; make clean ; cd $ddir"
-                        os.system(command)
+                        #command = f"ddir=$PWD ; cd {bench_path} ; make clean ; cd $ddir"
+                        #os.system(command)
+                        
+                        command = "make clean"
+                        _ = run_command_unix(command, timeout=timeout, cwd=bench_path)
 
                         if embeddings is None:
                             continue
 
-                        elapsed_compilation[benchmark][cos_idx][int(tasklet)][int(dpu)] = end_time_comp - start_time_comp
+                        elapsed_compilation[benchmark][cos_idx][int(tasklet)][int(dpu)] = make_ret["runtime"]["elapsed_time"] #end_time_comp - start_time_comp
                         elapsed_generate_representation[benchmark][cos_idx][int(tasklet)][int(dpu)] = end_time_repr - start_time_repr
 
                         data.append({
