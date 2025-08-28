@@ -24,7 +24,9 @@ import yaml as yl
 from tqdm import tqdm  
 from absl import app, flags
 
-from rouxinol.utility import get_next_filename, split_dataset, split_train_test_data
+from rouxinol.utility import get_next_filename, split_dataset
+from rouxinol.utility import split_train_test_data, classification_metrics
+
 from rouxinol.transformer import LLVMGraphBuilder
 from rouxinol.transformer import LLVMProGraMLVisitor
 from rouxinol.transformer import LLVMCFGVisitor
@@ -80,14 +82,14 @@ flags.DEFINE_string(
 
 flags.DEFINE_integer(
     'problems', 
-    default=100, 
+    default=32, 
     help='Number of classes',
     short_name='p'
 )
 
 flags.DEFINE_integer(
     'samples', 
-    default=500, 
+    default=100, 
     help='Number of samples per problem',
     short_name='s'
 )
@@ -97,6 +99,13 @@ flags.DEFINE_integer(
     4, 
     'Number of time steps',
     short_name='i'
+)
+
+flags.DEFINE_integer(
+    'emb_dim', 
+    64, 
+    'Embeddings dimension',
+    short_name='m'
 )
 
 flags.DEFINE_integer(
@@ -115,14 +124,14 @@ flags.DEFINE_integer(
 
 flags.DEFINE_integer(
     'epochs', 
-    1000, 
+    500, 
     'Number of epochs',
     short_name='e'
 )
 
 flags.DEFINE_integer(
     'patience', 
-    100, 
+    50, 
     'Patience',
     short_name='P'
 )
@@ -184,6 +193,7 @@ flags.DEFINE_enum(
     short_name='r'
 )
 
+flags.mark_flag_as_required('dataset_name')
 flags.mark_flag_as_required('data_directory')
 flags.mark_flag_as_required('statistics_directory')
 
@@ -231,7 +241,7 @@ def main(argv):
         dataset_items = list(dataset[key].items())  # Convert to list for tqdm compatibility  
         for idx, (problem, samples) in tqdm(enumerate(dataset_items), desc=f"Processing {key} problems", leave=False):  
             for sample in tqdm(samples, desc=f"Processing samples for {problem}", leave=False):  
-                in_filename = os.path.join(FLAGS.output_directory, label_dir, problem, "ir", f"{sample}.ll")  
+                in_filename = os.path.join(FLAGS.data_directory, label_dir, problem, "ir", f"{sample}.ll")  
                 if os.path.isfile(in_filename):
                     info = builder.string_to_info(  
                                         in_filename  
@@ -247,11 +257,11 @@ def main(argv):
 
     # Prepare the data
     data_train, data_test = split_train_test_data(data)
-
+    
     # Training and test            
     config = {
         "num_timesteps": FLAGS.timesteps,
-        "hidden_size_orig": builder.num_tokens(),
+        "emb_dim": FLAGS.emb_dim,
         "gnn_h_size": FLAGS.gnn_h_size,
         "num_edge_types": num_edge_types,
         "learning_rate": FLAGS.learning_rate,
@@ -261,21 +271,32 @@ def main(argv):
         "restore_best_weights": 1 if FLAGS.restore_best_weights else 0,
         "patience": FLAGS.patience,
         "num_classes": FLAGS.problems,
+        "num_types": builder.num_attrs()
     }
     model = GGNNModel(config=config)
 
-    train_summary = model.train(data_train, data_train)
-    f1, acc, recall, precision, y_test, y_pred = model.predict(data_test)
+    train_summary, _ = model.train(data_train, data_train)
+    y_test, y_pred, _ = model.predict(data_test)
 
-    os.makedirs(os.path.join(FLAGS.output_directory, "statistics"), exist_ok=True)
+    # Metrics
+    os.makedirs(FLAGS.statistics_directory, exist_ok=True)
+    
+    metrics = classification_metrics(y_test, y_pred)
+    stats = {
+        "f1": metrics["F1-Score"], 
+        "acc": metrics["Accuracy"], 
+        "recall": metrics["Recall"], 
+        "precision": metrics["Precision"], 
+        "y_test": y_test, 
+        "y_pred": y_pred.tolist(),
+        "train_summary": train_summary
+    }
 
-    stats = {"f1": f1, "acc": acc, "recall": recall, "precision": precision, "y_test": y_test,"y_pred": y_pred, "train_summary": train_summary}
-    dataset_name = os.path.basename(FLAGS.dataset_name)
     stats_filename = get_next_filename(
-                        os.path.join(FLAGS.output_directory, "stats", f"stats_{FLAGS.representation}_{FLAGS.train}_{FLAGS.test}"),
+                        os.path.join(FLAGS.statistics_directory, f"stats_{FLAGS.representation}_{FLAGS.train}_{FLAGS.test}"),
                         "yml"
                 )
-    with open(os.path.join(FLAGS.output_directory, stats_filename), "w") as fout:
+    with open(stats_filename, "w") as fout:
         yl.dump(stats, fout)
 
 

@@ -37,14 +37,22 @@ class Net(nn.Module):
 
         super(Net, self).__init__()
 
-        annotation_size = config["hidden_size_orig"]
-        self.annotation_size = annotation_size
+        # New: use embedding instead of one-hot
+        num_types = config["num_types"]
+        embed_dim = config["embed_dim"]
+        self.embed_dim = embed_dim
+
         hidden_size = config["gnn_h_size"]
         n_steps = config["num_timesteps"]
         n_etypes = config["num_edge_types"]
         num_cls = config["num_classes"]
 
-        self.reduce_layer = nn.Linear(annotation_size, hidden_size)
+        # Embedding maps type IDs -> dense vectors
+        self.type_embedding = nn.Embedding(num_embeddings=num_types, embedding_dim=embed_dim)
+
+        # Reduce embedding to GNN hidden size (or identity if same size)
+        self.reduce_layer = nn.Linear(embed_dim, hidden_size) if embed_dim != hidden_size else nn.Identity()
+
         self.ggnn = GatedGraphConv(
             in_feats=hidden_size,
             out_feats=hidden_size,
@@ -59,14 +67,23 @@ class Net(nn.Module):
         self.loss_fn = nn.CrossEntropyLoss()
 
     def forward(self, graph, labels=None):
+        # Edge types
         etypes = graph.edata.pop("type")
-        annotation = graph.ndata.pop("annotation").float()
-        assert annotation.size()[-1] == self.annotation_size
 
-        annotation = self.reduce_layer(annotation)
+        # New: get node type IDs and embed
+        type_ids = graph.ndata.pop("type_id").long()  # shape [num_nodes]
+        annotation = self.type_embedding(type_ids).float()  # [num_nodes, embed_dim]
 
-        out = self.ggnn(graph, annotation, etypes)
-        out = torch.cat([out, annotation], -1)
+        # Reduce embedding dimension to hidden size (if needed)
+        annotation_reduced = self.reduce_layer(annotation)  # [num_nodes, hidden_size]
+
+        # GGNN propagation starting from reduced annotation
+        out = self.ggnn(graph, annotation_reduced, etypes)
+
+        # Concatenate original reduced annotation for skip-connection / context
+        out = torch.cat([out, annotation_reduced], -1)
+
+        # Graph-level pooling
         out = self.pooling(graph, out)
 
         logits = self.output_layer(out)
@@ -80,11 +97,14 @@ class Net(nn.Module):
 
 class GGNNModel(Model):
     def __init__(self, config=None, num_classes=None, num_types=None):
+        # Updated default config: replace hidden_size_orig with embed_dim + num_types
         if not config:
+            if num_classes is None or num_types is None:
+                raise ValueError("When config is None, both num_classes and num_types must be provided.")
             config = {
                 "num_timesteps": 4,
-                "hidden_size_orig": num_types,
-                "gnn_h_size": 32,
+                "embed_dim": 128,        # New: size of the type embedding vectors
+                "gnn_h_size": 128,       # Can match embed_dim for Identity reduce
                 "num_edge_types": 3,
                 "learning_rate": 0.001,
                 "batch_size": 64,
@@ -93,7 +113,25 @@ class GGNNModel(Model):
                 "restore_best_weights": 1,
                 "patience": 100,
                 "num_classes": num_classes,
+                "num_types": num_types,   # New: vocabulary size for embeddings
             }
+        else:
+            # Backward compatibility: if older configs supply hidden_size_orig and not num_types/embed_dim
+            if "num_types" not in config:
+                if num_types is None:
+                    raise ValueError("num_types must be provided in config or as argument.")
+                config["num_types"] = num_types
+            if "embed_dim" not in config:
+                # If hidden_size_orig existed (old one-hot size), choose a reasonable embed size
+                config["embed_dim"] = min(128, config.get("hidden_size_orig", 128))
+            if "num_classes" not in config:
+                if num_classes is None:
+                    raise ValueError("num_classes must be provided in config or as argument.")
+                config["num_classes"] = num_classes
+            # Prefer gnn_h_size if provided; otherwise fallback to embed_dim
+            if "gnn_h_size" not in config:
+                config["gnn_h_size"] = config["embed_dim"]
+
         super().__init__(config)
 
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -102,13 +140,13 @@ class GGNNModel(Model):
 
         self.model = Net(config)
         self.model = self.model.to(self.device)
-    
+
         self.opt = Adam(self.model.parameters(), lr=config["learning_rate"])
 
     def __process_data(self, data):
         return [
             {
-                "nodes": data["x"].get_node_list(),
+                "nodes": data["x"].get_node_attr_list(),
                 "edges": data["x"].get_edge_list(),
                 "label": data["y"],
             }
@@ -137,11 +175,10 @@ class GGNNModel(Model):
             g.edata["type"] = torch.tensor(edge_types, dtype=torch.long)
 
             # node data
-            one_hot = np.zeros(
-                (len(batch_graph["nodes"]), self.config["hidden_size_orig"])
-            )
-            one_hot[np.arange(len(batch_graph["nodes"])), batch_graph["nodes"]] = 1
-            g.ndata["annotation"] = torch.tensor(one_hot, dtype=torch.float)
+            # CHANGED: store node type IDs instead of one-hot annotations
+            # batch_graph["nodes"] is assumed to be a list of integer type IDs in [0, num_types)
+            type_ids = torch.tensor(batch_graph["nodes"], dtype=torch.long)
+            g.ndata["type_id"] = type_ids
 
             dgl_graphs.append(g)
 
@@ -212,14 +249,16 @@ class GGNNModel(Model):
         _, pred = self._predict_with_batch(data)
 
         data_test_y = [data["label"] for data in data]
-        pred=pred.tolist()
+        pred = pred.tolist()
 
         return data_test_y, pred
 
     def _backup_best_weights(self, epoch):
-        self.best_epoch_weights = {'epoch': epoch,
-                                   'model_state_dict': self.model.state_dict(),
-                                   'optimizer_state_dict': self.opt.state_dict()}
+        self.best_epoch_weights = {
+            'epoch': epoch,
+            'model_state_dict': self.model.state_dict(),
+            'optimizer_state_dict': self.opt.state_dict()
+        }
 
     def _restore_best_weights(self):
         if self.best_epoch_weights:
@@ -236,7 +275,7 @@ class GGNNModel(Model):
     def restore_weights_from_disk(self, path):
         """Saves model weights to given file."""
         start_time = time.perf_counter()
-        self.best_epoch_weights = torch.load(path)
+        self.best_epoch_weights = torch.load(path, map_location=self.device)
         self._restore_best_weights()
         end_time = time.perf_counter()
         return end_time - start_time

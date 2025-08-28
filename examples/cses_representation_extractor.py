@@ -27,7 +27,7 @@ from rouxinol.dataset import CSES
 from rouxinol.environment import LLVMEnvironment
 from rouxinol.utility import create_timestamped_directory, get_next_filename
 
-from rouxinol.transformer import LLVMHistogramBuilder, LLVMVisitor
+from rouxinol.transformer import LLVMHistogramBuilder, LLVMHistogramVisitor
 from rouxinol.transformer import X86HistogramBuilder, X86AllSectionsVisitor
 from rouxinol.transformer import CFGgrindHistogramBuilder, CFGgrindVisitor, CFGgrindHybridVisitor, CFGgrindDynamicVisitor
 from rouxinol.transformer import Inst2VecBuilder, Inst2VecVisitor, Inst2VecPreprocessedVisitor, Inst2VecEmbeddingsVisitor

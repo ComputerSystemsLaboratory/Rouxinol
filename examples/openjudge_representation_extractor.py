@@ -27,13 +27,14 @@ from rouxinol.dataset import OpenJudge
 from rouxinol.environment import LLVMEnvironment
 from rouxinol.utility import create_timestamped_directory, get_next_filename
 
-from rouxinol.transformer import LLVMHistogramBuilder, LLVMVisitor
+from rouxinol.transformer import LLVMHistogramBuilder, LLVMHistogramVisitor
 from rouxinol.transformer import X86HistogramBuilder, X86AllSectionsVisitor
 from rouxinol.transformer import CFGgrindHistogramBuilder, CFGgrindVisitor, CFGgrindHybridVisitor, CFGgrindDynamicVisitor
 from rouxinol.transformer import Inst2VecBuilder, Inst2VecVisitor, Inst2VecPreprocessedVisitor, Inst2VecEmbeddingsVisitor
 from rouxinol.transformer import IR2VecBuilder, IR2VecFlowAwareRepresentationVisitor
 from rouxinol.transformer import LLVMGraphBuilder, LLVMProGraMLVisitor
 from rouxinol.transformer import PerformanceCounterHistogramBuilder, PerformanceCounterVisitor
+
 
 flags.DEFINE_string(
     'compiler_dir', 

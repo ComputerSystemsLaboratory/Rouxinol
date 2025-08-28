@@ -71,6 +71,9 @@ class CNM(Dataset):
                     for dpu in tqdm(dpus, desc=f"Processing DPUs", leave=False):                     
                         src_type = builder.get_src_type()
 
+                        if tasklet < dpu:
+                            continue
+
                         # Compile
                         bench_path=os.path.join(self.get_content_dir(), benchmark)
                         if not os.path.isdir(bench_path):
