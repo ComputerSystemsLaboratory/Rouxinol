@@ -137,6 +137,7 @@ class OpenCLDevmap(Dataset):
             bench_dir = os.path.join(basedir, row["suite_name"], subdir, benchmark_name)
             if row["suite_name"] == "parboil-0.2":
                 bench_dir = os.path.join(bench_dir, "src", "opencl_base")
+
             assert os.path.isdir(bench_dir)
 
             # 2. Search.
@@ -190,10 +191,13 @@ class OpenCLDevmap(Dataset):
                 benchmark_name,
             ) = file_data
 
-            extractionInfo = builder.string_to_info(
-                 bench_file, header=opencl_header, additional_include_dir=additional_include_dir
-            )
-
+            try:
+                extractionInfo = builder.string_to_info(
+                     bench_file, header=opencl_header, additional_include_dir=additional_include_dir
+                )
+            except:
+                continue
+                
             for functionInfo in extractionInfo.functionInfos:
                 processed[
                     (suite_name, benchmark_name, functionInfo.name)
