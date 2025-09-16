@@ -74,29 +74,6 @@ class OpenCLDevmap(Dataset):
             "shoc-1.1.5": {"subdir": "src/opencl/level1"},
         }
 
-
-        suite_specifics = {
-            "polybench-gpu-1.0": {
-                "subdir": "OpenCL",
-                "remappings": {
-                    "2DConvolution": "2DCONV",
-                    "2mm": "2MM",
-                    "3DConvolution": "3DCONV",
-                    "3mm": "3MM",
-                    "atax": "ATAX",
-                    "bicg": "BICG",
-                    "correlation": "CORR",
-                    "covariance": "COVAR",
-                    "gemm": "GEMM",
-                    "gesummv": "GESUMMV",
-                    "gramschmidt": "GRAMSCHM",
-                    "mvt": "MVT",
-                    "syr2k": "SYR2K",
-                    "syrk": "SYRK",
-                },
-            },
-        }
-
         if benchmark_suites is None:
             benchmark_suites = suite_specifics.keys()
 
