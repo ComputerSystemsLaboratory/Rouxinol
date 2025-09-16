@@ -282,7 +282,7 @@ from optuna.integration import PyTorchLightningPruningCallback
 from tqdm import tqdm
 from copy import deepcopy  
 from dataclasses import dataclass
-from typing import List, Dict, Any, Iterable, Optional, Tuple
+from typing import List, Dict, Any, Iterable, Optional, Tuple, Union
 
 from scipy import sparse
 from scipy.sparse.linalg import eigsh

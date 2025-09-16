@@ -46,3 +46,4 @@ dependencies:
     - wget
     - seaborn
     - shap
+    - optuna

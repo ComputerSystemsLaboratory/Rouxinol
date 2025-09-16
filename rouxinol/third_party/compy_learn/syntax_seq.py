@@ -70,8 +70,10 @@ class SyntaxSeqBuilder(common.RepresentationBuilder):
         return self.__src_type
 
     def string_to_info(self, src, *args, **kwargs):
+        
         additional_include_dir =  kwargs["additional_include_dir"] if "additional_include_dir" in kwargs else None
         filename = kwargs["filename"] if "filename" in kwargs else None      
+        header = kwargs["header"] if "header" in kwargs else None 
 
         # Start timing
         runtime = {
@@ -90,6 +92,9 @@ class SyntaxSeqBuilder(common.RepresentationBuilder):
 
         with open(src, "rb") as fin:
             src_bytes = fin.read()
+
+        if header:
+            src_bytes = header + src_bytes
 
         with clang_driver_scoped_options(self.__clang_driver, additional_include_dir=additional_include_dir, filename=filename):
             info = self.__extractor.SeqFromString(src_bytes)

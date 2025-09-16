@@ -7,3 +7,4 @@ from .pim_ml import PIMML
 from .pim_pack import PIMPack 
 from .cinnamon import CINNAMON
 from .bench_test import BenchTest
+from .devmap import OpenCLDevmap
