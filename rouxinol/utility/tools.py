@@ -297,74 +297,116 @@ def create_string(a, b):
 # ---------------------------------------------
 # Helper function: Statistics
 # --------------------------------------------- 
+def _to_numpy(arr):
+    """Convert input to a NumPy array, handling PyTorch tensors if present."""
+    # Try Torch conversion if available
+    try:
+        import torch
+        if isinstance(arr, torch.Tensor):
+            return arr.detach().cpu().numpy()
+    except Exception:
+        pass
+    # If it has a .numpy() method (e.g., NumPy array), use it
+    if hasattr(arr, "numpy"):
+        try:
+            return arr.numpy()
+        except Exception:
+            pass
+    # Fallback
+    return np.asarray(arr)
+
+
 def regression_metrics(
-    y_test, 
-    predictions
-):  
-    """  
-    Calculate and return error metrics for model predictions.  
+    y_test,
+    predictions,
+    mape_epsilon: float = 1e-8,
+    smape_epsilon: float = 1e-8,
+) -> dict:
+    """
+    Calculate and return error metrics for model predictions.
 
-    Parameters:  
-        y_test (torch.Tensor or numpy.ndarray): Ground truth labels.  
-        predictions (torch.Tensor or numpy.ndarray): Model predictions.  
+    Parameters:
+        y_test (torch.Tensor or numpy.ndarray): Ground truth labels.
+        predictions (torch.Tensor or numpy.ndarray): Model predictions.
+        mape_epsilon (float): Small value to stabilize MAPE denominator: max(|y|, epsilon).
+        smape_epsilon (float): Small value to stabilize SMAPE denominator.
 
-    Returns:  
-        dict: A dictionary containing the following metrics:  
-            - RMSE (Root Mean Squared Error)  
-            - MAE (Mean Absolute Error)  
-            - R² (R-squared Score)  
-            - MAPE (Mean Absolute Percentage Error)  
-    """  
-    # Convert y_test to numpy array if it's a PyTorch tensor  
-    if hasattr(y_test, 'numpy'):  # Check if y_test is a PyTorch tensor  
-        y_test_np = y_test.numpy()  
-    else:  
-        y_test_np = y_test  # Assume y_test is already a numpy array  
+    Returns:
+        dict: A dictionary containing the following metrics:
+            - RMSE (Root Mean Squared Error)
+            - MAE (Mean Absolute Error)
+            - R2 (R-squared Score)
+            - MAPE (Mean Absolute Percentage Error; legacy definition with zero handling)
+            - MAPE_epsilon (MAPE with stabilized denominator: max(|y|, epsilon))
+            - MdAPE (Median Absolute Percentage Error; uses same stabilized denominator)
+            - SMAPE (Symmetric Mean Absolute Percentage Error; epsilon-stabilized)
+            - RMSLE (Root Mean Squared Logarithmic Error; uses log1p with non-negative clipping)
+            - Shapiro (Shapiro–Wilk p-value of residuals)
+    """
+    # Convert to numpy
+    y_test_np = _to_numpy(y_test).astype(float).reshape(-1)
+    predictions_np = _to_numpy(predictions).astype(float).reshape(-1)
 
-    # Convert predictions to numpy array if it's a PyTorch tensor  
-    if hasattr(predictions, 'numpy'):  # Check if predictions is a PyTorch tensor  
-        predictions_np = predictions.numpy()  
-    else:  
-        predictions_np = predictions  # Assume predictions is already a numpy array  
+    # Remove NaN/Inf pairs for stable metric computation
+    mask = np.isfinite(y_test_np) & np.isfinite(predictions_np)
+    if not np.all(mask):
+        y_test_np = y_test_np[mask]
+        predictions_np = predictions_np[mask]
 
-    # Calculate Root Mean Squared Error (RMSE)  
-    # RMSE measures the average magnitude of the errors between predictions and actual values.  
-    rmse = np.sqrt(mean_squared_error(y_test_np, predictions_np))  
+    # Basic residuals
+    residuals = y_test_np - predictions_np
+    abs_errors = np.abs(residuals)
 
-    # Calculate Mean Absolute Error (MAE)  
-    # MAE measures the average absolute difference between predictions and actual values.  
-    mae = mean_absolute_error(y_test_np, predictions_np)  
+    # RMSE
+    rmse = float(np.sqrt(mean_squared_error(y_test_np, predictions_np)))
 
-    # Calculate R-squared (R²) Score  
-    # R² measures the proportion of variance in the dependent variable that is predictable from the independent variables.  
-    r2 = r2_score(y_test_np, predictions_np)  
+    # MAE
+    mae = float(mean_absolute_error(y_test_np, predictions_np))
 
-    # Calculate Mean Absolute Percentage Error (MAPE)  
-    # MAPE measures the average percentage difference between predictions and actual values.  
-    # Handle division by zero by replacing zeros in y_test_np with a small value (e.g., 1e-10).  
-    y_test_np_safe = np.where(y_test_np == 0, 1e-10, y_test_np)  # Avoid division by zero  
-    mape = np.mean(np.abs((y_test_np_safe - predictions_np) / y_test_np_safe)) * 100  
+    # R2
+    r2 = float(r2_score(y_test_np, predictions_np))
 
-    # Cálculo do SMAPE  
-    numerator = np.abs(y_test_np - predictions_np)  
-    denominator = (np.abs(y_test_np) + np.abs(predictions_np)) / 2  
-    smape = 100 * np.mean(numerator / denominator)  
+    # Original MAPE (legacy) with zero-handling (kept for continuity)
+    y_safe_legacy = np.where(y_test_np == 0, 1e-10, y_test_np)
+    mape = float(np.mean(np.abs((y_test_np - predictions_np) / y_safe_legacy)) * 100.0)
 
-    # Shapiro
-    shapiro_value = shapiro(y_test_np - predictions_np)[1]
+    # MAPE with epsilon (recommended)
+    denom_mape = np.maximum(np.abs(y_test_np), mape_epsilon)
+    mape_e = float(np.mean(abs_errors / denom_mape) * 100.0)
 
-    # Store metrics in a dictionary for easy access and readability  
-    metrics = {  
-        "RMSE": float(rmse),  # Root Mean Squared Error  
-        "MAE": float(mae),    # Mean Absolute Error  
-        "R2": float(r2),      # R-squared Score  
-        "MAPE": float(mape),   # Mean Absolute Percentage Error 
-        "SMAPE": float(smape), # Symmetric Mean Absolute Percentage Error
-        "Shapiro": float(shapiro_value)  # Shapiro-Wilk p-value (Residual Normality p-value)
-    }  
+    # MdAPE (Median Absolute Percentage Error) with epsilon
+    mdape = float(np.median(abs_errors / denom_mape) * 100.0)
 
-    return metrics  
+    # SMAPE (epsilon-stabilized)
+    smape_denom = (np.abs(y_test_np) + np.abs(predictions_np)) / 2.0
+    smape_denom = np.maximum(smape_denom, smape_epsilon)  # avoid 0/0
+    smape = float(100.0 * np.mean(abs_errors / smape_denom))
 
+    # RMSLE (Root Mean Squared Log Error)
+    # - Clip to non-negative to satisfy log1p domain
+    y_clip = np.clip(y_test_np, a_min=0.0, a_max=None)
+    p_clip = np.clip(predictions_np, a_min=0.0, a_max=None)
+    rmsle = float(np.sqrt(np.mean((np.log1p(y_clip) - np.log1p(p_clip)) ** 2)))
+
+    # Shapiro–Wilk p-value on residuals (if too large sample sizes, scipy may warn)
+    try:
+        shapiro_value = float(shapiro(residuals)[1])
+    except Exception:
+        # In case of failures (e.g., very large n), fall back to NaN
+        shapiro_value = float("nan")
+
+    metrics = {
+        "RMSE": rmse,
+        "MAE": mae,
+        "R2": r2,
+        "MAPE": mape,
+        "MAPE_epsilon": mape_e,  # Recommended MAPE with epsilon
+        "MdAPE": mdape,
+        "SMAPE": smape,
+        "RMSLE": rmsle,
+        "Shapiro": shapiro_value,
+    }
+    return metrics
 
 def classification_metrics(
     y_test,

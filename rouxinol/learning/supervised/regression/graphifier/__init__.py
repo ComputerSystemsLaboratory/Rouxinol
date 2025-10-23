@@ -16,4 +16,4 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 """
 
-from .gnn_model import AdvancedGNNModel
+from .ggnn_model import GGNNModel

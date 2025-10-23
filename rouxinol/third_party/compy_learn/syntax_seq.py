@@ -1,4 +1,6 @@
 import os
+import time
+import resource
 
 from rouxinol.third_party.compy_learn.extractors import clang_driver_scoped_options
 from rouxinol.third_party.compy_learn.extractors.extractors import Visitor
