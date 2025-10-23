@@ -23,4 +23,3 @@ from .support_vector_machine_model import SupportVectorMachineModel
 from .multi_layer_perceptron_model import MultiLayerPerceptronModel
 from .xgboost_model import XGBoostModel
 from .l2p_model import L2PModel
-from .l2p_enhanced_model import L2PEnhancedModel
