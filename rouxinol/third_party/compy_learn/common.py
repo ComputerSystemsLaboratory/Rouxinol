@@ -266,6 +266,9 @@ class Graph(object):
     def _get_node_attr_dict(self):
         return collections.OrderedDict(self.G.nodes(data="attr", default="N/A"))
 
+    def get_num_nodes(self):
+        return len(self.G.nodes())
+
     def get_node_attr(self):
         return self.__node_attr
 
@@ -322,6 +325,9 @@ class Graph(object):
     def get_edge_attr(self):
         return self.__edge_attr
 
+    def get_num_edges(self):
+        return len(self.G.edges())
+
     def get_edge_list(self):
         nodes_keys = {n: i for i, n in enumerate(self._get_node_attr_dict().keys())}
 
@@ -331,6 +337,21 @@ class Graph(object):
                 [
                     nodes_keys[node1],
                     self.__edge_attr.index(data["attr"]),
+                    nodes_keys[node2],
+                ]
+            )
+
+        return edges
+
+    def get_edge_str_list(self):
+        nodes_keys = {n: i for i, n in enumerate(self._get_node_attr_dict().keys())}
+
+        edges = []
+        for node1, node2, data in self.G.edges(data=True):
+            edges.append(
+                [
+                    nodes_keys[node1],
+                    data["attr"],
                     nodes_keys[node2],
                 ]
             )

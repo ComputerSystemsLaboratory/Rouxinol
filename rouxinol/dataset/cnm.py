@@ -17,6 +17,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 """
 
 import os
+import sys
 import time
 
 from tqdm import tqdm
@@ -41,12 +42,17 @@ class CNM(Dataset):
         visitor = kwargs["visitor"]
 
         benchmarks = kwargs["benchmarks"]
-        passes = kwargs["passes"]
+        passesD = kwargs["passesD"]
+        passesH = kwargs["passesH"]
 
         tasklets = kwargs["tasklets"]
         dpus = kwargs["dpus"]
 
         timeout = kwargs["timeout"] if "timeout" in kwargs else 300
+
+        if len(passesD) != len(passesH):
+            logging.error("Passes files have different length!")
+            sys.exit(1)
 
         # Representations
         data = []
@@ -60,7 +66,7 @@ class CNM(Dataset):
             elapsed_compilation[benchmark] = {}
             elapsed_generate_representation[benchmark] = {}
 
-            for cos_idx, cos in tqdm(passes.items(), desc=f"Processing compiler optimization sequences", leave=False): 
+            for cos_idx, _ in tqdm(passesD.items(), desc=f"Processing compiler optimization sequences", leave=False): 
                 elapsed_compilation[benchmark][cos_idx] = {}
                 elapsed_generate_representation[benchmark][cos_idx] = {}
 
@@ -71,17 +77,15 @@ class CNM(Dataset):
                     for dpu in tqdm(dpus, desc=f"Processing DPUs", leave=False):                     
                         src_type = builder.get_src_type()
 
-                        if tasklet < dpu:
-                            continue
-
                         # Compile
                         bench_path=os.path.join(self.get_content_dir(), benchmark)
                         if not os.path.isdir(bench_path):
                             logging.error(f"Benchmark does not exist ({bench_path}).")
                             sys.exit(1)
 
-                        cos_list = " ".join(cos)                            
-                        
+                        cos_list_d = " ".join(passesD[cos_idx])                            
+                        cos_list_h = " ".join(passesH[cos_idx])  
+
                         #command = f"ddir=$PWD ; cd {bench_path} ; make clean ; make NR_TASKLETS={tasklet} NR_DPUS={dpu} PASSES=\"{cos_list}\" ; cd $ddir"
                         #start_time_comp = time.perf_counter()
                         #os.system(command)
@@ -92,7 +96,7 @@ class CNM(Dataset):
                         if ret["returncode"] != 0:
                             continue
 
-                        command = f"make NR_TASKLETS={tasklet} NR_DPUS={dpu} PASSES=\"{cos_list}\""
+                        command = f"make NR_TASKLETS={tasklet} NR_DPUS={dpu} PASSESD=\"{cos_list_d}\" PASSESH=\"{cos_list_h}\""
                         make_ret = run_command_unix(command, timeout=timeout, cwd=bench_path)
                         if make_ret["returncode"] != 0:
                             continue
@@ -105,15 +109,31 @@ class CNM(Dataset):
                             "IR": os.path.join(bench_path, "bin", "dpu_code_opt.ll"),
                             "EXEC": os.path.join(bench_path, "bin", "dpu_code")
                         }
-                        in_filename = src_types[src_type]
+                        in_filename_d = src_types[src_type]
+
+                        src_types = {
+                            "SRC" : os.path.join(bench_path, "bin", "host_code_p.c"),
+                            "IR": os.path.join(bench_path, "bin", "host_code_opt.ll"),
+                            "EXEC": os.path.join(bench_path, "bin", "host_code")
+                        }
+                        in_filename_h = src_types[src_type]
 
                         start_time_repr = time.perf_counter()
                         
                         info = builder.string_to_info(
-                                            in_filename
+                                            in_filename_d
                                 )
                         
-                        embeddings = builder.info_to_representation(
+                        embeddings_d = builder.info_to_representation(
+                                                info,
+                                                visitor=visitor
+                                    )
+
+                        info = builder.string_to_info(
+                                            in_filename_h
+                                )
+                        
+                        embeddings_h = builder.info_to_representation(
                                                 info,
                                                 visitor=visitor
                                     )
@@ -126,15 +146,16 @@ class CNM(Dataset):
                         command = "make clean"
                         _ = run_command_unix(command, timeout=timeout, cwd=bench_path)
 
-                        if embeddings is None:
+                        if embeddings_d is None or embeddings_h is None:
                             continue
 
                         elapsed_compilation[benchmark][cos_idx][int(tasklet)][int(dpu)] = make_ret["runtime"]["elapsed_time"] #end_time_comp - start_time_comp
                         elapsed_generate_representation[benchmark][cos_idx][int(tasklet)][int(dpu)] = end_time_repr - start_time_repr
 
                         data.append({
-                            "x": embeddings,
-                            "info": {"benchmark": benchmark, "cos": cos_idx, "tasklets": tasklet, "dpus": dpu}}
+                            "x_d": embeddings_d,
+                            "x_h": embeddings_h,                            
+                            "info": {"benchmark": benchmark, "cos_h": cos_idx, "cos_d": cos_idx, "tasklets": tasklet, "dpus": dpu}}
                         )
 
         return data, elapsed_compilation, elapsed_generate_representation

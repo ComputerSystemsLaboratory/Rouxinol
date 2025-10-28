@@ -5,7 +5,7 @@ project(gnns4code_native)
 
 set(CMAKE_CXX_STANDARD 14)
 
-find_package(LLVM 12.0.0)
+find_package(LLVM 10.0.0)
 
 # prefer Clang matching LLVM
 find_package(Clang HINTS "${LLVM_CMAKE_DIR}/../clang")

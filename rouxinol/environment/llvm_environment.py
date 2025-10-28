@@ -194,11 +194,11 @@ class LLVMEnvironment(Environment):
             sys.exit(1)
 
         """The out filename."""
-        _, file_type, out_filename = output_filename(
-                                        ir_filename,
-                                        exec_directory,
-                                        ""
-                                    )
+        _, _, out_filename = output_filename(
+                                ir_filename,
+                                exec_directory,
+                                ""
+                            )
 
         if not force and os.path.isfile(out_filename):
             return out_filename, none_output()
@@ -210,8 +210,8 @@ class LLVMEnvironment(Environment):
 
         compiler = os.path.join(
                         self.config["absolute_path"],
-                        self.config["compiler"][file_type]
-                    ) if self.config["absolute_path"] else self.config["compiler"][file_type]
+                        self.config["compiler"][src_type]
+                    ) if self.config["absolute_path"] else self.config["compiler"][src_type]
         command = f"{compiler} {flags} {ir_filename} -o {out_filename} {linker_flags} -lm"
 
         """Compile to exe."""
@@ -269,7 +269,7 @@ class LLVMEnvironment(Environment):
                         self.config["absolute_path"],
                         self.config["optimizer"]
                     ) if self.config["absolute_path"] else self.config["optimizer"]        
-        command = f"{optimizer} {flags} {ir_filename} -o {out_filename}"
+        command = f"{optimizer} -S {flags} {ir_filename} -o {out_filename}"
 
         """Optimize."""
         if ir_directory:
