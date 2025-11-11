@@ -74,7 +74,7 @@ flags.mark_flag_as_required("counters")
 
 
 def main(argv):
-    os.makedirs(FLAGS.output_dir, exist_ok=True)
+    os.makedirs(FLAGS.output_directory, exist_ok=True)
 
     counters_to_process = list(map(int, FLAGS.counters))
     # match files like matches_*.yml
@@ -133,7 +133,7 @@ def main(argv):
 
     plt.tight_layout()
 
-    output_path = os.path.join(FLAGS.output_dir, f'{FLAGS.plot_name}.{FLAGS.plot_type}')
+    output_path = os.path.join(FLAGS.output_directory, f'{FLAGS.plot_name}.{FLAGS.plot_type}')
     plt.savefig(output_path)
     print(f"Plot saved to {output_path}")
 

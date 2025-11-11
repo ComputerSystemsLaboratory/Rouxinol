@@ -235,7 +235,7 @@ def main(argv):
 
     # Builder and Visitor
     b_and_v = {
-        "llvmHistogram": (LLVMHistogramBuilder, LLVMVisitor),
+        "llvmHistogram": (LLVMHistogramBuilder, LLVMHistogramVisitor),
         "x86Histogram": (X86HistogramBuilder, X86AllSectionsVisitor),
         "cfggrindHistogram": (CFGgrindHistogramBuilder, CFGgrindVisitor),
         "cfggrindHybridHistogram": (CFGgrindHistogramBuilder, CFGgrindHybridVisitor),

@@ -13,7 +13,8 @@ workers=1
 samples=500
 entry=1
 events="branch-load-misses,L1-icache-load-misses,iTLB-loads,branch-loads,branch-instructions,branch-misses,faults,dTLB-stores,cycles,dTLB-loads,instructions,dTLB-load-misses,cache-references,LLC-stores,LLC-store-misses,L1-dcache-stores,iTLB-load-misses,LLC-loads,L1-dcache-loads,L1-dcache-load-misses,dTLB-store-misses,LLC-load-misses,cache-misses"
-is_cc2025_artifact=true
+representations=""
+flags="O0,O1,O2"
 do_not_extract_representation=false
 add_command=""
 
@@ -39,28 +40,34 @@ add_command=""
 
 # Function to display usage  
 usage() {  
-    echo "CC 2025 Artifact"
+    echo "Rouxinol Artifact"
     echo "Copyright (C) 2025 Anderson Faustino da Silva"
     echo ""     
-    echo "Usage: $0 --out-dir <directory> --rouxinol <directory> --conda <directory> [--app-dir <directory>]"
-    echo "                           [--dataset <string>] [--problems <integer>] [--workers <integer>] [--samples <integer>]"
-    echo "                           [--entry <integer>] [--events <list,>] [--no-repr] [--force] [--no-cc2025]"  
+    echo "Usage: $0 --out-dir <directory> --rouxinol <directory> --conda <directory> "
+    echo "                                --representations <R1,R2,...> --flags <F1,F2,...>"
+    echo "                                [--dataset <string>] [--problems <integer>] [--workers <integer>]"
+    echo "                                [--samples <integer>][--entry <integer>] [--events <list,>] "
+    echo "                                [--app-dir <directory>] [--no-repr] [--force]"  
     echo ""  
     echo "Commands:"
     echo "  -a, --app-dir           Path to the ROUXINOL_APP_DIR."  
     echo "  -c, --conda             Path to the Conda directory."
     echo "  -d, --dataset           Dataset name. (Default=openjudge)"
     echo "  -e, --entry             Number of CSES workload (Default=1)."
-    echo "  -E, --events            List of perf events (Default=[branch-load-misses,L1-icache-load-misses,iTLB-loads,branch-loads,branch-instructions,"
-    echo "                                                    branch-misses,faults,dTLB-stores,cycles,dTLB-loads,instructions,dTLB-load-misses,cache-references,"
-    echo "                                                    LLC-stores,LLC-store-misses,L1-dcache-stores,iTLB-load-misses,LLC-loads,L1-dcache-loads,"
-    echo "                                                    L1-dcache-load-misses,dTLB-store-misses,LLC-load-misses,cache-misses])."
+    echo "  -E, --events            Coma-separared list of events (Default=[branch-load-misses,L1-icache-load-misses,iTLB-loads,"
+    echo "                                                                  branch-loads,branch-instructions,branch-misses,"
+    echo "                                                                  faults,dTLB-stores,cycles,dTLB-loads,instructions,"
+    echo "                                                                  dTLB-load-misses,cache-references,LLC-stores,"
+    echo "                                                                  LLC-store-misses,L1-dcache-stores,iTLB-load-misses,"
+    echo "                                                                  LLC-loads,L1-dcache-loads,L1-dcache-load-misses,"
+    echo "                                                                  dTLB-store-misses,LLC-load-misses,cache-misses])."
     echo "  -f, --force             Always compile."
-    echo "  -n, --no-cc2025         It is not the CC2025 artifact."
-    echo "  -N, --no-repr           Do not extract representation (Default=false)."
+    echo "  -F, --flags             Coma-separared list of flags (e.g., O0,O1,O2,...)"
+    echo "  -n, --no-repr           Do not extract representation (Default=false)."
     echo "  -o, --out-dir           Path to the output directory."
     echo "  -p, --problems          Number of problems (Default=100)."  
     echo "  -r, --rouxinol          Path to the Rouxinol directory."
+    echo "  -R, --representations   Coma-separared list of representations (e.g., llvmHistogram,ir2vec,...)"
     echo "  -s, --samples           Number of samples (Default=500)."  
     echo "  -w, --workers           Number of workers (Default=1)."  
     echo "  -h, --hep               Help"
@@ -73,7 +80,7 @@ if [ $# -eq 0 ]; then
 fi
 
 # Parse command-line options using getopt  
-OPTIONS=$(getopt -o o:r:c:a:d:p:w:s:e:E:Nfnh --long out-dir:,rouxinol:,conda:,app-dir:,dataset:,problems:,workers:,samples:,entry:,events:,no-repr,force,no-cc2025,help -- "$@")  
+OPTIONS=$(getopt -o o:r:R:c:a:d:p:w:s:e:E:F:nfh --long out-dir:,rouxinol:,representations:,conda:,app-dir:,dataset:,problems:,workers:,samples:,entry:,events:,flags:,no-repr,force,help -- "$@")  
 if [ $? -ne 0 ]; then  
     usage  
 fi  
@@ -90,13 +97,17 @@ while true; do
         -r|--rouxinol)  
             rouxinol_directory="$2"  
             shift 2  
-            ;;              
+            ;;   
+        -R|--representations)  
+            representations="$2"  
+            shift 2  
+            ;;                          
         -c|--conda)  
             conda_directory="$2"  
             shift 2  
             ;;  
         -a|--app-dir)  
-            rouxinol_app_directory="$2"  
+            rouxinol_app_directory="$2"
             shift 2  
             ;; 
         -d|--dataset)  
@@ -141,9 +152,13 @@ while true; do
             ;;
         -E|--events)  
             events="$2"
-            shift
+            shift 2
             ;;
-        -N|--no-repr)  
+        -F|--flags)  
+            flags="$2"
+            shift 2
+            ;;            
+        -n|--no-repr)  
             do_not_extract_representation=true
             add_command="$add_command --no_repr "
             shift
@@ -151,11 +166,7 @@ while true; do
         -f|--force)
             add_command+="$add_command --force=True "
             shift
-            ;; 
-        -n|--no-cc2025)  
-            is_cc2025_artifact=false
-            shift
-            ;;                                       
+            ;;                                      
         -h|--help)  
             usage  
             ;;               
@@ -168,6 +179,7 @@ while true; do
             ;;  
     esac  
 done   
+
 
 # Check if dataset is set and if it is in the valid_datasets array
 valid_datasets=("cses" "openjudge")  
@@ -222,32 +234,48 @@ for (( d=0; d<${#dirs[@]}; d++ )); do
     fi  
 done 
 
+# Validate representations
+IFS=',' read -r -a representation_array <<< "${representations}"
+valid_representations=("programl" "llvmHistogram" "x86Histogram" "cfggrindHybridHistogram" "cfggrindDynamicHistogram"  "performanceCounterHistogram" "ir2vec" "inst2vecEmbeddings" "inst2vecPreprocessed")
+
+for repr in "${representation_array[@]}"; do
+    if [[ ! " ${valid_representations[@]} " =~ " ${repr} " ]]; then
+        echo "Error: Invalid benchmark ${repr}. Allowed values are: ${valid_representations[*]}"
+        exit 1
+    fi
+done
+
+# Validate flags
+IFS=',' read -r -a flag_array <<< "${flags}"
+valid_flags=("O0" "O1" "O2" "O3" "fla" "sub" "bcf" "ollvm")
+
+for flag in "${flag_array[@]}"; do
+    if [[ ! " ${valid_flags[@]} " =~ " ${flag} " ]]; then
+        echo "Error: Invalid benchmark ${flag}. Allowed values are: ${valid_flags[*]}"
+        exit 1
+    fi
+done
+
 export VALGRIND_LIB=${conda_directory}/envs/rouxinol/libexec/valgrind
 export PYTHONPATH=${rouxinol_directory}
 
-if [ -n "${rouxinol_app_directory}" ] && [ -d "${rouxinol_app_directory}" ]; then
-        export ROUXINOL_APP_DIR=${rouxinol_app_directory}
-fi
-
-if [ "${do_not_extract_representation}" = false ]; then
-    if [ "${is_cc2025_artifact}" = true ]; then
-        representations=("llvmHistogram" "x86Histogram" "cfggrindHybridHistogram" "cfggrindDynamicHistogram" "ir2vec" "inst2vecEmbeddings")
-    else 
-        representations=("llvmHistogram" "x86Histogram" "cfggrindHybridHistogram" "cfggrindDynamicHistogram" "performanceCounterHistogram" "ir2vec" "inst2vecEmbeddings" "inst2vecPreprocessed")
+if [ -n "${rouxinol_app_directory}" ]; then
+    if [ ! -d "${rouxinol_app_directory}" ]; then
+        mkdir -p "${rouxinol_app_directory}" || {
+            echo "Failed to create directory: ${rouxinol_app_directory}" >&2
+            exit 1
+        }
     fi
-else
-    representations=("llvmHistogram")
+    export ROUXINOL_APP_DIR="${rouxinol_app_directory}"
 fi
 
-flags=("O0" "O1" "O2" "O3" "fla" "sub" "bcf" "ollvm")
-
-for (( r=0; r<${#representations[@]}; r++ )); do 
-    representation=${representations[r]}
+for (( r=0; r<${#representation_array[@]}; r++ )); do 
+    representation=${representation_array[r]}
     
     echo -e "\nProcessing ${representation} ..."
 
-    for (( f=0; f<${#flags[@]}; f++ )); do  
-        flag=${flags[f]}
+    for (( f=0; f<${#flag_array[@]}; f++ )); do  
+        flag=${flag_array[f]}
 
         echo -e "\t${flag} ..."
 
@@ -296,7 +324,7 @@ for (( r=0; r<${#representations[@]}; r++ )); do
                 python ${rouxinol_directory}/examples/cses_representation_extractor.py \
                     --compiler_dir=${conda_directory}/envs/rouxinol/bin \
                     --cxx_flags="${cxx_flags}" \
-                    --representation=${representations[r]} \
+                    --representation=${representation} \
                     --output_directory="${output_directory}/${flag}" \
                     --problems=${problems} \
                     --samples=${samples} \
@@ -310,7 +338,7 @@ for (( r=0; r<${#representations[@]}; r++ )); do
                     --compiler_dir=${conda_directory}/envs/rouxinol/bin \
                     --c_flags="${c_flags}" \
                     --cxx_flags="${cxx_flags}" \
-                    --representation=${representations[r]} \
+                    --representation=${representation} \
                     --output_directory="${output_directory}/${flag}" \
                     --problems=${problems} \
                     --samples=${samples} \

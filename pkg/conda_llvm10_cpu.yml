@@ -1,0 +1,50 @@
+name: rouxinol
+channels:
+  - pytorch
+  - defaults
+  - anaconda
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - python=3.10
+  - gawk
+  - libstdcxx-ng
+  - graphviz
+  - capstone
+  - automake
+  - cmake
+  - pytorch-cpu
+  - tensorflow
+  - dgl=2.3.0=py310h039f8d5_0
+  - clang=10.0.0
+  - clang-tools=10.0.0
+  - clangdev=10.0.0
+  - clangxx=10.0.0
+  - libclang=10.0.0
+  - libclang-cpp=10.0.0
+  - libllvm10=10.0.0
+  - llvm=10.0.0
+  - llvm-tools=10.0.0
+  - llvmdev=10.0.0
+  - pip
+  - pip:
+    - absl-py
+    - appdirs
+    - gitpython
+    - networkx
+    - pandas
+    - pytest
+    - pygraphviz
+    - ir2vec==2.1.0
+    - lief=0.13.2
+    - pyaml
+    - typing-extensions
+    - scikit-learn
+    - sympy
+    - xgboost-cpu
+    - wget
+    - seaborn
+    - shap
+    - optuna
+

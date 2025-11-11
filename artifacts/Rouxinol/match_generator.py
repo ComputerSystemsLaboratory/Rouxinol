@@ -215,15 +215,15 @@ def distance(set1, set2, data_dir, metric, representation, hops):
 
 def main(argv):
 
-    os.makedirs(FLAGS.output_dir, exist_ok=True)
+    os.makedirs(FLAGS.output_directory, exist_ok=True)
     for r in range(FLAGS.rounds):
         set1, set2 = select_files(FLAGS.data_dir, FLAGS.representation)
         results, matches = distance(set1, set2, FLAGS.data_dir, FLAGS.metric, FLAGS.representation, FLAGS.hops)
 
-        with open(os.path.join(FLAGS.output_dir, f"results_{r}.yml"), "w") as fout:
+        with open(os.path.join(FLAGS.output_directory, f"results_{r}.yml"), "w") as fout:
             yaml.dump(results, fout)
         
-        with open(os.path.join(FLAGS.output_dir, f"matches_{r}.yml"), "w") as fout:
+        with open(os.path.join(FLAGS.output_directory, f"matches_{r}.yml"), "w") as fout:
             yaml.dump(matches, fout)
 
 

@@ -9,107 +9,33 @@ game=0
 rounds=10
 problems=100
 samples=500
+representations=""
 test_ratio=0.2
 is_cc2025_artifact=true
 
 # Function to display usage  
 usage() {
-    echo "CC 2025 Artifact"
+    echo "Rouxinol Artifact"
     echo "Copyright (C) 2025 Anderson Faustino da Silva"
     echo "" 
-    echo "Usage: $0 --dataset <string> --out-dir <directory> --rouxinol <directory> [--problems <integer>] "
-    echo "                            [--samples <integer>] [--test-ratio <float> ] [--rounds <integer>] [--game <integer>] "
-    echo "                            [--shuffle] [--no-cc2025] [--help]"  
+    echo "Usage: $0 --dataset <string> --out-dir <directory> --rouxinol <directory> "
+    echo "                             --representations <R1,R2,...> [--problems <integer>] "
+    echo "                             [--samples <integer>] [--test-ratio <float> ] [--rounds <integer>] "
+    echo "                             [--game <integer>] [--shuffle] [--help]"  
     echo ""  
     echo "Commands:"
     echo "  -d, --dataset           Dataset name"
     echo "  -g, --game              Number of the game (Default=0)"
-    echo "  -n, --no-cc2025         It is not the CC2025 artifact"  
     echo "  -o, --out-dir           Path to the output directory"
     echo "  -p, --problems          Number of problems (Default=100)"  
     echo "  -r, --rounds            Number of rounds (Default=10)"    
     echo "  -R, --rouxinol          Path to the Rouxinol directory"
+    echo "  -e, --representations   Coma-separared list of representations (e.g., llvmHistogram,ir2vec,...)"
     echo "  -s, --samples           Number of samples (Default=500)"    
     echo "  -S, --shuffle           Shuffle problems and samples (Default=false)"  
     echo "  -t, --test-ratio        Ratio of test samples"
     echo "  -h, --help              Help"       
     exit 1  
-}  
-
-# Check if it is the CC2025 artifact
-check_game_condition_cc2025() { 
-    local game="$1"  
-    local representation="$2"  
-
-    if { [ ${game} -eq 1 ] || [ ${game} -eq 2 ]; } &&   
-       { [ "${representation}" == "ir2vec" ] || [ "${representation}" == "inst2vecPreprocessed" ]|| [ "${representation}" == "inst2vecEmbeddings" ] || [ "${representation}" == "programl" ]; }; then
-        return 0  
-    else
-        return 1  
-    fi  
-}
-
-# Check if it is the CC2025 artifact
-check_train_condition_cc2025() {  
-    local train_label="$1"  
-    local representation="$2"  
-
-    if { [ "${train_label}" == "O1" ] || [ "${train_label}" == "O2" ]; } &&   
-       { [ "${representation}" == "ir2vec" ] || [ "${representation}" == "inst2vecPreprocessed" ]|| [ "${representation}" == "inst2vecEmbeddings" ] || [ "${representation}" == "programl" ]; }; then  
-        return 0  
-    else  
-        return 1  
-    fi  
-}
-
-check_cc2025_artifact() {  
-    local is_cc2025_artifact="$1"  
-
-    # Local array of valid representations  
-    local -a valid_representations=("ir2vec" "inst2vecPreprocessed" "inst2vecEmbeddings" "programl")  
-
-    if [ "$is_cc2025_artifact" = true ]; then  
-        # Check if $representation is in valid_representations  
-        for rep in "${valid_representations[@]}"; do  
-            if [ "$representation" = "$rep" ]; then  
-                return 0  # Condition met  
-            fi  
-        done  
-    fi  
-
-    return 1  # Condition not met  
-}
-
-check_game_condition() {  
-    local game_val="$1"  
-    local game_array_name="$2"  
-    local representation_val="$3"  
-    local rep_array_name="$4"  
-
-    local -n game_array="$game_array_name"  
-    local -n rep_array="$rep_array_name"  
-
-    local game_valid=false  
-    for g in "${game_array[@]}"; do  
-        if [[ "$game_val" == "$g" ]]; then  
-            game_valid=true  
-            break  
-        fi  
-    done  
-
-    local rep_valid=false  
-    for ra in "${rep_array[@]}"; do  
-        if [[ "$representation_val" == "$ra" ]]; then  
-            rep_valid=true  
-            break  
-        fi  
-    done  
-
-    if $game_valid && $rep_valid; then  
-        return 0  
-    else  
-        return 1  
-    fi  
 }  
 
 # Check if no arguments are provided  
@@ -118,7 +44,7 @@ if [ $# -eq 0 ]; then
 fi
 
 # Parse command-line options using getopt  
-OPTIONS=$(getopt -o o:R:d:p:s:r:g:S:t:nh --long out-dir:,rouxinol:,dataset:,problems:,samples:,rounds:,game:,shuffle,test-ratio,no-cc2025,help -- "$@")  
+OPTIONS=$(getopt -o o:R:d:p:s:r:e:g:S:t:h --long out-dir:,rouxinol:,representations:,dataset:,problems:,samples:,rounds:,game:,shuffle,test-ratio,help -- "$@")  
 if [ $? -ne 0 ]; then  
     usage  
 fi  
@@ -136,6 +62,10 @@ while true; do
             rouxinol_directory="$2"  
             shift 2  
             ;;
+        -e|--representations)  
+            representations="$2"  
+            shift 2  
+            ;;         
         -d|--dataset)  
             dataset="$2"  
             shift 2  
@@ -188,11 +118,7 @@ while true; do
         -S|--shuffle)  
             add_command=" --shuffle "
             shift
-            ;;   
-        -n|--no-cc2025)  
-            is_cc2025_artifact=false
-            shift
-            ;;                                                 
+            ;;                                                
         -h|--help)  
             usage  
             ;;   
@@ -205,6 +131,17 @@ while true; do
             ;;  
     esac  
 done   
+
+# Validate representations
+IFS=',' read -r -a representation_array <<< "${representations}"
+valid_representations=("programl" "llvmHistogram" "x86Histogram" "cfggrindHybridHistogram" "cfggrindDynamicHistogram"  "performanceCounterHistogram" "ir2vec" "inst2vecEmbeddings" "inst2vecPreprocessed")
+
+for repr in "${representation_array[@]}"; do
+    if [[ ! " ${valid_representations[@]} " =~ " ${repr} " ]]; then
+        echo "Error: Invalid benchmark ${repr}. Allowed values are: ${valid_representations[*]}"
+        exit 1
+    fi
+done
 
 # Check if dataset is set and if it is valid
 if [ -z "${dataset}" ]; then  
@@ -259,37 +196,17 @@ case "${game}" in
         ;;  
 esac
 
-if [ "${is_cc2025_artifact}" = true ]; then
-    representations=("llvmHistogram" "x86Histogram" "cfggrindDynamicHistogram" "cfggrindHybridHistogram" "ir2vec" "inst2vecEmbeddings" "programl")
-    EXCLUDE_GAMES=(1 2)
-    EXCLUDE_LABELS=("O1" "O2") 
-    EXCLUDE_REPRESENTATIONS=("inst2vecEmbeddings" "ir2vec" "programl")
-else 
-    representations=("llvmHistogram" "x86Histogram" "cfggrindDynamicHistogram" "cfggrindHybridHistogram" "performanceCounterHistogram" "ir2vec" "inst2vecPreprocessed" "inst2vecEmbeddings" "programl")
-fi
-
 for (( r=0; r<${rounds}; r++ )); do 
 
     echo -e "\nRound ${r} ..."
 
-    for (( re=0; re<${#representations[@]}; re++ )); do 
-        representation=${representations[re]}
-        
-        #if check_game_condition_cc2025 "${game}" "${representation}"; then 
-        #    continue
-        #fi
-        if check_game_condition "${game}" EXCLUDE_GAMES "${representation}" EXCLUDE_REPRESENTATIONS; then
-            continue
-        fi
+    for (( re=0; re<${#representation_array[@]}; re++ )); do 
+        representation=${representation_array[re]}
         
         echo -e "\tClassify ${representation} ..."
 
         for (( tr=0; tr<${#train[@]}; tr++ )); do  
             train_label=${train[tr]}
-
-            if check_game_condition "${train_label}" EXCLUDE_LABELS "${representation}" EXCLUDE_REPRESENTATIONS; then
-                continue
-            fi
 
             for (( te=0; te<${#test[@]}; te++ )); do  
                 test_label=${test[te]}
@@ -297,12 +214,6 @@ for (( r=0; r<${rounds}; r++ )); do
                 if { [ "${game}" -eq 0 ] || [ "${game}" -eq 2 ]; } && [ "${train_label}" != "${test_label}" ]; then 
                     continue  
                 fi 
-
-                if check_cc2025_artifact $is_cc2025_artifact; then
-                    n_problems=32
-                else 
-                    n_problems=${problems}
-                fi
 
                 if [ "${representation}" == "programl" ]; then
                     python ${rouxinol_directory}/examples/exploration_ggnn.py \

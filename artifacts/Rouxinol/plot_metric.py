@@ -228,7 +228,7 @@ def plot_statistics(statistics, metric, statistics_directory, train_test, plot_n
         f"S-x86 {'all' if split.endswith('ollvm') else split.split('_')[1]}" if representation == "x86Histogram" else  
         f"H-x86 {'all' if split.endswith('ollvm') else split.split('_')[1]}" if representation == "cfggrindHybridHistogram" else  
         f"D-x86 {'all' if split.endswith('ollvm') else split.split('_')[1]}" if representation == "cfggrindDynamicHistogram" else  
-        f"PCounter {'all' if split.endswith('ollvm') else split.split('_')[1]}" if representation == "performanceCounterHistogram" else
+        f"PMU {'all' if split.endswith('ollvm') else split.split('_')[1]}" if representation == "performanceCounterHistogram" else
         f"IR2Vec {'all' if split.endswith('ollvm') else split.split('_')[1]}" if representation == "ir2vec" else  
         f"Inst2Vec.P {'all' if split.endswith('ollvm') else split.split('_')[1]}" if representation == "inst2vecPreprocessed" else  
         f"Inst2Vec.E {'all' if split.endswith('ollvm') else split.split('_')[1]}" if representation == "inst2vecEmbeddings" else  
